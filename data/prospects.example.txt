@@ -1,0 +1,14 @@
+# Et domaene per linje. Linjer der starter med # bliver sprunget over.
+# Kopier filen til data/prospects.txt (den er gitignored) og saet dine egne ind.
+#
+# Hvor du finder dem, se FIRST-SALE.md afsnit 1:
+#   - folk du allerede kender som driver noget
+#   - e-maerket.dk, virksomheder der har betalt for et tillidsmaerke
+#   - Trustpilot Danmark, kategorisider
+#   - lokale butikker og klinikker i Svendborg
+#
+# Sigt efter 2-20 ansatte. Spring de helt store over, de har et bureau.
+
+eksempel-butik.dk
+eksempel-klinik.dk
+eksempel-webshop.dk

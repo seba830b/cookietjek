@@ -1,0 +1,22 @@
+{
+  "name": "cookietjek",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Maaler om danske hjemmesider saetter tracking foer samtykke, og bygger en rapport der kan sendes til dem.",
+  "scripts": {
+    "scan": "node scan.mjs",
+    "report": "node report.mjs",
+    "test": "node --test test/*.test.mjs",
+    "fixtures": "node test/serve-fixtures.mjs",
+    "serve": "node --run-if-present serve || npx --yes serve site",
+    "build": "node report.mjs --kun-forside",
+    "deploy:cloudflare": "npm run build && npx --yes wrangler pages deploy site --project-name cookietjek",
+    "deploy:netlify": "npm run build && npx --yes netlify-cli deploy --dir=site --prod",
+    "deploy:vercel": "npm run build && npx --yes vercel deploy site --prod --yes",
+    "publish:pages": "node publish-pages.mjs"
+  },
+  "dependencies": {
+    "playwright": "^1.49.0"
+  }
+}

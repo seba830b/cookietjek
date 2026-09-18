@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="da"><head><meta charset="utf-8"><title>Fixture: dårlig opsætning</title>
+<style>body{font-family:sans-serif;padding:40px;margin:0}
+#cookiebox{position:fixed;left:0;right:0;bottom:0;background:#222;color:#fff;padding:20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+button{padding:10px 18px;font-size:15px;cursor:pointer}</style>
+</head><body>
+<h1>Eksempelfirma A/S</h1>
+<p>Denne fixture opfører sig som en typisk fejlkonfigureret dansk side: tracking
+starter med det samme, og cookiebonnen har kun "Accepter alle" plus et
+indstillinger-link et klik dybere.</p>
+
+<script>
+  // Tracking-cookies saettes med det samme, foer der er trykket paa noget.
+  document.cookie = "_ga=GA1.2.1234567890.1699999999; path=/";
+  document.cookie = "_ga_ABC123XYZ=GS1.1.1699999999; path=/";
+  document.cookie = "_fbp=fb.1.1699999999.987654321; path=/";
+  document.cookie = "_hjSessionUser_123=eyJpZCI6IjEifQ; path=/";
+</script>
+<!-- Disse kald naar aldrig frem i testmiljoeet, men request-eventet fyrer,
+     hvilket er praecis det scanneren maaler. -->
+<script src="https://www.google-analytics.com/analytics.js" async></script>
+<script src="https://connect.facebook.net/en_US/fbevents.js" async></script>
+<script src="https://static.hotjar.com/c/hotjar-123.js" async></script>
+<img src="https://www.facebook.com/tr?id=123&ev=PageView" alt="" width="1" height="1">
+
+<div id="cookiebox">
+  <span>Vi bruger cookies til statistik og markedsføring.</span>
+  <button id="acc">Accepter alle</button>
+  <a href="#" style="color:#9cf">Indstillinger</a>
+</div>
+</body></html>

@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="da"><head><meta charset="utf-8"><title>Fixture: god opsætning</title>
+<style>body{font-family:sans-serif;padding:40px;margin:0}
+#cookiebox{position:fixed;left:0;right:0;bottom:0;background:#222;color:#fff;padding:20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+button{padding:10px 18px;font-size:15px;cursor:pointer}</style>
+</head><body>
+<h1>Ordentlig Webshop ApS</h1>
+<p>Denne fixture gør det rigtigt: ingen analyse- eller markedsføringscookies før
+samtykke, og "Afvis alle" står side om side med "Accepter alle".</p>
+<script>
+  // Kun en teknisk noedvendig cookie. Den skal IKKE give udslag.
+  document.cookie = "PHPSESSID=abc123; path=/";
+  document.cookie = "CookieConsent=pending; path=/";
+</script>
+<div id="cookiebox">
+  <span>Vi bruger cookies. Du bestemmer selv.</span>
+  <button id="rej">Afvis alle</button>
+  <button id="acc">Accepter alle</button>
+</div>
+</body></html>
