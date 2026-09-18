@@ -1,0 +1,65 @@
+# Udgiver landingssiden til GitHub Pages ved hvert push til main.
+#
+# Bygget kraever ingen afhaengigheder: `npm run build` fletter config.mjs ind i
+# site/index.html med ren Node, uden Playwright.
+#
+# Rapporter bliver aldrig udgivet. De er gitignored, saa de findes ikke i
+# repoet, og trinnet "Fjern rapporter" nedenfor er et baelte ud over selerne.
+# Et offentligt repo og en offentlig Pages-side ville ellers blive en laesbar
+# liste over hvilke danske virksomheder der er scannet og hvad der blev fundet.
+name: Udgiv landingsside
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  byg:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Byg landingssiden
+        run: npm run build
+
+      - name: Fjern rapporter, hvis nogen skulle vaere sluppet med
+        run: rm -rf site/rapport
+
+      - name: Fejl hvis der ligger andet end landingssiden
+        run: |
+          uventet=$(find site -type f ! -path 'site/index.html' -print)
+          if [ -n "$uventet" ]; then
+            echo "Naegter at udgive. Disse filer hoerer ikke til paa en offentlig side:"
+            echo "$uventet"
+            exit 1
+          fi
+          echo "Kun index.html bliver udgivet."
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  udgiv:
+    needs: byg
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

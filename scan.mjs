@@ -14,6 +14,10 @@ import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { matchHost, matchCookie } from './lib/trackers.mjs';
 import { detectBanner } from './lib/detect.mjs';
+import { normaliseDomain, parseTarget } from './lib/targets.mjs';
+
+// Re-eksporteres saa eksisterende importer af scan.mjs bliver ved med at virke.
+export { normaliseDomain, parseTarget };
 
 export const SCANNER_VERSION = '0.1.0';
 
@@ -32,29 +36,6 @@ function parseArgs(argv) {
     else opts.domains.push(a);
   }
   return opts;
-}
-
-export function normaliseDomain(input) {
-  let d = String(input).trim().toLowerCase();
-  d = d.replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/^www\./, '');
-  return d;
-}
-
-// Accepts either a bare domain ("eksempel.dk") or a full URL. Full URLs exist
-// so the test suite can point the scanner at a local fixture server; in normal
-// use you pass domains.
-export function parseTarget(input) {
-  const raw = String(input).trim();
-  if (/^https?:\/\//i.test(raw)) {
-    const u = new URL(raw);
-    // Include the path in the label, otherwise two URLs on the same host would
-    // write to the same output folder and silently overwrite each other.
-    const pathSlug = u.pathname.replace(/^\/|\/$/g, '').replace(/[^a-z0-9]+/gi, '_');
-    const label = [u.host.replace(/^www\./, '').replace(/:/g, '_'), pathSlug].filter(Boolean).join('_');
-    return { url: raw, domain: label, host: u.hostname };
-  }
-  const domain = normaliseDomain(raw);
-  return { url: `https://${domain}/`, domain, host: domain };
 }
 
 export function classifyFindings({ banner, trackerRequests, trackerCookies }) {

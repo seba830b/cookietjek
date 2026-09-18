@@ -10,7 +10,7 @@ import { mkdir, readFile, writeFile, copyFile, readdir } from 'node:fs/promises'
 import path from 'node:path';
 import { renderReport } from './lib/report.mjs';
 import { renderLanding } from './lib/landing.mjs';
-import { normaliseDomain } from './scan.mjs';
+import { normaliseDomain } from './lib/targets.mjs';
 import config from './config.mjs';
 
 const OUT_DIR = 'out';
