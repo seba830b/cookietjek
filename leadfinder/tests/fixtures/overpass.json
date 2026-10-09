@@ -1,0 +1,10 @@
+{"elements": [
+ {"type":"node","id":1,"lat":55.06,"lon":10.61,"tags":{"place":"town","name":"Svendborg"}},
+ {"type":"node","id":2,"lat":55.15,"lon":10.70,"tags":{"place":"village","name":"Gudme"}},
+ {"type":"node","id":10,"lat":55.061,"lon":10.611,"tags":{"amenity":"cafe","name":"Café Havnen","website":"cafehavnen.dk","phone":"+45 62 21 00 00","addr:street":"Havnen","addr:housenumber":"1","addr:postcode":"5700","addr:city":"Svendborg"}},
+ {"type":"way","id":11,"center":{"lat":55.149,"lon":10.701},"tags":{"shop":"hairdresser","name":"Frisør Lis","contact:facebook":"https://www.facebook.com/frisorlis"}},
+ {"type":"node","id":12,"lat":55.149,"lon":10.701,"tags":{"shop":"hairdresser","name":"Frisør Lis"}},
+ {"type":"node","id":13,"lat":55.06,"lon":10.6,"tags":{"shop":"supermarket","name":"Netto","brand":"Netto"}},
+ {"type":"node","id":14,"lat":55.06,"lon":10.6,"tags":{"shop":"clothes","name":"Tøjbutikken","website":"https://www.facebook.com/tojbutikken"}},
+ {"type":"node","id":15,"lat":55.06,"lon":10.6,"tags":{"craft":"painter","name":"Malerfirma Hansen"}}
+]}

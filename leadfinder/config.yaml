@@ -1,0 +1,61 @@
+# Lead finder settings. Edit freely, then run: python3 find_leads.py
+
+# Centre of the search. If lat/lon are left empty, the town is looked up
+# once via Nominatim (OpenStreetMap's official geocoder) and cached.
+town: Svendborg
+country: Denmark
+lat: 55.0598
+lon: 10.6068
+radius_km: 25
+
+# Each category maps to one or more OpenStreetMap tag filters.
+# "key=value" matches that exact tag, "key" alone matches any value.
+# label_da is used in the Danish pitch text.
+categories:
+  electrician: {label_da: elektriker,   tags: ["craft=electrician"]}
+  plumber:     {label_da: VVS-mand,     tags: ["craft=plumber"]}
+  painter:     {label_da: maler,        tags: ["craft=painter"]}
+  carpenter:   {label_da: tømrer,       tags: ["craft=carpenter", "craft=joiner"]}
+  hairdresser: {label_da: frisør,       tags: ["shop=hairdresser"]}
+  beauty:      {label_da: skønhedssalon, tags: ["shop=beauty", "shop=cosmetics"]}
+  cafe:        {label_da: café,         tags: ["amenity=cafe"]}
+  restaurant:  {label_da: restaurant,   tags: ["amenity=restaurant"]}
+  bakery:      {label_da: bager,        tags: ["shop=bakery"]}
+  clinic:      {label_da: klinik,       tags: ["amenity=clinic", "amenity=dentist", "healthcare=physiotherapist"]}
+  bnb_hotel:   {label_da: overnatning,  tags: ["tourism=guest_house", "tourism=hotel"]}
+  camping:     {label_da: campingplads, tags: ["tourism=camp_site"]}
+  shop:        {label_da: butik,        tags: ["shop"]}
+
+# Skip businesses that carry a brand tag (chains like Netto, Matas, Shell).
+skip_chains: true
+
+# Overpass servers, tried in order until one answers.
+overpass_endpoints:
+  - https://overpass-api.de/api/interpreter
+  - https://overpass.private.coffee/api/interpreter
+  - https://overpass.kumi.systems/api/interpreter
+  - https://maps.mail.ru/osm/tools/overpass/api/interpreter
+
+# Be polite: identify yourself and keep a gap between requests to a host.
+user_agent: "SvendborgLeadFinder/1.0 (small business web audit; contact: you@example.com)"
+min_seconds_between_requests_per_host: 2.0
+request_timeout_seconds: 15
+slow_site_seconds: 3.0
+respect_robots_txt: true
+
+# Optional: official web search for businesses without a website in OSM.
+# Uses the Brave Search API (free tier). Put the key in the environment
+# variable named below. Without a key this step is skipped.
+search:
+  provider: brave
+  api_key_env: BRAVE_API_KEY
+  max_searches: 300
+
+# Cache: answers are stored in .cache/ and reused for this many days.
+cache_dir: .cache
+cache_days: 14
+
+# Output files (relative to this folder). Danish Excel expects ";" in CSV.
+output_csv: leads.csv
+output_xlsx: leads.xlsx
+csv_delimiter: ";"
