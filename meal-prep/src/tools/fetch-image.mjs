@@ -258,7 +258,7 @@ async function main() {
     }
   }
   if (!cands.length) {
-    const titles = args.wiki ? [args.wiki] : words.map((_, i) => words.slice(0, words.length - i).join(' '));
+    const titles = args.wiki ? [args.wiki] : prefixes;
     for (const t of titles) {
       const title = t.charAt(0).toUpperCase() + t.slice(1);
       console.error(`trying Wikipedia "${title}"`);

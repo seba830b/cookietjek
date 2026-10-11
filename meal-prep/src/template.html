@@ -296,6 +296,32 @@ ol.steps li::before { content: counter(s); position: absolute; left: 0; top: 3px
 @media (max-width: 420px) { .facts { grid-template-columns: 1fr; } }
 .note { font-size: .9rem; margin: 12px 0 0; padding: 10px 12px; border-left: 4px solid var(--mustard); background: color-mix(in srgb, var(--mustard-soft) 60%, transparent); border-radius: 0 10px 10px 0; }
 
+/* ---------- v2: photos, toggles */
+.thumb { width: 46px; height: 46px; border-radius: 12px; object-fit: cover; flex: none; background: var(--surface-2); }
+.tpic { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 10px; background: var(--surface-2); }
+.hero { margin: 14px 0 0; }
+.hpic { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 14px; display: block; background: var(--surface-2); }
+figcaption { font-size: .72rem; color: var(--muted); margin-top: 4px; }
+figcaption a { color: inherit; }
+.mname { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.meal .what { flex-wrap: nowrap; gap: 10px; }
+.mact { display: flex; align-items: center; gap: 6px; flex: none; margin-left: auto; }
+.meal.off .when { opacity: .6; }
+.mtile.off { opacity: .6; border-style: dashed; }
+.minib { min-height: 36px; padding: 0 10px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); font-size: .76rem; font-weight: 800; }
+.tgl { width: 46px; height: 28px; border-radius: 999px; border: 0; background: var(--surface-2); position: relative; flex: none; box-shadow: inset 0 0 0 1px var(--border); }
+.tgl::after { content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: var(--surface); box-shadow: 0 1px 3px rgb(0 0 0 / .3); transition: transform .15s; }
+.tgl[aria-checked="true"] { background: var(--ok); }
+.tgl[aria-checked="true"]::after { transform: translateX(18px); }
+.weekhead { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 30px 0 4px; }
+.weekhead h2 { margin: 0; }
+.btn.small { min-height: 38px; padding: 0 14px; font-size: .85rem; }
+.altlist { display: grid; gap: 8px; }
+.alt { display: flex; gap: 10px; align-items: center; text-align: left; padding: 8px; border-radius: 14px; border: 1px solid var(--border); background: var(--surface); min-height: 60px; }
+.alt b { display: block; }
+@media (max-width: 420px) { .meal { flex-direction: row; flex-wrap: wrap; } .meal .when { width: 100%; } }
+
 /* ---------- Shopping + starter */
 .sum-anchor { height: 0; }
 .sticky-sum { position: relative; padding: 10px 14px; margin-bottom: 12px; display: grid; gap: 6px; }
@@ -459,20 +485,23 @@ const DA_DAY = { Sun: 'søndag', Mon: 'mandag', Tue: 'tirsdag', Wed: 'onsdag', T
 const DAY_ALIASES = { man: 'Mon', tir: 'Tue', ons: 'Wed', tor: 'Thu', fre: 'Fri', lør: 'Sat', lor: 'Sat', søn: 'Sun', son: 'Sun',
   mon: 'Mon', tue: 'Tue', wed: 'Wed', thu: 'Thu', fri: 'Fri', sat: 'Sat', sun: 'Sun' };
 const TRACK = { pot: 'Gryde', pan: 'Pande', air: 'Airfryer', you: 'Dig' };
-const MEALS = DATA.WEEK.length * 2 || 10;
+let MEALS = 10;
 const R = Object.fromEntries(DATA.RECIPES.map((r, i) => [r.id, Object.assign({ num: i + 1 }, r)]));
-const PT = DATA.PREP_TIME || {};
+let PT = DATA.PREP_TIME || {};
 const tmin = (t) => { const m = /^(\d+):(\d\d)$/.exec(String(t || '').trim()); return m ? +m[1] * 60 + +m[2] : null; };
-const PREP_MIN = (() => {
-  if (Number.isFinite(PT.rutine)) return PT.rutine;
-  const ts = DATA.PREP.map((s) => tmin(s.t)).filter((x) => x != null);
-  return ts.length ? Math.round(Math.max(...ts) / 5) * 5 : 75;
-})();
-const FIRST_MIN = Number.isFinite(PT.foersteGang) ? PT.foersteGang : null;
+let PREP_MIN = 75, FIRST_MIN = null;
 const isOptStep = (s) => !!(s && (s.opt || /^nødplan/i.test(String(s.t || ''))));
-const BOX_KIT = DATA.KIT.find((k) => /boks/i.test(k.n || '') && Number.isFinite(k.count));
-const BOXES = BOX_KIT ? BOX_KIT.count : MEALS;
-const STEP_MIN = DATA.PREP.map((s) => tmin(s.t));
+let BOXES = 10, STEP_MIN = [];
+function recalcDerived() {
+  MEALS = DATA.WEEK.reduce((n, d) => n + [d.lunch, d.dinner].filter((m) => m && !m.skip).length, 0) || 1;
+  PT = DATA.PREP_TIME || {};
+  if (Number.isFinite(PT.rutine)) PREP_MIN = PT.rutine;
+  else { const ts = DATA.PREP.map((s) => tmin(s.t)).filter((x) => x != null); PREP_MIN = ts.length ? Math.round(Math.max(...ts) / 5) * 5 : 75; }
+  FIRST_MIN = Number.isFinite(PT.foersteGang) ? PT.foersteGang : null;
+  const bk = DATA.KIT.find((k) => /boks/i.test(k.n || '') && Number.isFinite(k.count));
+  BOXES = bk ? bk.count : MEALS;
+  STEP_MIN = DATA.PREP.map((s) => tmin(s.t));
+}
 
 /* ---------- State: load and validate */
 const KEY = 'lazyprep:v1';
@@ -493,7 +522,22 @@ const state = {
   rf: {},
   lists: {},
   prepStart: null,
+  meals: {},
+  weeks: {},
 };
+const WDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+WDAYS.forEach((d) => {
+  const def = (DATA.DEFAULT_MEALS && DATA.DEFAULT_MEALS[d]) || { lunch: true, dinner: true };
+  const sv = isObj(saved.meals) && isObj(saved.meals[d]) ? saved.meals[d] : {};
+  state.meals[d] = { lunch: typeof sv.lunch === 'boolean' ? sv.lunch : !!def.lunch, dinner: typeof sv.dinner === 'boolean' ? sv.dinner : !!def.dinner };
+});
+if (isObj(saved.weeks)) Object.keys(saved.weeks).slice(-8).forEach((k) => {
+  const w = saved.weeks[k];
+  if (!/^\d{4}-W\d\d$/.test(k) || !isObj(w)) return;
+  const ov = {};
+  if (isObj(w.ov)) Object.keys(w.ov).forEach((s) => { if (typeof w.ov[s] === 'string' && R[w.ov[s]]) ov[s] = w.ov[s]; });
+  state.weeks[k] = { off: Number.isInteger(w.off) && w.off >= 0 ? w.off : 0, ov };
+});
 if (isObj(saved.checks)) Object.keys(saved.checks).forEach((k) => { if (saved.checks[k] && /^[a-z]:/.test(k)) state.checks[k] = 1; });
 if (isObj(saved.rf)) Object.keys(saved.rf).forEach((k) => {
   const n = saved.rf[k];
@@ -529,6 +573,26 @@ DATA.STARTER.forEach((g, gi) => A(g.items).forEach((it, i) => {
   if (staple) HAVE_OK.add(ikey(it, `k:${gi}:${i}`));
 }));
 DATA.PANTRY.forEach((it, i) => { if (it.staple !== false) HAVE_OK.add(ikey(it, `b:${i}`)); });
+
+/* ---------- v2: this week is computed by the engine from the meal toggles */
+const WK = typeof planWeek === 'function' ? planWeek(new Date()) : (DATA.BUILT_WEEK || { year: 0, week: 0 });
+const WKEY = typeof weekKey === 'function' ? weekKey(WK) : '';
+const wkState = () => (state.weeks[WKEY] = state.weeks[WKEY] || { off: 0, ov: {} });
+const SKIP_TXT = { lunch: 'Ingen frokost', dinner: 'Aftensmad i skolen' };
+function recompute() {
+  if (typeof computeAll === 'function') {
+    const w = wkState();
+    const all = computeAll(DATA, state.meals, seedFor(WK, w.off), w.ov, 1);
+    DATA.PLAN = all.plan;
+    DATA.WEEK = all.plan.days.map((d) => ({ ...d,
+      lunch: d.lunch || { r: SKIP_TXT.lunch, skip: true, s: 'fridge' }, dinner: d.dinner || { r: SKIP_TXT.dinner, skip: true, s: 'fridge' } }));
+    DATA.PREP = all.prep.steps; DATA.KIT = all.prep.kit; DATA.SHOP = all.shop; DATA.REMINDERS = all.reminders;
+    DATA.PREP_TIME = all.prep.minutes;
+  }
+  recalcDerived();
+}
+const pic = (r, cls) => (r && r.img && r.img.file ? `<img class="${cls}" src="${esc(r.img.file)}" alt="${esc(r.name)}" loading="lazy" decoding="async">` : '');
+const credit = (r) => (r && r.img && r.img.by ? `<figcaption>Foto: ${esc(r.img.by)}${r.img.license ? `, <a href="${esc(r.img.src || r.img.licenseUrl || '#')}" target="_blank" rel="noopener">${esc(r.img.license)}</a>` : ''}</figcaption>` : '');
 
 /* ---------- Helpers */
 const $ = (s, el = document) => el.querySelector(s);
@@ -630,19 +694,23 @@ const eatOf = (id) => DATA.EAT[id] || (R[id] && R[id].reheat) || '';
 function renderPlan() {
   const styles = new Set(DATA.WEEK.flatMap((d) => [d.lunch, d.dinner].filter((m) => m && R[m.r]).map((m) => R[m.r].style)));
   const today = DATA.WEEK.find((d) => d.day === TODAY);
-  const tile = (label, m) => `
+  const tile = (label, m) => m.skip ? `
+    <div class="mtile off"><span class="when">${label}</span><span class="name muted">${esc(m.r)}</span></div>` : `
     <div class="mtile">
+      ${pic(R[m.r], 'tpic')}
       <span class="when">${label} ${stateChip(m)}</span>
       <button class="link name" type="button" data-eat="${esc(m.r)}" data-st="${boxState(m)}">${esc(R[m.r] ? R[m.r].name : m.r)}</button>
       <span class="how">${esc(eatOf(m.r))}</span>
     </div>`;
-  const meal = (label, m) => `
-    <div class="meal">
+  const meal = (label, m, key) => `
+    <div class="meal${m.skip ? ' off' : ''}">
       <span class="when">${label}</span>
-      <span class="what">
-        <button class="link" type="button" data-eat="${esc(m.r)}" data-st="${boxState(m)}">${esc(R[m.r] ? R[m.r].name : m.r)}</button>
-        ${R[m.r] ? styleChip(R[m.r].style) : ''} ${stateChip(m)}
+      <span class="what">${m.skip ? `<span class="muted small">${esc(m.r)}</span>` : `${pic(R[m.r], 'thumb')}
+        <span class="mname"><button class="link" type="button" data-eat="${esc(m.r)}" data-st="${boxState(m)}">${esc(R[m.r] ? R[m.r].name : m.r)}</button>
+        <span class="chips">${R[m.r] ? styleChip(R[m.r].style) : ''} ${stateChip(m)}</span></span>`}
       </span>
+      <span class="mact">${m.skip ? '' : `<button type="button" class="minib" data-swap="${key}" aria-label="Byt ${esc(label.toLowerCase())}">Byt</button>`}
+        <button type="button" class="tgl" role="switch" data-toggle="${key}" aria-checked="${!m.skip}" aria-label="${label} ${m.skip ? 'fra' : 'til'}"></button></span>
     </div>`;
   /* Thaw reminders for tonight, from WEEK.thaw; falls back to REMINDERS that start with today's name. */
   const thawing = DATA.WEEK.filter((d) => [d.lunch, d.dinner].some((m) => m && m.thaw === TODAY));
@@ -713,10 +781,11 @@ function renderPlan() {
       <div class="card stat"><b id="statPer">-</b><span>pr. måltid</span></div>
     </div>`}
 
-    <h2 class="display">Ugen</h2>
+    <div class="weekhead"><h2 class="display">Uge ${WK.week}</h2><button type="button" class="btn ghost small" data-reroll>Bland igen</button></div>
+    <p class="lede">Slå et måltid fra med kontakten, hvis du spiser i skolen. Alt andet regner selv om. "Byt" giver dig en anden ret.</p>
     <div class="week">
       ${DATA.WEEK.map((d) => `<div class="card day${d.day === TODAY ? ' is-today' : ''}"${d.day === TODAY ? ' aria-current="date"' : ''}>
-        <span class="dname">${esc(dayName(d).slice(0, 3).replace(/^./, (c) => c.toUpperCase()))}${d.day === TODAY ? '<small>I dag</small>' : ''}</span>${meal('Frokost', d.lunch)}${meal('Aften', d.dinner)}</div>`).join('')}
+        <span class="dname">${esc(dayName(d).slice(0, 3).replace(/^./, (c) => c.toUpperCase()))}${d.day === TODAY ? '<small>I dag</small>' : ''}</span>${meal('Frokost', d.lunch, d.day + ':lunch')}${meal('Aften', d.dinner, d.day + ':dinner')}</div>`).join('')}
     </div>
     ${DATA.REMINDERS.length ? `<div class="callout"><ul>${DATA.REMINDERS.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}
 
@@ -774,6 +843,7 @@ function renderRecipes() {
       <summary><span class="num">${r.num}</span><span class="title"><b>${esc(r.name)}</b>
         <span class="meta">${styleChip(r.style)}<span class="pp"></span>${r.hands ? `${esc(r.hands)} min arbejdstid` : ''}${A(r.bases).length ? `, base ${esc(r.bases.join(' + '))}` : ''}</span></span>${ICON.chev}</summary>
       <div class="rbody">
+        ${r.img ? `<figure class="hero">${pic(r, 'hpic')}${credit(r)}</figure>` : ''}
         ${portionBar(r.name, false)}
         <h4>Det skal du bruge <span class="scaled-for"></span></h4>${ingList(r.ingredients)}
         <h4>Sådan gør du</h4><ol class="steps">${A(r.steps).map((s) => `<li>${raw(s)}</li>`).join('')}</ol>
@@ -1151,6 +1221,7 @@ function openEat(id, st) {
       <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px">${styleChip(r.style)}${chip}</div></div>
       <button class="close" type="button" data-close aria-label="Luk">${ICON.x}</button></div>
     ${{ freezer: 'Den er i fryseren. Læg den i køleskabet aftenen før, du skal spise den.', tonight: 'Flyt den fra fryseren til køleskabet i aften.', later: 'Den laves på prepdagen søndag.' }[st] ? `<div class="reminder">${ICON.bell}<span>${{ freezer: 'Den er i fryseren. Læg den i køleskabet aftenen før, du skal spise den.', tonight: 'Flyt den fra fryseren til køleskabet i aften.', later: 'Den laves på prepdagen søndag.' }[st]}</span></div>` : ''}
+    ${r.img ? `<figure class="hero">${pic(r, 'hpic')}${credit(r)}</figure>` : ''}
     ${eatOf(id) ? `<div class="fact reheat"><strong>Opvarmning</strong>${esc(eatOf(id))}</div>` : ''}
     ${r.reheat && !String(r.reheat).includes(eatOf(id)) ? `<div class="fact"><strong>Godt at vide</strong>${esc(r.reheat)}</div>` : ''}
     <div class="btnrow"><button class="btn" type="button" data-goto="${esc(id)}">Se hele opskriften</button></div>`;
@@ -1228,6 +1299,7 @@ function onScroll() {
 window.addEventListener('scroll', () => { if (!scrollQueued) { scrollQueued = true; requestAnimationFrame(onScroll); } }, { passive: true });
 
 /* ---------- Boot */
+recompute();
 renderPlan(); renderRecipes(); renderShop(); renderStarter();
 applyTheme(); showTab(state.tab); syncRows(); update(); applyListTools(); measureHeader(); clockLoop();
 ready = true;
@@ -1327,6 +1399,20 @@ document.addEventListener('click', (e) => {
     return;
   }
   if (t.closest('#miniClock')) { const n = $('#prepList .row.next') || $('#clockCard'); n.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'center' }); return; }
+  const tg2 = t.closest('[data-toggle]');
+  if (tg2) {
+    const [d, sl] = tg2.dataset.toggle.split(':');
+    const on = !state.meals[d][sl];
+    if (!on && WDAYS.every((x) => ['lunch', 'dinner'].every((y) => (x === d && y === sl) || !state.meals[x][y]))) { toast('Mindst ét måltid skal være slået til'); return; }
+    state.meals[d][sl] = on;
+    replan(on ? 'Måltid slået til' : 'Måltid slået fra');
+    return;
+  }
+  if (t.closest('[data-reroll]')) { const w = wkState(); w.off++; w.ov = {}; replan('Ny blanding af ugen'); return; }
+  const sw = t.closest('[data-swap]');
+  if (sw) { openSwap(sw.dataset.swap); return; }
+  const pk = t.closest('[data-pick]');
+  if (pk) { wkState().ov[pk.dataset.slot] = pk.dataset.pick; $('#sheet').close(); replan('Ret byttet'); return; }
   const sp = t.closest('[data-start-prep]');
   if (sp && state.prepStart == null) startClock();
   const tg = t.closest('[data-tab-go]');
@@ -1340,6 +1426,32 @@ document.addEventListener('click', (e) => {
   const fb = t.closest('[data-filter]');
   if (fb) setFilter(fb.dataset.filter);
 });
+
+/* Re-plan after a toggle, shuffle or swap: recompute, re-render, keep scroll position. */
+function replan(msg) {
+  const y = scrollY;
+  Object.keys(state.checks).forEach((k) => { if (k.startsWith('p:')) delete state.checks[k]; });
+  recompute();
+  renderPlan(); renderShop();
+  syncRows(); update(); applyListTools();
+  save();
+  scrollTo(0, y);
+  if (msg) toast(msg);
+}
+function openSwap(key) {
+  const [d, sl] = key.split(':');
+  const cur = DATA.PLAN && DATA.PLAN.days.find((x) => x.day === d);
+  const now = cur && cur[sl] ? cur[sl].r : null;
+  let ids = [];
+  try { ids = alternatives(DATA.RECIPES, DATA.PLAN, key) || []; } catch (e) {}
+  ids = ids.filter((id) => R[id] && id !== now).slice(0, 8);
+  $('#sheetBody').innerHTML = `
+    <div class="sheet-head"><div><div class="kicker">${esc(dayName(cur || d))} ${sl === 'lunch' ? 'frokost' : 'aften'}</div><h2 class="display" id="sheetTitle">Byt ret</h2></div>
+      <button class="close" type="button" data-close aria-label="Luk">${ICON.x}</button></div>
+    ${ids.length ? `<div class="altlist">${ids.map((id) => `<button type="button" class="alt" data-pick="${esc(id)}" data-slot="${esc(key)}">${pic(R[id], 'thumb')}<span><b>${esc(R[id].name)}</b>${styleChip(R[id].style)}</span></button>`).join('')}</div>` : '<p class="muted">Ingen andre retter passer ind i ugen lige nu. Prøv "Bland igen".</p>'}`;
+  const dlg = $('#sheet');
+  if (typeof dlg.showModal === 'function') { try { dlg.showModal(); } catch (e) {} }
+}
 
 function setFilter(f) {
   $$('[data-filter]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.filter === f));

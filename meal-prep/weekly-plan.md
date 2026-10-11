@@ -1,7 +1,8 @@
 # Ugeplan
 
-Én prepdag: ca. **85 min**, når du har prøvet det, ca. **110 min** første gang. Ca. 55 min er arbejdstid, resten venter du på airfryeren.
-Det giver **10 måltider** (5 dage, frokost + aftensmad) i 5 stilarter: mexicansk, italiensk, indisk, koreansk, amerikansk diner.
+Én prepdag: ca. **70 min**, når du har prøvet det, ca. **90 min** første gang. Ca. 65 min er arbejdstid, resten venter du på airfryeren.
+Uge 42: **7 måltider** (frokost mandag-fredag + aftensmad onsdag og fredag, du spiser i skolen mandag, tirsdag og torsdag aften) i 4 stilarter: italiensk, koreansk, asiatisk takeaway, mexicansk.
+Ugen skifter automatisk hver uge, og i `index.html` kan du slå hvert måltid til og fra og bytte retter. Alt herunder regnes ud fra de aktive måltider.
 
 Prep søndag. Boksene til mandag og tirsdag kommer i køleskabet, onsdag-fredag i fryseren. Fødevarestyrelsen siger, at rester skal spises inden for 2-3 dage, så intet står i køleskabet mere end 2 dage.
 **Frokost kan altid laves med kun en mikro** (til uni). Retter, der skal i airfryeren, er aftensmad.
@@ -10,35 +11,33 @@ Prep søndag. Boksene til mandag og tirsdag kommer i køleskabet, onsdag-fredag 
 
 | Dag | Frokost (kun mikro) | Aftensmad |
 |---|---|---|
-| Mandag | Burrito bowl med kylling (Mexicansk) | Pasta al forno (Italiensk) |
-| Tirsdag | Butter chicken (Indisk) | Taco loaded fries (Mexicansk) |
-| Onsdag | Koreansk sticky chicken (Koreansk) ❄ tø op tirsdag aften | Buffalo chicken fries (Amerikansk diner) ❄ tø op tirsdag aften |
-| Torsdag | Butter chicken (Indisk) ❄ tø op onsdag aften | Pasta al forno (Italiensk) ❄ tø op onsdag aften |
-| Fredag | Koreansk sticky chicken (Koreansk) ❄ tø op torsdag aften | Quesadillas med oksekød (Mexicansk) ❄ tø op torsdag aften |
+| Mandag | Cremet tomatpasta med kylling (Italiensk) | - |
+| Tirsdag | Bulgogi-oksekød med ris (Koreansk) | - |
+| Onsdag | Peanut chicken med ris og wokgrønt (Asiatisk takeaway) ❄ tø op tirsdag aften | Taco loaded fries (Mexicansk) ❄ tø op tirsdag aften |
+| Torsdag | Koreansk sticky chicken (Koreansk) ❄ tø op onsdag aften | - |
+| Fredag | Koreansk sticky chicken (Koreansk) ❄ tø op torsdag aften | Loaded nachos med tacokød (Mexicansk) ❄ tø op torsdag aften |
 
 ❄ = frosset på prepdagen. Flyttes til køleskabet aftenen før.
 
-- Tirsdag aften: flyt onsdagens boks (koreansk) og fryseposen (buffalo-kylling) fra fryser til køleskab.
-- Onsdag aften: flyt torsdagens 2 bokse (butter chicken og pasta al forno) fra fryser til køleskab.
-- Torsdag aften: flyt fredagens 2 bokse (koreansk og tacokød) fra fryser til køleskab.
+- Tirsdag aften: flyt onsdagens 2 bokse (Peanut chicken og Taco fries) fra fryser til køleskab.
+- Onsdag aften: flyt torsdagens boks (Koreansk kylling) fra fryser til køleskab.
+- Torsdag aften: flyt fredagens 2 bokse (Koreansk kylling og Nachos) fra fryser til køleskab.
 - Optøede bokse: spis dem inden for 24 timer, og frys dem aldrig igen.
 - Frokost på uni: læg boksen i et køleskab, eller tag den med i en køletaske med et køleelement.
 
 ### Når du spiser
 
-- **Burrito bowl med kylling:** Kun mikro: 1 spsk vand på risen, låg på skrå, 3-4 min, rør halvvejs. Kold salsa og cremefraiche på bagefter. På uni: spring cremefraichen over.
-- **Pasta al forno:** Mikro 3½-4 min, låg på skrå. Plastlåget af, glasboksen i airfryeren 200°C 4-5 min, til osten bobler.
-- **Butter chicken:** Kun mikro: låg på skrå, 4-5 min, rør halvvejs, til det damper. En klat smør eller cremefraiche i, hvis du er hjemme.
+- **Cremet tomatpasta med kylling:** Kun mikro: et skvæt vand i, låg på skrå, 3 min, rør, 1 min mere.
+- **Bulgogi-oksekød med ris:** Kun mikro: 1 spsk vand på risen, låg på skrå, 4-5 min, rør halvvejs. Sesam over, hvis du har.
+- **Peanut chicken med ris og wokgrønt:** Kun mikro: 2 spsk vand i, låg på skrå, 5 min, rør halvvejs. Et skvæt lime, hvis du har.
 - **Taco loaded fries:** Bådene 200°C 20-25 min, vend 2 gange. Pladen ud, kødet i mikro 2-3 min. Kød og ost på bådene, 2 min i airfryeren.
 - **Koreansk sticky chicken:** Kun mikro: saucen over det hele, 1 spsk vand på risen, låg på skrå, 4-5 min, rør halvvejs.
-- **Buffalo chicken fries:** Krus: 1 spsk smør + 1½ spsk chilisauce + 1½ tsk eddike, mikro 30 sek. Bådene 200°C 20-25 min, kyllingen på de sidste 6. Vend i saucen, ost over, 1-2 min.
-- **Quesadillas med oksekød:** Fyldet i mikro 2 min, til det damper. 3 tortillas: ost, fyld, ost, fold, lidt olie udenpå. Airfryer 200°C 6-8 min, vend halvvejs.
+- **Loaded nachos med tacokød:** Kødet i mikro 2-3 min, til det damper. Chips på pladen, kød og ost over. Airfryer 200°C 3-4 min. Salsa og cremefraiche ovenpå.
 
 ## Udstyr
 
-- **9 madbokse med låg**: heraf 2 ovnfaste glasbokse til pasta al forno.
-- **1 frysepose**: til buffalo-kyllingen.
-- **2 små bægre med låg**: til den koreanske sauce. Små syltetøjsglas virker fint.
+- **7 madbokse med låg**: mikroovnsegnede, med låg.
+- **2 små bægre med låg**: til saucen til koreansk kylling. Små syltetøjsglas virker fint.
 - **2 skåle**: én til rå kylling, én til færdig kylling. Ikke flere.
 - **Gryde og pande**: én af hver.
 - **Stegespade eller grydeske**: til at dele kødet og røre.
@@ -53,54 +52,50 @@ Prep søndag. Boksene til mandag og tirsdag kommer i køleskabet, onsdag-fredag 
 
 Fire spor kører samtidig: **GRYDE** (ris, så pasta), **PANDE** (oksekød), **AIRFRYER** (kylling) og **DIG** (klippe, røre, fylde bokse).
 Dine hænder laver kun én ting ad gangen. Kombien kan ikke mikro og airfry samtidig, så mikroen bruges ikke på prepdagen, medmindre kyllingen skal tøs op i en fart.
-Kyllingen kører i 3 hold à ca. 350 g, og det er dem, der sætter tempoet.
+Kyllingen kører i 2 hold à ca. 350 g, og det er dem, der sætter tempoet.
 
 | Tid | Spor | Gør | Sådan |
 |---|---|---|---|
 | Dagen før | DIG | **TØ OP** | Frossen kylling? Læg den i en skål nederst i køleskabet, ca. 24 timer. Frisk kylling: brug den bare før datoen. |
-| Dagen før | DIG | **FIND** | Find 9 bokse med låg frem, heraf 2 ovnfaste glasbokse. Plus 1 frysepose og 2 små bægre med låg. |
+| Dagen før | DIG | **FIND** | Find 7 bokse med låg frem. Plus 2 små bægre med låg. |
 | Nødplan | DIG | **TØ OP** | (Kun hvis det er nødvendigt) Er kyllingen stadig frossen? Brug mikroens optøningsprogram, og lav den med det samme. Det er eneste gang, mikroen bruges i dag. |
-| 0:00 | DIG | **KLIP** | Klip 1 kg kylling i 3 cm stykker direkte ned i en stor skål. Tager ca. 6 min. |
-| 0:06 | DIG | **KRYDR** | Smuldr 1 terning hønsebouillon over. Plus ½ tsk salt, ½ tsk peber, 1 tsk hvidløgspulver og 1 tsk paprika. |
-| 0:08 | DIG | **VEND** | 3 spsk majsstivelse og 1 tsk bagepulver over. Vend, til der ikke er tørt pulver. Til sidst 1 spsk olie, vend igen. |
+| 0:00 | GRYDE | **SKYL** | Skyl 1½ krus ris i gryden, hæld vandet ud med låget på skrå. 2¼ krus vand og ½ tsk salt i. Låg på, fuld varme. |
+| 0:02 | DIG | **KLIP** | Klip 660 g kylling i 3 cm stykker direkte ned i en stor skål. Tager ca. 4 min. |
+| 0:06 | DIG | **KRYDR** | Smuldr ¾ terning hønsebouillon over. Plus ¼ tsk salt, ¼ tsk peber, ¾ tsk hvidløgspulver og ¾ tsk paprika. |
+| 0:07 | GRYDE | **SKRU NED** | Koger det? Laveste varme, låg på, 12 min. Løft ikke låget. |
+| 0:08 | DIG | **VEND** | 2 spsk majsstivelse og ¾ tsk bagepulver over. Vend, til der ikke er tørt pulver. Til sidst ½ spsk olie, vend igen. |
 | 0:11 | DIG | **VASK** | Vask hænder og saks med sæbe. Skålen med rå kylling må ikke røre andet. |
 | 0:12 | AIRFRYER | **TÆND** | Airfry-funktion, 200°C. Forvarm, hvis din model beder om det. |
-| 0:13 | GRYDE | **SKYL** | Skyl 2 krus ris i gryden. Låget på skrå, hæld vandet ud i vasken. 2¾ krus vand og ½ tsk salt i. Låg på, fuld varme. |
-| 0:15 | DIG | **HAK** | Skær 1 løg groft på en tallerken. Pænt behøver det ikke være. |
-| 0:17 | AIRFRYER | **IND** | Første hold: en tredjedel af kyllingen, ét lag (ca. 350 g). 200°C, 16 min. Laver du til flere: flere hold, se boksen øverst. |
-| 0:18 | PANDE | **BRUN** | Høj varme, lidt olie. 400 g oksekød, løget og 1 tsk salt. Del kødet med stegespaden, brun 8 min. Over 400 g: 2 omgange. |
-| 0:20 | GRYDE | **SKRU NED** | Koger risen? Laveste varme, låg på, 12 min. Løft ikke låget. |
-| 0:21 | DIG | **RØR** | Koreansk sauce i et krus: 2 spsk chilisauce (eller gochujang), 1 spsk soja, 1½ spsk honning, 1 tsk hvidløgspulver, 1 spsk vand. |
-| 0:23 | DIG | **FORDEL** | Saucen i de små bægre, og skyl kruset. Skriv dag og måltid på lågene med tusch, hvis du gider. |
-| 0:25 | AIRFRYER | **VEND** | Vend kyllingen. |
-| 0:26 | PANDE | **DEL** | Halvdelen af kødet over i en glasboks. Det bliver bolognese om lidt. |
-| 0:27 | PANDE | **TACO** | Resten i panden: 1 brev tacokrydderi, 1 dåse drænede kidneybønner, 1 spsk ketchup og ½ krus vand. Mos bønnerne lidt. Lad det boble 4 min. |
-| 0:31 | PANDE | **FYLD** | Tacokødet direkte i 2 bokse, låg af. Halvdelen er til tirsdag, halvdelen til fredag. |
-| 0:32 | GRYDE | **SLUK** | Risen af varmen. Låget bliver på, 8 min. |
-| 0:33 | AIRFRYER | **UD** | Kyllingen ud i den rene skål. Skær det største stykke over: hvidt hele vejen? Så er den færdig. |
-| 0:34 | AIRFRYER | **IND** | Andet hold ind, 200°C, 16 min. Laver du til flere: flere hold, se boksen øverst. |
-| 0:35 | PANDE | **SIMR** | Kødet fra glasboksen tilbage i panden. 1 glas pastasauce, 1 terning oksebouillon, 1 tsk hvidløgspulver, 1 tsk oregano, ½ krus vand. Simr 5 min. |
-| 0:40 | GRYDE | **FORDEL** | Fordel risen i 5 bokse, ca. halvt op. Bred den ud, låg af, så den køler hurtigt. |
-| 0:41 | PANDE | **PARKÉR** | Bolognesen over i de ovnfaste glasbokse. Den venter der på pastaen. |
+| 0:13 | DIG | **HAK** | Skær ¾ løg groft på en tallerken. Pænt behøver det ikke være. |
+| 0:15 | PANDE | **BRUN** | Høj varme, lidt olie. 330 g oksekød, løget og ¾ tsk salt. Del kødet med stegespaden, brun 8 min. |
+| 0:17 | AIRFRYER | **IND** | Hold 1 af 2: ca. 330 g kylling i ét lag med luft imellem. 200°C, 16 min. |
+| 0:18 | DIG | **RØR** | Koreansk sauce i et krus: 2 spsk chilisauce (eller gochujang), 1 spsk soja, 1½ spsk honning, 1 tsk hvidløgspulver, 1 spsk vand. |
+| 0:19 | GRYDE | **SLUK** | Risen af varmen. Låget bliver på, 8 min. |
+| 0:20 | DIG | **FORDEL** | Saucen i 2 små bægre, og skyl kruset. Skriv dag på lågene, hvis du gider. |
+| 0:23 | PANDE | **DEL** | En tredjedel af kødet (ca. 120 g) over i en ren boks. Det bliver bulgogi om lidt. |
+| 0:24 | PANDE | **TACO** | Resten i panden: 1 brev tacokrydderi, 1 dåse drænede kidneybønner, 1 spsk ketchup og ½ krus vand. Mos bønnerne lidt. Bobl 4 min. |
+| 0:26 | AIRFRYER | **VEND** | Vend kyllingen. |
+| 0:27 | GRYDE | **FORDEL** | Fordel risen i 4 bokse, ca. halvt op. Bred den ud, låg af, så den køler hurtigt. |
+| 0:29 | PANDE | **TACO FRIES** | Tacokødet til taco fries direkte i 1 boks, låg af. |
+| 0:30 | PANDE | **NACHOS** | Tacokødet i 1 boks. Chips, ost og salsa venter i skabet og køleskabet. |
+| 0:31 | PANDE | **BULGOGI** | Kødet til 1 portion i panden. 1 spsk soja, 1 spsk honning, ½ tsk hvidløgspulver, 1 tsk chilisauce, 1 spsk vand. Boble 3 min. |
+| 0:33 | GRYDE | **KOG** | Skyl gryden. Fyld den halvt med vand, ½ tsk salt, låg på, fuld varme. |
+| 0:34 | AIRFRYER | **SKIFT** | Hold 1 ud i den rene skål. Hvidt hele vejen igennem? Hold 2 ind, ca. 330 g, 200°C, 16 min. |
+| 0:35 | PANDE | **PARKÉR** | Kødet til bulgogi over i 1 boks. Det venter der på risen. |
+| 0:36 | PANDE | **PEANUTSAUCE** | Pande, lav varme. 2 spsk peanutbutter, 1 spsk soja, 1 tsk honning, 1 tsk chilisauce, 4 spsk vand. Rør glat. 1 portion kylling i. |
+| 0:39 | DIG | **BULGOGI BOWL** | I 1 boks med ris: bulgogikød og 2 håndfulde frossen broccoli ved siden af. |
+| 0:40 | DIG | **PEANUT CHICKEN** | I 1 boks med ris: peanutkylling ovenpå, en god håndfuld frosne wokgrøntsager ved siden af. |
+| 0:41 | GRYDE | **PENNE** | Koger vandet? 1 krus penne i. Kog 1 min kortere, end der står på pakken. |
 | 0:42 | AIRFRYER | **VEND** | Vend kyllingen. |
-| 0:43 | PANDE | **GLASÉR** | Uvasket pande, middel varme: 1 portion kylling (ca. 10 stykker pr. portion), ¼ brev tacokrydderi, 1½ spsk vand. Vend 1-2 min. |
-| 0:45 | DIG | **BURRITO** | Tacokyllingen i 1 boks med ris. ¼ dåse majs og en håndfuld ost pr. boks ovenpå. |
-| 0:46 | GRYDE | **KOG** | Skyl gryden. Fyld den halvt med vand, 1 tsk salt, låg på, fuld varme. |
-| 0:47 | DIG | **VASK** | Vask panden. Den er færdig for i dag. |
-| 0:50 | AIRFRYER | **SKIFT** | Andet hold ud i skålen. Tredje hold ind, 200°C, 16-18 min. |
-| 0:52 | DIG | **BUTTER** | 2 portioner kylling i 2 bokse med ris. 1 glas tikka masala over, rør rundt. |
-| 0:54 | DIG | **ÆRTER** | 1 krus frosne ærter fordelt ovenpå. De bliver kogt, når du varmer op. |
-| 0:55 | GRYDE | **PENNE** | Koger vandet? 2 krus penne i. Kog 1 min kortere, end der står på pakken. |
-| 0:57 | DIG | **KØL** | Tacokødet og burritoen har dampet af. Låg på: mandag og tirsdag i køleskabet, fredag i fryseren. |
-| 0:58 | AIRFRYER | **VEND** | Vend kyllingen. |
-| 0:59 | DIG | **VASK** | Skålen med rå kylling er tom nu. Vask den og saksen. |
-| 1:05 | GRYDE | **HÆLD FRA** | Låget på skrå, hæld vandet ud i vasken. Bolognesen fra glasboksene i, rør rundt. |
-| 1:06 | GRYDE | **FORDEL** | Tilbage i glasboksene. 100 g revet ost ovenpå, ca. 2 håndfulde pr. boks. |
-| 1:08 | AIRFRYER | **UD** | Tredje hold ud, tjek det. Sluk airfryeren. |
-| 1:09 | DIG | **KOREANSK** | Resten af risboksene (2 bokse): 2 portioner kylling fordelt ligeligt, plus 2 håndfulde frossen broccoli og et saucebæger i hver. |
-| 1:11 | DIG | **BUFFALO** | Resten af kyllingen (1 portion) i fryseposen, uden sauce. Lad den stå åben, til den har dampet af. |
-| 1:12 | DIG | **DAMP AF** | Låg af, boksene side om side, ikke stablet. Vask skål og gryde imens, ca. 10 min. |
-| 1:22 | DIG | **FÆRDIG** | Låg på, posen lukket. Mandag og tirsdag i køleskabet, resten i fryseren. Alt er i køl/frys inden for 1 time. |
+| 0:43 | DIG | **VASK** | Skålen med rå kylling er tom nu. Vask den og saksen. |
+| 0:50 | AIRFRYER | **UD** | Sidste hold ud i den rene skål. Skær det største stykke over: hvidt hele vejen? Så er den færdig. Sluk airfryeren. |
+| 0:51 | GRYDE | **HÆLD FRA** | Låget på skrå, hæld vandet ud i vasken. |
+| 0:52 | PANDE | **ROSÉ-SAUCE** | Pande, middel varme. ¼ glas pastasauce, 40 g flødeost, en knivspids oregano. Rør glat, 2 min. Pasta og 1 portion kylling i. |
+| 0:55 | DIG | **ROSÉ-PASTA** | Fordel i 1 boks. |
+| 0:56 | DIG | **KOREANSK** | 2 portioner kylling uden sauce i 2 bokse med ris. 2 håndfulde frossen broccoli og et saucebæger i hver. |
+| 0:57 | DIG | **VASK** | Vask panden. Den er færdig for i dag. |
+| 0:59 | DIG | **DAMP AF** | Låg af, boksene side om side, ikke stablet. Vask skål og gryde imens, ca. 10 min. |
+| 1:09 | DIG | **FÆRDIG** | Låg på. Mandag og tirsdag i køleskabet, resten i fryseren. Alt er i køl/frys inden for 1 time. |
 
 ### Laver du mad til flere?
 
@@ -112,9 +107,30 @@ Kyllingen kører i 3 hold à ca. 350 g, og det er dem, der sætter tempoet.
 
 ## Næste uge
 
-Byt nogle af de andre retter ind, så det ikke bliver kedeligt:
-- Cremet hvidløgspasta med kylling og parmesan (Italiensk)
-- Sweet chili-kylling (Asiatisk takeaway)
-- Cheeseburger fries (Amerikansk diner)
+Appen laver selv en ny uge hver mandag (Bland igen, hvis du vil have en anden), og der kommer 2-3 nye retter til hver fredag. Andre retter, du kan bytte ind:
+- Burrito bowl med kylling (Mexicansk, frokost (kun mikro))
+- Quesadillas med oksekød (Mexicansk, aftensmad (airfryer))
+- Butter chicken (Indisk, frokost (kun mikro))
+- Pasta al forno (Italiensk, frokost eller aftensmad)
+- Cremet hvidløgspasta med kylling og parmesan (Italiensk, frokost (kun mikro))
+- Sweet chili-kylling (Asiatisk takeaway, frokost eller aftensmad)
+- Buffalo chicken fries (Amerikansk diner, aftensmad (airfryer))
+- Cheeseburger fries (Amerikansk diner, aftensmad (airfryer))
+- Chili con carne med ris (Mexicansk, frokost (kun mikro))
+- Enchiladas med oksekød og ost (Mexicansk, frokost eller aftensmad)
+- Fajita bowl med kylling (Mexicansk, frokost (kun mikro))
+- Sprøde chimichangas med kylling og bønner (Mexicansk, aftensmad (airfryer))
+- Cremet gochujang-pasta med kylling (Koreansk, frokost (kun mikro))
+- Koreansk soy garlic chicken med både (Koreansk, aftensmad (airfryer))
+- Chicken korma med ris og ærter (Indisk, frokost (kun mikro))
+- Keema: indisk karrykød med ærter og ris (Indisk, frokost (kun mikro))
+- Sprøde tikka-wraps med kylling og ost (Indisk, aftensmad (airfryer))
+- Lasagne-pasta i glasboks (Italiensk, frokost eller aftensmad)
+- Pestopasta med kylling og ærter (Italiensk, frokost (kun mikro))
+- Cheeseburger mac and cheese (Amerikansk diner, frokost eller aftensmad)
+- Chicken tenders med både og honning-sennepsdip (Amerikansk diner, aftensmad (airfryer))
+- Sloppy joe fries (Amerikansk diner, aftensmad (airfryer))
+- Teriyaki-kylling med ris og broccoli (Asiatisk takeaway, frokost (kun mikro))
+- Fried rice med kylling og æg (Asiatisk takeaway, frokost (kun mikro))
 
 Samme baser, samme tidsplan, bare andre saucer, når kyllingen fordeles.
