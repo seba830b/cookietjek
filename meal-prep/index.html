@@ -202,9 +202,11 @@ h2 .count { font-size: .8rem; font-weight: 700; color: var(--muted); margin-left
 .intro { display: flex; gap: 12px; align-items: flex-start; padding: 14px; margin-bottom: 14px; background: var(--mustard-soft); border-color: color-mix(in srgb, var(--mustard) 50%, var(--border)); }
 .intro svg.i { color: var(--accent); margin-top: 2px; }
 .intro p { margin: 0; font-size: .92rem; }
-.filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
-.filters button { border: 1px solid var(--border); background: var(--surface); border-radius: 999px; min-height: 40px; padding: 0 14px; font-size: .86rem; font-weight: 700; }
-.filters button[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+.strip { display: flex; gap: 6px; flex-wrap: nowrap; overflow-x: auto; margin: 0 -16px 14px; padding: 2px 16px 4px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.strip::-webkit-scrollbar { display: none; }
+.strip > * { flex: none; }
+.strip button { border: 1px solid var(--border); background: var(--surface); border-radius: 999px; min-height: 40px; padding: 0 14px; font-size: .86rem; font-weight: 700; }
+.strip button[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
 details.card { margin-bottom: 10px; scroll-margin-top: calc(var(--hh) + 12px); overflow: hidden; }
 details > summary { list-style: none; padding: 14px; cursor: pointer; display: flex; gap: 12px; align-items: center; min-height: 64px; }
 details > summary::-webkit-details-marker { display: none; }
@@ -252,12 +254,16 @@ ol.steps li::before { content: counter(s); position: absolute; left: 0; top: 3px
 .note { font-size: .9rem; margin: 12px 0 0; padding: 10px 12px; border-left: 4px solid var(--mustard); background: color-mix(in srgb, var(--mustard-soft) 60%, transparent); border-radius: 0 10px 10px 0; }
 
 /* ---------- Shopping + starter */
-.sticky-sum { position: sticky; top: calc(var(--hh) + 8px); z-index: 10; padding: 12px 14px; margin-bottom: 12px; display: grid; gap: 8px; }
+.sticky-sum { position: sticky; top: calc(var(--hh) + 8px); z-index: 10; padding: 10px 14px; margin-bottom: 12px; display: grid; gap: 6px; }
 .sum-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; }
 .sum-top small { display: block; font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; color: var(--muted); }
-.sum-top .big { font-size: 1.6rem; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.1; border-radius: 6px; }
-.sum-top .left { text-align: right; }
+.sum-top .big { display: block; font-size: 1.45rem; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.1; border-radius: 6px; }
+.sum-top .right { text-align: right; }
+.sum-top .right .big { font-size: 1.05rem; color: var(--muted); }
 .sum-top .left .big { color: var(--accent); }
+.mini { display: flex; align-items: center; gap: 10px; font-size: .8rem; font-weight: 700; color: var(--muted); }
+.mini .bar { height: 8px; }
+.tools .reset { margin-left: auto; }
 .tools { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 0 0 6px; }
 .tools .lbl { font-size: .78rem; font-weight: 800; color: var(--muted); margin-right: 2px; }
 .seg { border: 1px solid var(--border); background: var(--surface); border-radius: 999px; min-height: 40px; padding: 0 12px; font-size: .82rem; font-weight: 700; }
@@ -338,23 +344,52 @@ footer { color: var(--muted); font-size: .78rem; text-align: center; padding: 0 
 </nav>
 
 <script>
+// Units for fmtQty:
+//   g, ml      weight/volume. >= 1000 becomes kg / L. Rounded to 5 (under 100) or 10.
+//   tsp        spoons, dry or wet. 3 tsp or more becomes "1 tbsp + 1 tsp" style.
+//   tbsp       wet/saucy spoons. Over 4 tbsp becomes ml (16 tbsp salsa = 240 ml).
+//   dtbsp      dry spoons (cornstarch). Shown as tbsp, never converted to ml.
+//   pcs        countable things, shown as a bare number.
+//   can, jar, bag, cube   packs. Plural above 1.
 const FRAC = { 0: '', 0.25: '¼', 0.5: '½', 0.75: '¾' };
-const PLURAL = { can: 'cans', jar: 'jars', bag: 'bags' };
+const PLURAL = { can: 'cans', jar: 'jars', bag: 'bags', cube: 'cubes' };
+
+function frac(r) {
+  const whole = Math.floor(r);
+  return (whole ? whole : '') + FRAC[r - whole];
+}
+
+function metric(v, u) {
+  if (v >= 1000) return (Math.round(v / 100) / 10).toString() + ' ' + (u === 'g' ? 'kg' : 'L');
+  if (v >= 100) return Math.round(v / 10) * 10 + ' ' + u;
+  if (v >= 10) return Math.round(v / 5) * 5 + ' ' + u;
+  return Math.max(1, Math.round(v)) + ' ' + u;
+}
+
+function spoonsTsp(v) {
+  if (v < 0.2) return 'a pinch';
+  if (v < 3) return frac(Math.max(0.25, Math.round(v * 4) / 4)) + ' tsp';
+  const half = Math.round(v * 2) / 2;
+  const tb = Math.floor(half / 3);
+  const rest = half - tb * 3;
+  return tb + ' tbsp' + (rest ? ' + ' + frac(rest) + ' tsp' : '');
+}
 
 function fmtQty(q, u, f) {
   if (q == null) return '';
-  let v = q * (f || 1);
-  if (u === 'g' || u === 'ml') {
-    if (u === 'g' && v >= 1000) return (Math.round(v / 100) / 10).toString() + ' kg';
-    v = v >= 100 ? Math.round(v / 10) * 10 : Math.max(5, Math.round(v / 5) * 5);
-    return v + ' ' + u;
+  const v = q * (f || 1);
+  if (u === 'g' || u === 'ml') return metric(v, u);
+  if (u === 'tsp') return spoonsTsp(v);
+  if (u === 'tbsp' || u === 'dtbsp') {
+    if (v < 0.5) return spoonsTsp(v * 3);
+    if (u === 'tbsp' && v > 4) return metric(v * 15, 'ml');
+    const r = v > 4 ? Math.round(v) : Math.round(v * 2) / 2;
+    return frac(r) + ' tbsp';
   }
+  if (u === 'pcs') return v >= 1 ? String(Math.round(v)) : frac(Math.max(0.25, Math.round(v * 4) / 4));
   const r = Math.max(0.25, Math.round(v * 4) / 4);
-  const whole = Math.floor(r);
-  const num = (whole ? whole : '') + FRAC[r - whole];
-  if (u === 'pcs') return num;
-  const unit = r > 1 && PLURAL[u] ? PLURAL[u] : u;
-  return num + ' ' + unit;
+  const unit = r > 1 && PLURAL[u] ? PLURAL[u] : u || '';
+  return (frac(r) + ' ' + unit).trim();
 }
 
 function fmtText(s, f) {
@@ -396,12 +431,13 @@ const ICON = {
   auto: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>',
 };
 
+let ready = false;
 /* Set text and flash it when the value actually changes. */
 function setText(el, t) {
   if (!el) return;
   t = String(t);
   if (el.textContent === t) return;
-  const had = el.textContent !== '';
+  const had = ready && el.textContent !== '';
   el.textContent = t;
   if (had) { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
 }
@@ -531,8 +567,8 @@ function renderRecipes() {
       </div>
     </details>`).join('');
   $('#recipes').innerHTML = `
-    <div class="card intro">${ICON.scale}<p><b>Every amount scales.</b> Open a recipe and hit <b>-</b> or <b>+</b> to cook more or less, or drag the slider up top to scale everything at once. Changed numbers flash yellow.</p></div>
-    <div class="filters" role="group" aria-label="Filter recipes">
+    <div class="card intro">${ICON.scale}<p><b>Amounts scale.</b> Tap <b>-</b> / <b>+</b> inside a recipe, or drag the slider up top for everything. Changed numbers flash yellow.</p></div>
+    <div class="strip" role="group" aria-label="Filter recipes">
       <button type="button" aria-pressed="true" data-filter="all">All</button>
       ${used.map((s) => `<button type="button" aria-pressed="false" data-filter="${esc(s)}">${esc(DATA.STYLES[s] || s)}</button>`).join('')}
       <button type="button" aria-pressed="false" data-filter="base">Bases</button>
@@ -544,14 +580,17 @@ function renderRecipes() {
 }
 
 /* ---------- Shopping */
-const storeKeys = () => DATA.STORES.map((s) => s.chain.split(' ')[0]);
-const storeTools = () => `
-  <div class="tools" role="group" aria-label="Vis varer fra butik">
-    <span class="lbl">Butik</span>
+const storeTools = (items, prefix) => {
+  const ws = items.map((x) => String(x.where || '').toLowerCase()).join(' ');
+  const keys = DATA.STORES.filter((s) => ws.includes(s.chain.split(' ')[0].toLowerCase()));
+  return `
+  <div class="strip" role="group" aria-label="Vis kun varer fra en butik">
+    <span class="tools"><span class="lbl">Butik</span></span>
     <button type="button" class="seg" data-store="all" aria-pressed="false">Alle</button>
-    ${storeKeys().map((k) => `<button type="button" class="seg" data-store="${esc(k)}" aria-pressed="false">${esc(k)}</button>`).join('')}
+    ${keys.map((s) => `<button type="button" class="seg" data-store="${esc(s.chain.split(' ')[0])}" aria-pressed="false">${esc(s.chain)}</button>`).join('')}
   </div>
-  <div class="tools"><label class="toggle"><input type="checkbox" data-hide> Skjul det jeg har købt</label></div>`;
+  <div class="tools"><label class="toggle"><input type="checkbox" data-hide> Skjul det jeg har købt</label><button class="reset" type="button" data-reset="${prefix}">Nulstil</button></div>`;
+};
 
 function renderShop() {
   const row = (key, it, extra) => `
@@ -563,12 +602,12 @@ function renderShop() {
   $('#shop').innerHTML = `
     <div class="card sticky-sum">
       <div class="sum-top">
-        <span><small>Ugen i alt</small><span class="big" id="shopTotal"></span></span>
         <span class="left"><small>Tilbage at købe</small><span class="big" id="shopLeft"></span></span>
+        <span class="right"><small>Ugen i alt</small><span class="big" id="shopTotal"></span></span>
       </div>
-      <div class="progress" style="margin:0"><span class="count" id="shopCount"></span><div class="bar" role="presentation"><i id="shopBar"></i></div><button class="reset" type="button" data-reset="s:">Nulstil</button></div>
+      <div class="mini"><span class="count tnum" id="shopCount"></span><div class="bar" role="presentation"><i id="shopBar"></i></div></div>
     </div>
-    ${storeTools()}
+    ${storeTools(DATA.SHOP.flatMap((g) => g.items), 's:')}
     <div class="checklist">
     ${DATA.SHOP.map((s, si) => `
       <div class="grp">
@@ -590,17 +629,17 @@ function renderStarter() {
     <p class="lede">Alt til alle ${DATA.RECIPES.length} opskrifter. Køb én gang, så skal du kun købe kød, ost og mejeri hver uge. Holdbarhed er tommelfingerregler, pakken vinder altid.</p>
     <div class="card sticky-sum">
       <div class="sum-top">
-        <span><small>Starter i alt</small><span class="big" id="kitTotal"></span></span>
         <span class="left"><small>Tilbage at købe</small><span class="big" id="kitLeft"></span></span>
+        <span class="right"><small>Starter i alt</small><span class="big" id="kitTotal"></span></span>
       </div>
-      <div class="progress" style="margin:0"><span class="count" id="kitCount"></span><div class="bar" role="presentation"><i id="kitBar"></i></div><button class="reset" type="button" data-reset="k:">Nulstil</button></div>
+      <div class="mini"><span class="count tnum" id="kitCount"></span><div class="bar" role="presentation"><i id="kitBar"></i></div></div>
     </div>
     <p class="muted small">Uden de valgfrie ting. Skalerer med slideren: x1 = 10 måltider, én af hver ret. x4 = 40 måltider. Køl-varerne skal du stadig købe løbende, de holder ikke en måned.</p>
     <h2 class="display">Hvor i Svendborg</h2>
     <div class="stores">${DATA.STORES.map((s) => `<div class="card store"><b>${esc(s.chain)}</b><span class="addr">${ICON.pin}<span>${esc(s.where)}</span></span><div class="muted small">${esc(s.why)}</div></div>`).join('')}</div>
     <div class="callout">Nemmeste tur: Lidl (Mølmarksvej 185) + Netto (Mølmarksvej 50) ligger på samme vej og dækker næsten det hele.</div>
     <h2 class="display">Listen</h2>
-    ${storeTools()}
+    ${storeTools(DATA.STARTER.flatMap((g) => g.items), 'k:')}
     <div class="checklist">
     ${DATA.STARTER.map((g, gi) => `
       <div class="grp">
@@ -749,6 +788,7 @@ function measureHeader() {
 if (!['auto', 'light', 'dark'].includes(state.theme)) state.theme = 'auto';
 renderPlan(); renderRecipes(); renderShop(); renderStarter();
 applyTheme(); showTab(state.tab); update(); applyListTools(); measureHeader();
+ready = true;
 window.addEventListener('resize', measureHeader);
 
 $('#scale').addEventListener('input', (e) => { state.scale = parseFloat(e.target.value); state.rf = {}; update(); save(); });
