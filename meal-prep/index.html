@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Lazy Prep</title>
+<style>
+:root {
+  --bg: #faf7f2; --surface: #ffffff; --surface-2: #f3eee6; --text: #1f1a16; --muted: #6d645b;
+  --border: #e6dfd4; --accent: #c2410c; --accent-soft: #fde8dc; --ok: #2b8a3e; --shadow: 0 1px 2px rgb(0 0 0 / .05);
+  --mexican: #d9480f; --korean: #c2255c; --indian: #e67700; --italian: #2b8a3e; --diner: #1971c2; --takeaway: #7048e8;
+  --pot: #1971c2; --pan: #e67700; --air: #c92a2a; --you: #5c7c4a;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141210; --surface: #1d1a17; --surface-2: #27231f; --text: #f2ede6; --muted: #a39a90;
+    --border: #35302a; --accent: #ff8a50; --accent-soft: #3b2417; --ok: #69db7c; --shadow: none;
+    --mexican: #ff8a50; --korean: #f06595; --indian: #ffa94d; --italian: #69db7c; --diner: #74c0fc; --takeaway: #b197fc;
+    --pot: #74c0fc; --pan: #ffa94d; --air: #ff8787; --you: #a9e34b;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141210; --surface: #1d1a17; --surface-2: #27231f; --text: #f2ede6; --muted: #a39a90;
+  --border: #35302a; --accent: #ff8a50; --accent-soft: #3b2417; --ok: #69db7c; --shadow: none;
+  --mexican: #ff8a50; --korean: #f06595; --indian: #ffa94d; --italian: #69db7c; --diner: #74c0fc; --takeaway: #b197fc;
+  --pot: #74c0fc; --pan: #ffa94d; --air: #ff8787; --you: #a9e34b;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+button { font: inherit; color: inherit; cursor: pointer; }
+
+/* header */
+header { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+.top { display: flex; align-items: center; gap: 12px; padding-top: 14px; }
+.top h1 { font-size: 1.35rem; margin: 0; letter-spacing: -.02em; }
+.top h1 span { color: var(--accent); }
+.top p { margin: 0; color: var(--muted); font-size: .85rem; }
+.top .grow { flex: 1; min-width: 0; }
+.icon-btn { background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 6px 12px; font-size: .8rem; color: var(--muted); }
+.scale { display: flex; align-items: center; gap: 12px; padding: 10px 0 4px; }
+.scale label { font-size: .85rem; color: var(--muted); white-space: nowrap; }
+.scale input { flex: 1; accent-color: var(--accent); min-width: 0; }
+.scale output { font-weight: 600; font-size: .9rem; min-width: 120px; text-align: right; font-variant-numeric: tabular-nums; }
+nav { display: flex; gap: 4px; padding: 6px 0 10px; }
+nav button { flex: 1; background: transparent; border: 1px solid transparent; border-radius: 10px; padding: 8px 6px; font-weight: 600; color: var(--muted); }
+nav button[aria-selected="true"] { background: var(--surface); border-color: var(--border); color: var(--text); box-shadow: var(--shadow); }
+
+main { padding: 18px 0 64px; }
+section[hidden] { display: none; }
+h2 { font-size: 1.15rem; margin: 28px 0 10px; letter-spacing: -.01em; }
+h2:first-child { margin-top: 0; }
+.muted { color: var(--muted); }
+.small { font-size: .85rem; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; box-shadow: var(--shadow); }
+
+/* stats */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.stat { padding: 10px 12px; }
+.stat b { display: block; font-size: 1.2rem; font-variant-numeric: tabular-nums; }
+.stat span { font-size: .78rem; color: var(--muted); }
+@media (max-width: 520px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+
+/* chips */
+.chip { display: inline-block; font-size: .72rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+  color: var(--c, var(--muted)); background: color-mix(in srgb, var(--c, var(--muted)) 14%, transparent); }
+.chip.frozen { --c: var(--diner); }
+
+/* week */
+.week { display: grid; gap: 8px; }
+.day { padding: 10px 12px; display: grid; grid-template-columns: 44px 1fr; gap: 4px 10px; }
+.day > b { grid-row: span 2; font-size: .95rem; padding-top: 6px; }
+.meal { display: flex; align-items: flex-start; gap: 8px; padding: 6px 0; }
+.meal + .meal { border-top: 1px dashed var(--border); }
+.meal .when { font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); width: 48px; flex: none; padding-top: 3px; }
+.meal .what { flex: 1; min-width: 0; }
+.link { background: none; border: 0; padding: 0; font-weight: 600; text-align: left; text-decoration: underline; text-decoration-color: var(--border); text-underline-offset: 3px; }
+.link:hover { text-decoration-color: var(--accent); }
+.meal .eat { display: block; font-size: .82rem; color: var(--muted); }
+.callout { background: var(--accent-soft); border-radius: 12px; padding: 10px 14px; margin-top: 10px; font-size: .9rem; }
+.callout ul { margin: 0; padding-left: 18px; }
+
+/* checklists */
+.progress { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; font-size: .85rem; color: var(--muted); }
+.bar { flex: 1; height: 6px; background: var(--surface-2); border-radius: 99px; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; background: var(--ok); transition: width .25s; }
+.reset { background: none; border: 1px solid var(--border); border-radius: 8px; padding: 3px 10px; font-size: .78rem; color: var(--muted); }
+.list { overflow: hidden; }
+.row { display: flex; gap: 12px; align-items: flex-start; padding: 11px 14px; cursor: pointer; }
+.row + .row { border-top: 1px solid var(--border); }
+.row input { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--ok); flex: none; cursor: pointer; }
+.row .body { flex: 1; min-width: 0; }
+.row:has(input:checked) .body, .row:has(input:checked) .price { opacity: .45; text-decoration: line-through; }
+.time { font-variant-numeric: tabular-nums; font-weight: 700; font-size: .85rem; margin-right: 6px; }
+.track-pot { --c: var(--pot); } .track-pan { --c: var(--pan); } .track-air { --c: var(--air); } .track-you { --c: var(--you); }
+.step-text { display: block; margin-top: 3px; font-size: .93rem; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+
+/* recipes */
+.filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+.filters button { border: 1px solid var(--border); background: var(--surface); border-radius: 999px; padding: 5px 12px; font-size: .85rem; }
+.filters button[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+details.card { margin-bottom: 8px; scroll-margin-top: 190px; }
+details > summary { list-style: none; padding: 12px 14px; cursor: pointer; display: flex; gap: 10px; align-items: center; }
+details > summary::-webkit-details-marker { display: none; }
+summary .num { font-weight: 700; color: var(--muted); font-variant-numeric: tabular-nums; width: 22px; flex: none; }
+summary .title { flex: 1; min-width: 0; }
+summary .title b { display: block; line-height: 1.3; }
+summary .meta { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; align-items: center; font-size: .78rem; color: var(--muted); }
+summary::after { content: "+"; font-size: 1.3rem; color: var(--muted); flex: none; }
+details[open] > summary::after { content: "−"; }
+.rbody { padding: 0 14px 14px 46px; }
+@media (max-width: 520px) { .rbody { padding-left: 14px; } }
+.rbody h4 { margin: 12px 0 4px; font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.rbody ul, .rbody ol { margin: 0; padding-left: 20px; }
+.rbody li { margin: 3px 0; }
+.rbody li b { font-variant-numeric: tabular-nums; }
+.facts { display: grid; gap: 6px; margin-top: 12px; }
+.fact { background: var(--surface-2); border-radius: 10px; padding: 8px 12px; font-size: .9rem; }
+.fact strong { display: block; font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.fact.reheat { background: var(--accent-soft); }
+.note { font-size: .88rem; color: var(--muted); margin-top: 10px; font-style: italic; }
+.base-tag { --c: var(--accent); }
+
+/* shop */
+.shop-total { display: flex; justify-content: space-between; align-items: baseline; padding: 14px 16px; margin-bottom: 6px; }
+.shop-total b { font-size: 1.6rem; font-variant-numeric: tabular-nums; }
+.sec-title { font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 18px 0 6px; }
+.item { display: flex; justify-content: space-between; gap: 10px; }
+.item .where { display: block; font-size: .78rem; color: var(--muted); }
+.price { font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
+.rules { margin: 0; padding-left: 20px; }
+.rules li { margin: 4px 0; }
+footer { color: var(--muted); font-size: .78rem; text-align: center; padding: 10px 0 30px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="top">
+      <div class="grow">
+        <h1>Lazy <span>Prep</span></h1>
+        <p>10 meals · 1 hour · no oven</p>
+      </div>
+      <button class="icon-btn" id="theme" type="button" aria-label="Toggle colour theme">Auto</button>
+    </div>
+    <div class="scale">
+      <label for="scale">Portions</label>
+      <input id="scale" type="range" min="0.5" max="4" step="0.5" value="1">
+      <output id="scaleOut" for="scale"></output>
+    </div>
+    <nav role="tablist">
+      <button role="tab" data-tab="plan" aria-selected="true">Plan</button>
+      <button role="tab" data-tab="recipes" aria-selected="false">Recipes</button>
+      <button role="tab" data-tab="shop" aria-selected="false">Shopping</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="plan"></section>
+  <section id="recipes" hidden></section>
+  <section id="shop" hidden></section>
+</main>
+<footer class="wrap">Prices are estimates. Checkboxes are saved on this device.</footer>
+
+<script>
+const FRAC = { 0: '', 0.25: '¼', 0.5: '½', 0.75: '¾' };
+const PLURAL = { can: 'cans', jar: 'jars', bag: 'bags' };
+
+function fmtQty(q, u, f) {
+  if (q == null) return '';
+  let v = q * (f || 1);
+  if (u === 'g' || u === 'ml') {
+    if (u === 'g' && v >= 1000) return (Math.round(v / 100) / 10).toString() + ' kg';
+    v = v >= 100 ? Math.round(v / 10) * 10 : Math.max(5, Math.round(v / 5) * 5);
+    return v + ' ' + u;
+  }
+  const r = Math.max(0.25, Math.round(v * 4) / 4);
+  const whole = Math.floor(r);
+  const num = (whole ? whole : '') + FRAC[r - whole];
+  if (u === 'pcs') return num;
+  const unit = r > 1 && PLURAL[u] ? PLURAL[u] : u;
+  return num + ' ' + unit;
+}
+
+function fmtText(s, f) {
+  return s.replace(/\{([\d.]+)\|(\w+)\}/g, (_, q, u) => fmtQty(parseFloat(q), u, f));
+}
+
+function packs(it, f) {
+  return Math.max(1, Math.ceil((it.need * (f || 1)) / it.size - 1e-9));
+}
+
+const DATA = {"STYLES":{"mexican":"Mexican","korean":"Korean","indian":"Indian","italian":"Italian","diner":"American diner","takeaway":"Asian takeaway"},"BASES":[{"id":"A","name":"Crispy airfryer chicken","makes":"6 portions","ingredients":[{"q":1000,"u":"g","n":"chicken breast, thawed (frozen bag is cheapest)"},{"q":1,"u":"tbsp","n":"oil"},{"q":1,"u":"tsp","n":"salt"},{"q":1,"u":"tsp","n":"garlic powder"},{"q":1,"u":"tsp","n":"paprika"},{"q":2,"u":"tbsp","n":"cornstarch (majsstivelse)"}],"steps":["Cut into 3 cm bites. Use kitchen scissors straight over the bowl, no cutting board needed.","Toss everything in a big bowl until coated.","Airfryer 200°C, 12-14 min per batch (about 500 g), single layer. Shake at 7 min.","Done when the biggest piece has no pink inside (75°C if you own a thermometer)."],"fridge":"3 days","freezer":"3 months. Freeze flat in a bag so the bites don't clump.","note":"Cornstarch is the crispy trick. Don't skip it."},{"id":"B","name":"Seasoned mince, 2 ways","makes":"about 500 g taco mince + 650 g bolognese","ingredients":[{"q":500,"u":"g","n":"beef mince 8-12%"},{"q":150,"u":"g","n":"frozen chopped onion"},{"q":1,"u":"tsp","n":"salt"},{"q":1,"u":"jar","n":"pasta sauce (about 500 g)"},{"q":1,"u":"bag","n":"taco spice mix"},{"q":1,"u":"can","n":"kidney beans, drained"},{"q":100,"u":"ml","n":"water"}],"steps":["Pan, medium-high, splash of oil. Mince + onion + salt. Break it up with the spatula and brown for 8 min.","Scoop half into a bowl. That is your taco half.","Pasta sauce into the pan with the other half, simmer 5 min. That is bolognese. Tip it into a box.","Taco half back in the pan with taco mix, beans and water. Bubble 3-4 min until thick."],"fridge":"3 days","freezer":"3 months","note":"Cheeseburger version (recipe 10): skip both sauces and stir in 1 tbsp ketchup + 1 tsp paprika instead."},{"id":"C","name":"Big pot of rice","makes":"6 portions","ingredients":[{"q":450,"u":"g","n":"jasmine rice"},{"q":700,"u":"ml","n":"water"},{"q":0.5,"u":"tsp","n":"salt"}],"steps":["Rinse the rice once in the pot, drain.","Add water + salt, lid on, high heat until it boils.","Lowest heat, 12 min. Don't lift the lid.","Off the heat, lid on, 10 min more.","Spread it on a big plate to cool fast. Fridge within 1 hour."],"fridge":"3 days. Rice is the one to be strict about, cool it fast.","freezer":"2 months","note":"Shortcut: microwave rice pouches, 2 min at 800 W. Pricier, zero work."},{"id":"D","name":"Pasta","makes":"2 portions","ingredients":[{"q":200,"u":"g","n":"penne"},{"q":1,"u":"tsp","n":"salt"}],"steps":["Big pot of salted water, boil.","Cook 1 min LESS than the pack says. It softens more when you reheat it.","Drain and mix with sauce straight away so it doesn't glue together."],"fridge":"3-4 days (with sauce)","freezer":"3 months (with sauce)"},{"id":"E","name":"Frozen potato wedges","makes":"2 portions","ingredients":[{"q":500,"u":"g","n":"frozen potato wedges (kartoffelbåde)"}],"steps":["Never prep these. Cook straight from frozen when you eat, it is zero effort anyway.","Airfryer 200°C, 15-18 min, shake at 8 min."],"fridge":"Don't. Always cook fresh.","freezer":"That's where they live."}],"RECIPES":[{"id":"burrito","name":"Chicken burrito bowl","style":"mexican","bases":["A","C"],"hands":5,"ingredients":[{"q":230,"u":"g","n":"crispy chicken (Base A)"},{"q":0.5,"u":"bag","n":"taco spice mix"},{"q":2,"u":"tbsp","n":"water"},{"q":300,"u":"g","n":"cooked rice (Base C)"},{"q":0.5,"u":"can","n":"sweetcorn, drained"},{"q":60,"u":"g","n":"grated cheese"},{"q":4,"u":"tbsp","n":"salsa"},{"q":2,"u":"tbsp","n":"crème fraîche"}],"steps":["Toss the warm chicken with taco mix and water. It turns into a sticky coating.","Box it: rice, chicken, corn, cheese on top.","Salsa and crème fraîche stay in their jars until you eat."],"fridge":"3 days","freezer":"2 months, without salsa and crème fraîche","reheat":"Microwave 800 W, lid loose, 2-2½ min. Then cold salsa + crème fraîche on top. Hot and cold together is the whole point."},{"id":"quesadilla","name":"Cheesy beef quesadillas","style":"mexican","bases":["B"],"hands":6,"ingredients":[{"q":4,"u":"pcs","n":"large tortillas"},{"q":500,"u":"g","n":"taco mince (Base B)"},{"q":100,"u":"g","n":"grated cheese"},{"q":null,"u":"","n":"salsa + crème fraîche to dip"}],"steps":["Warm the filling 1 min in the microwave so the cheese melts properly.","Filling + cheese on one half of each tortilla, fold.","Airfryer 200°C, 6-7 min, flip at 4 min. If they flap open, weigh them down with the rack.","Cut into triangles and dip."],"fridge":"Filling 3 days. Make the quesadillas fresh, it takes 7 min.","freezer":"Filling 3 months. Or freeze them folded but uncooked, then airfry from frozen at 190°C for 10-12 min, flip halfway.","reheat":"Never microwave a quesadilla, it goes floppy. Leftovers: airfryer 180°C, 3-4 min."},{"id":"tacofries","name":"Taco loaded fries","style":"mexican","bases":["B","E"],"hands":5,"ingredients":[{"q":500,"u":"g","n":"frozen potato wedges (Base E)"},{"q":500,"u":"g","n":"taco mince (Base B)"},{"q":80,"u":"g","n":"grated cheese"},{"q":4,"u":"tbsp","n":"salsa"},{"q":2,"u":"tbsp","n":"crème fraîche"},{"q":null,"u":"","n":"pickled jalapeños (optional)"}],"steps":["Microwave the taco mince 2 min first, keep it covered.","Wedges in the airfryer, 200°C, 15 min, shake at 8.","Pile mince + cheese on the wedges (move to an airfryer-safe dish if your basket is a grill), 200°C, 2-3 min until melty.","Salsa, crème fraîche, jalapeños on top."],"fridge":"Mince 3 days. Fries are always cooked fresh.","freezer":"Mince 3 months.","reheat":"Not a reheat dish. Fresh fries are what keeps it crispy, and they are zero effort."},{"id":"butter","name":"Butter chicken","style":"indian","bases":["A","C"],"hands":3,"ingredients":[{"q":230,"u":"g","n":"crispy chicken (Base A)"},{"q":1,"u":"jar","n":"butter chicken sauce (350-400 g)"},{"q":300,"u":"g","n":"cooked rice (Base C)"},{"q":150,"u":"g","n":"frozen broccoli or peas"},{"q":null,"u":"","n":"frozen naan from Lidl (optional)"}],"steps":["Chicken in the box, pour the sauce over, stir.","Rice on the other side. Frozen broccoli goes straight in, it cooks when you reheat."],"fridge":"3 days","freezer":"3 months. One of the best freezers on this list.","reheat":"Microwave 800 W, lid loose, 3-3½ min, stir halfway. Dry rice? Splash 1 tbsp water on it first. Naan: airfryer 180°C, 2-3 min."},{"id":"korean","name":"Korean sticky chicken bowl","style":"korean","bases":["A","C"],"hands":4,"ingredients":[{"q":230,"u":"g","n":"crispy chicken (Base A)"},{"q":2,"u":"tbsp","n":"gochujang"},{"q":1,"u":"tbsp","n":"soy sauce"},{"q":1,"u":"tbsp","n":"honey"},{"q":1,"u":"tbsp","n":"water"},{"q":300,"u":"g","n":"cooked rice (Base C)"},{"q":150,"u":"g","n":"frozen broccoli"},{"q":null,"u":"","n":"spring onion + sesame seeds (optional)"}],"steps":["Stir gochujang, soy, honey and water in a bowl. No gochujang? Use 2 tbsp sriracha + an extra ½ tbsp honey.","Toss in the chicken.","Box: rice, sticky chicken, frozen broccoli. Spring onion + sesame go on when you eat."],"fridge":"3 days","freezer":"2 months","reheat":"Lazy: microwave 3 min, lid loose. Crispy: keep the sauce in a small cup, airfry the plain chicken 180°C 4 min, then toss.","tip":"Korean beef variant: same sauce on plain browned mince."},{"id":"alforno","name":"Pasta al forno (cheesy bolognese bake)","style":"italian","bases":["B","D"],"hands":5,"ingredients":[{"q":200,"u":"g","n":"penne, cooked (Base D)"},{"q":650,"u":"g","n":"bolognese (Base B)"},{"q":100,"u":"g","n":"grated cheese"}],"steps":["Mix the drained pasta with the hot bolognese.","Split into boxes that can go in the airfryer (oven-safe glass). Cheese on top."],"fridge":"3-4 days","freezer":"3 months. Thaw in the fridge overnight.","reheat":"Microwave 800 W, lid on, 2½ min to heat through. Lid off, then airfryer 200°C, 4-5 min until the cheese bubbles and browns. That's the \"baked\" part, no oven needed."},{"id":"garlicpasta","name":"Creamy garlic parmesan chicken pasta","style":"italian","bases":["A","D"],"hands":6,"ingredients":[{"q":200,"u":"g","n":"penne, cooked (Base D)"},{"q":230,"u":"g","n":"crispy chicken (Base A)"},{"q":150,"u":"g","n":"cream cheese (flødeost naturel)"},{"q":150,"u":"ml","n":"milk"},{"q":40,"u":"g","n":"grated parmesan (Grana Padano)"},{"q":1,"u":"tsp","n":"garlic powder"},{"q":100,"u":"g","n":"frozen chopped spinach"},{"q":null,"u":"","n":"black pepper"}],"steps":["Big microwave bowl: spinach, 2 min.","Add cream cheese, milk, garlic and parmesan. 1½ min, stir until smooth.","Toss in the hot pasta and chicken. Box it."],"fridge":"3 days","freezer":"1 month. The sauce may split a bit, stir in milk and it comes back.","reheat":"Add 2 tbsp milk first, cream sauces thicken in the fridge. Microwave 2 min, stir, 30 s more."},{"id":"sweetsour","name":"Sweet & sour chicken","style":"takeaway","bases":["A","C"],"hands":5,"ingredients":[{"q":230,"u":"g","n":"crispy chicken (Base A)"},{"q":1,"u":"jar","n":"sweet & sour sauce (about 400 g)"},{"q":250,"u":"g","n":"frozen wok vegetables"},{"q":300,"u":"g","n":"cooked rice (Base C)"}],"steps":["Microwave the wok veg in a covered bowl, 4 min. Pour off the water.","Mix veg + sauce + chicken.","Box it with rice."],"fridge":"3 days","freezer":"2 months","reheat":"Microwave 3 min, stir halfway. Takeaway-level crispy: store the chicken dry, airfry 180°C 4 min, toss in the hot sauce."},{"id":"buffalo","name":"Buffalo chicken loaded fries","style":"diner","bases":["A","E"],"hands":5,"ingredients":[{"q":500,"u":"g","n":"frozen potato wedges (Base E)"},{"q":230,"u":"g","n":"crispy chicken (Base A)"},{"q":4,"u":"tbsp","n":"hot sauce (Frank's style or sriracha)"},{"q":1,"u":"tbsp","n":"butter"},{"q":60,"u":"g","n":"grated cheddar"},{"q":3,"u":"tbsp","n":"garlic dressing or ranch"}],"steps":["Microwave butter + hot sauce 30 s, stir. That is buffalo sauce.","Wedges in the airfryer, 200°C, 15 min, shake at 8. Chicken on top for the last 4 min.","Toss the chicken in the sauce, back on the fries, cheese over, 1 more min.","Dressing on top."],"fridge":"Chicken 3 days. Fries always fresh.","freezer":"Chicken 3 months.","reheat":"Nothing to reheat. Everything is cooked fresh in about 20 min, 5 of them hands-on."},{"id":"cheeseburger","name":"Cheeseburger fries bowl","style":"diner","bases":["B","E"],"hands":5,"ingredients":[{"q":500,"u":"g","n":"frozen potato wedges (Base E)"},{"q":250,"u":"g","n":"cheeseburger mince (Base B, see note)"},{"q":60,"u":"g","n":"grated cheddar"},{"q":3,"u":"tbsp","n":"burger dressing"},{"q":6,"u":"pcs","n":"pickle slices, chopped"}],"steps":["Microwave the mince 1½ min, keep it covered.","Wedges in the airfryer, 200°C, 15 min, shake at 8.","Mince + cheese over the wedges, 200°C, 2 min until melted.","Dressing + pickles on top. Basically a Big Mac with fries, in a bowl."],"fridge":"Mince 3 days. Fries always fresh.","freezer":"Mince 3 months.","reheat":"Cook the fries fresh. Only the mince gets reheated."}],"WEEK":[{"day":"Mon","lunch":{"r":"burrito","s":"fridge"},"dinner":{"r":"alforno","s":"fridge"}},{"day":"Tue","lunch":{"r":"butter","s":"fridge"},"dinner":{"r":"tacofries","s":"fridge"}},{"day":"Wed","lunch":{"r":"korean","s":"fridge"},"dinner":{"r":"burrito","s":"fridge"}},{"day":"Thu","lunch":{"r":"alforno","s":"freezer"},"dinner":{"r":"butter","s":"freezer"}},{"day":"Fri","lunch":{"r":"korean","s":"freezer"},"dinner":{"r":"quesadilla","s":"freezer"}}],"EAT":{"burrito":"Microwave 2½ min, then salsa + crème fraîche on top.","alforno":"Microwave 2½ min, then airfryer 200°C 4-5 min for golden cheese.","butter":"Microwave 3-3½ min, stir halfway.","tacofries":"Wedges 200°C 15 min, top with hot mince + cheese, 2 min more.","korean":"Microwave 3 min. Spring onion on top if you bought it.","quesadilla":"2 tortillas, filling + cheese, airfryer 200°C 6-7 min, flip at 4."},"REMINDERS":["Wed evening: move the Thu boxes from freezer to fridge.","Thu evening: move the Fri boxes from freezer to fridge."],"PREP":[{"t":"-1 day","k":"you","x":"Move the {1000|g} frozen chicken to the fridge to thaw. Wash 10 boxes, at least 2 of them oven-safe glass for the pasta bake."},{"t":"0:00","k":"pot","x":"Rinse {450|g} rice, drain. Add {700|ml} water + pinch of salt. Lid on, high heat."},{"t":"0:02","k":"you","x":"Cut the chicken into 3 cm bites with scissors. Toss in a big bowl with {1|tbsp} oil, {1|tsp} salt, {1|tsp} garlic powder, {1|tsp} paprika and {2|tbsp} cornstarch."},{"t":"0:05","k":"pot","x":"Rice boiling? Lowest heat, lid on, timer 12 min."},{"t":"0:08","k":"air","x":"Chicken batch 1 (half), single layer. 200°C, 13 min. Shake at 7 min."},{"t":"0:09","k":"pan","x":"Medium-high, splash of oil. {500|g} mince + {150|g} frozen onion + {1|tsp} salt. Break up, brown 8 min."},{"t":"0:17","k":"pot","x":"Rice off the heat. Lid stays on for 10 min."},{"t":"0:17","k":"pan","x":"Scoop half the mince into a bowl (taco half). Pour {1|jar} pasta sauce into the pan, simmer 5 min. That is your bolognese."},{"t":"0:21","k":"air","x":"Batch 1 out, check no pink inside. Batch 2 in, 200°C, 13 min, shake at 7."},{"t":"0:22","k":"pan","x":"Bolognese into a bowl. Taco half back in the pan + {1|bag} taco mix + {1|can} drained kidney beans + {100|ml} water. Bubble 4 min, then into a box. Pan is done."},{"t":"0:27","k":"pot","x":"Spread the rice on a big plate to cool. Quick rinse, fill the pot with water + salt, lid on, high heat."},{"t":"0:28","k":"you","x":"Korean sauce in a small bowl: {2|tbsp} gochujang + {1|tbsp} soy + {1|tbsp} honey + {1|tbsp} water. Label your boxes with tape: day + meal."},{"t":"0:33","k":"pot","x":"{200|g} penne in. Cook 1 min less than the pack says."},{"t":"0:34","k":"air","x":"Batch 2 out. Airfryer is done."},{"t":"0:35","k":"you","x":"Split the chicken in 3. Third 1: toss with {0.5|bag} taco mix + {2|tbsp} water. Third 2: toss with the Korean sauce. Third 3: into a bowl with {1|jar} butter chicken sauce."},{"t":"0:42","k":"pot","x":"Drain the pasta, back into the pot, stir in the bolognese. Into the 2 glass boxes, {100|g} cheese on top."},{"t":"0:45","k":"you","x":"Assemble the rice boxes (about {150|g} rice each). Burrito x2: rice + taco chicken + {0.5|can} corn + {60|g} cheese. Butter chicken x2 and Korean x2: rice + chicken + {300|g} frozen broccoli split over the 4 boxes."},{"t":"0:52","k":"you","x":"Taco mince into 2 boxes: Tue fries, Fri quesadillas. Lids on loosely while it all steams off."},{"t":"0:55","k":"you","x":"Fridge: Mon, Tue, Wed boxes. Freezer: Thu + Fri boxes. Everything cold within 1 hour of cooking."},{"t":"0:58","k":"you","x":"Wash the pot, pan and bowls. Done. Go lie down."}],"RULES":["Microwave times are for 800 W. At 1000 W take off about 20%.","Lid on loosely in the microwave. Steam keeps sauces saucy and rice soft.","Anything that should be crispy finishes in the airfryer, 180-200°C for 3-5 min. Never just microwave it.","Combo oven: no foil, no metal trays in microwave mode. Glass and ceramic are fine in both modes.","Thaw frozen boxes in the fridge overnight. Forgot? Microwave on defrost 4-5 min, then reheat as normal.","Stir halfway. Microwaves heat edges first, stirring kills the cold middle."],"SHOP":[{"sec":"Frugt & grønt","items":[{"n":"Forårsløg","need":1,"size":1,"label":"1 bundt","price":8,"where":"Alle","opt":true}]},{"sec":"Kød & køl","items":[{"n":"Hakket oksekød 8-12%","need":500,"size":500,"label":"500 g","price":48,"where":"Netto / Rema"},{"n":"Revet ost (pizzatopping)","need":280,"size":400,"label":"400 g","price":32,"where":"Netto"},{"n":"Cremefraiche 18%","need":120,"size":200,"label":"200 ml","price":12,"where":"Alle"}]},{"sec":"Frost","items":[{"n":"Kyllingebrystfilet, frost","need":1000,"size":1000,"label":"1 kg","price":65,"where":"Lidl / Netto"},{"n":"Hakkede løg, frost","need":150,"size":300,"label":"300 g","price":12,"where":"Rema / Netto"},{"n":"Broccolibuketter, frost","need":300,"size":500,"label":"500 g","price":14,"where":"Lidl / Netto"},{"n":"Kartoffelbåde, frost","need":250,"size":1000,"label":"1 kg","price":20,"where":"Lidl"}]},{"sec":"Kolonial","items":[{"n":"Jasminris","need":450,"size":1000,"label":"1 kg","price":20,"where":"Alle"},{"n":"Penne","need":200,"size":500,"label":"500 g","price":8,"where":"Alle"},{"n":"Pastasauce, basilikum","need":1,"size":1,"label":"1 glas, ca. 500 g","price":12,"where":"Netto / Lidl"},{"n":"Butter chicken sauce","need":1,"size":1,"label":"1 glas","price":25,"where":"Rema / Lidl"},{"n":"Taco krydderimix","need":1.5,"size":1,"label":"1 brev","price":6,"where":"Alle"},{"n":"Kidneybønner","need":1,"size":1,"label":"1 dåse","price":6,"where":"Alle"},{"n":"Majs","need":0.5,"size":1,"label":"1 dåse","price":7,"where":"Alle"},{"n":"Salsa / tacosauce","need":0.5,"size":1,"label":"1 glas","price":15,"where":"Alle"}]},{"sec":"Brød","items":[{"n":"Tortillas, store","need":2,"size":8,"label":"8 stk","price":12,"where":"Lidl / Netto"}]}],"PANTRY":[{"n":"Rapsolie","label":"1 L","price":20},{"n":"Hvidløgspulver","label":"1 bøtte","price":12},{"n":"Paprika","label":"1 bøtte","price":10},{"n":"Majsstivelse (Maizena)","label":"400 g","price":12},{"n":"Sojasauce","label":"1 flaske","price":15},{"n":"Honning","label":"1 glas","price":25},{"n":"Gochujang (eller Sriracha)","label":"1 bøtte","price":30},{"n":"Sesamfrø (valgfri)","label":"1 pose","price":12}]};
+
+const KEY = 'lazyprep:v1';
+let state = { checks: {}, scale: 1, tab: 'plan', theme: 'auto' };
+try { Object.assign(state, JSON.parse(localStorage.getItem(KEY)) || {}); } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} };
+
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const R = Object.fromEntries(DATA.RECIPES.map((r, i) => [r.id, Object.assign({ num: i + 1 }, r)]));
+const TRACK = { pot: 'Pot', pan: 'Pan', air: 'Airfryer', you: 'You' };
+const styleChip = (s) => `<span class="chip" style="--c:var(--${s})">${esc(DATA.STYLES[s])}</span>`;
+const raw = (s) => `<span data-raw="${esc(s)}"></span>`;
+const check = (key) => `<input type="checkbox" data-key="${key}"${state.checks[key] ? ' checked' : ''}>`;
+
+/* ---------- Plan */
+function renderPlan() {
+  const styles = new Set(DATA.WEEK.flatMap((d) => [R[d.lunch.r].style, R[d.dinner.r].style]));
+  const meal = (label, m) => `
+    <div class="meal">
+      <span class="when">${label}</span>
+      <span class="what">
+        <button class="link" data-goto="${m.r}">${esc(R[m.r].name)}</button>
+        ${styleChip(R[m.r].style)} ${m.s === 'freezer' ? '<span class="chip frozen">❄ freezer</span>' : ''}
+        <span class="eat">${esc(DATA.EAT[m.r])}</span>
+      </span>
+    </div>`;
+  $('#plan').innerHTML = `
+    <div class="stats">
+      <div class="card stat"><b>~60 min</b><span>prep, once</span></div>
+      <div class="card stat"><b id="statMeals">10</b><span>meals</span></div>
+      <div class="card stat"><b>${styles.size}</b><span>flavor styles</span></div>
+      <div class="card stat"><b id="statPer">-</b><span>per meal</span></div>
+    </div>
+
+    <h2>The week</h2>
+    <div class="week">
+      ${DATA.WEEK.map((d) => `<div class="card day"><b>${d.day}</b>${meal('Lunch', d.lunch)}${meal('Dinner', d.dinner)}</div>`).join('')}
+    </div>
+    <div class="callout"><ul>${DATA.REMINDERS.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>
+
+    <h2>Prep day timeline</h2>
+    <p class="muted small" style="margin-top:0">Four things run at once. Tick as you go. The combo can't microwave and airfry together, so prep day skips the microwave.</p>
+    <div class="legend">${Object.keys(TRACK).map((k) => `<span class="chip track-${k}">${TRACK[k]}</span>`).join('')}</div>
+    <div class="progress"><span id="prepCount"></span><div class="bar"><i id="prepBar"></i></div><button class="reset" data-reset="p:">Reset</button></div>
+    <div class="card list">
+      ${DATA.PREP.map((s, i) => `
+        <label class="row">${check('p:' + i)}
+          <span class="body"><span class="time">${esc(s.t)}</span><span class="chip track-${s.k}">${TRACK[s.k]}</span>
+          <span class="step-text">${raw(s.x)}</span></span>
+        </label>`).join('')}
+    </div>
+    <p class="muted small" id="scaleNote" hidden>Scaled up? Every extra 500 g chicken is one more airfryer batch, about +13 min.</p>
+
+    <h2>Reheat rules</h2>
+    <div class="card" style="padding:12px 16px"><ul class="rules">${DATA.RULES.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>`;
+}
+
+/* ---------- Recipes */
+const ingList = (list) => `<ul>${list.map((x) => `<li>${x.q == null ? '' : `<b data-q="${x.q}" data-u="${x.u}"></b> `}${esc(x.n)}</li>`).join('')}</ul>`;
+const facts = (o, reheat) => `<div class="facts">
+  <div class="fact"><strong>Fridge</strong>${esc(o.fridge)}</div>
+  <div class="fact"><strong>Freezer</strong>${esc(o.freezer)}</div>
+  ${reheat ? `<div class="fact reheat"><strong>Reheat</strong>${esc(reheat)}</div>` : ''}</div>`;
+
+function renderRecipes() {
+  const used = [...new Set(DATA.RECIPES.map((r) => r.style))];
+  const bases = DATA.BASES.map((b) => `
+    <details class="card" data-style="base">
+      <summary><span class="num">${b.id}</span><span class="title"><b>${esc(b.name)}</b>
+        <span class="meta"><span class="chip base-tag">Base</span> makes ${esc(b.makes)}</span></span></summary>
+      <div class="rbody">
+        <h4>You need</h4>${ingList(b.ingredients)}
+        <h4>Do this</h4><ol>${b.steps.map((s) => `<li>${esc(s)}</li>`).join('')}</ol>
+        ${facts(b)}${b.note ? `<p class="note">${esc(b.note)}</p>` : ''}
+      </div>
+    </details>`).join('');
+  const dishes = Object.values(R).map((r) => `
+    <details class="card" id="r-${r.id}" data-style="${r.style}">
+      <summary><span class="num">${r.num}</span><span class="title"><b>${esc(r.name)}</b>
+        <span class="meta">${styleChip(r.style)} ${r.hands} min hands-on · Base ${r.bases.join(' + ')}</span></span></summary>
+      <div class="rbody">
+        <h4>You need · <span class="portions"></span></h4>${ingList(r.ingredients)}
+        <h4>Do this</h4><ol>${r.steps.map((s) => `<li>${esc(s)}</li>`).join('')}</ol>
+        ${facts(r, r.reheat)}${r.tip ? `<p class="note">${esc(r.tip)}</p>` : ''}
+      </div>
+    </details>`).join('');
+  $('#recipes').innerHTML = `
+    <div class="filters">
+      <button aria-pressed="true" data-filter="all">All</button>
+      ${used.map((s) => `<button aria-pressed="false" data-filter="${s}">${esc(DATA.STYLES[s])}</button>`).join('')}
+      <button aria-pressed="false" data-filter="base">Bases</button>
+    </div>
+    <div id="dishes">${dishes}</div>
+    <h2 class="base-h">Base components</h2>
+    <p class="muted small base-h" style="margin-top:0">Cook these on prep day. Every dish above is just bases + a sauce.</p>
+    <div>${bases}</div>`;
+}
+
+/* ---------- Shopping */
+function renderShop() {
+  const row = (key, it, extra) => `
+    <label class="row">${check(key)}
+      <span class="body item"><span>${esc(it.n)}${it.opt ? ' <span class="muted small">(valgfri)</span>' : ''}
+        <span class="where">${extra}</span></span></span>
+      <span class="price" ${it.need != null ? `data-price="${key}"` : ''}>${it.need != null ? '' : it.price + ' kr'}</span>
+    </label>`;
+  $('#shop').innerHTML = `
+    <div class="card shop-total"><span><span class="muted small">Uge i alt</span><br><b id="shopTotal"></b></span>
+      <span class="muted small" style="text-align:right">Tilbage at købe<br><b id="shopLeft" style="font-size:1.1rem"></b></span></div>
+    <div class="progress"><span id="shopCount"></span><div class="bar"><i id="shopBar"></i></div><button class="reset" data-reset="s:">Nulstil</button></div>
+    ${DATA.SHOP.map((s, si) => `
+      <div class="sec-title">${esc(s.sec)}</div>
+      <div class="card list">${s.items.map((it, ii) => row(`s:${si}:${ii}`, it, `<span data-pack="s:${si}:${ii}"></span> · ${esc(it.where)}`)).join('')}</div>`).join('')}
+    <h2>Basisvarer</h2>
+    <p class="muted small" style="margin-top:0">Købes én gang og holder i ugevis. Ikke med i ugens total. I alt ca. <b>${DATA.PANTRY.reduce((a, x) => a + x.price, 0)} kr</b>.</p>
+    <div class="card list">${DATA.PANTRY.map((it, i) => row('b:' + i, it, esc(it.label))).join('')}</div>`;
+}
+
+/* ---------- Scale + counters */
+function update() {
+  const f = state.scale;
+  $('#scale').value = f;
+  $('#scaleOut').textContent = `×${f} · ${10 * f} meals`;
+  $$('[data-raw]').forEach((el) => { el.textContent = fmtText(el.dataset.raw, f); });
+  $$('[data-q]').forEach((el) => { el.textContent = fmtQty(parseFloat(el.dataset.q), el.dataset.u, f); });
+  $$('.portions').forEach((el) => { el.textContent = `${2 * f} portion${2 * f === 1 ? '' : 's'}`; });
+  $('#statMeals').textContent = 10 * f;
+  $('#scaleNote').hidden = f <= 1;
+
+  let total = 0, left = 0;
+  DATA.SHOP.forEach((s, si) => s.items.forEach((it, ii) => {
+    const key = `s:${si}:${ii}`, n = packs(it, f), price = n * it.price;
+    total += price;
+    if (!state.checks[key]) left += price;
+    $(`[data-pack="${key}"]`).textContent = (n > 1 ? n + ' x ' : '') + it.label;
+    $(`[data-price="${key}"]`).textContent = price + ' kr';
+  }));
+  $('#shopTotal').textContent = `ca. ${total} kr`;
+  $('#shopLeft').textContent = `${left} kr`;
+  $('#statPer').textContent = `${Math.round(total / (10 * f))} kr`;
+  counters();
+}
+
+function counters() {
+  const count = (prefix, label, bar) => {
+    const boxes = $$(`input[data-key^="${prefix}"]`), done = boxes.filter((b) => b.checked).length;
+    $(label).textContent = `${done}/${boxes.length}`;
+    $(bar).style.width = (100 * done / boxes.length) + '%';
+  };
+  count('p:', '#prepCount', '#prepBar');
+  count('s:', '#shopCount', '#shopBar');
+}
+
+/* ---------- Tabs, theme, events */
+function showTab(tab) {
+  state.tab = tab;
+  $$('nav button').forEach((b) => b.setAttribute('aria-selected', b.dataset.tab === tab));
+  $$('main > section').forEach((s) => { s.hidden = s.id !== tab; });
+  save();
+}
+
+function applyTheme() {
+  if (state.theme === 'auto') document.documentElement.removeAttribute('data-theme');
+  else document.documentElement.dataset.theme = state.theme;
+  $('#theme').textContent = { auto: 'Auto', light: 'Light', dark: 'Dark' }[state.theme];
+}
+
+renderPlan(); renderRecipes(); renderShop();
+applyTheme(); showTab(state.tab); update();
+
+$('#scale').addEventListener('input', (e) => { state.scale = parseFloat(e.target.value); update(); save(); });
+$('#theme').addEventListener('click', () => {
+  state.theme = { auto: 'light', light: 'dark', dark: 'auto' }[state.theme];
+  applyTheme(); save();
+});
+$$('nav button').forEach((b) => b.addEventListener('click', () => { showTab(b.dataset.tab); window.scrollTo(0, 0); }));
+
+document.addEventListener('change', (e) => {
+  const k = e.target.dataset && e.target.dataset.key;
+  if (!k) return;
+  if (e.target.checked) state.checks[k] = 1; else delete state.checks[k];
+  save();
+  if (k.startsWith('s:')) update(); else counters();
+});
+
+document.addEventListener('click', (e) => {
+  const reset = e.target.closest('[data-reset]');
+  if (reset) {
+    const p = reset.dataset.reset;
+    Object.keys(state.checks).forEach((k) => { if (k.startsWith(p)) delete state.checks[k]; });
+    $$(`input[data-key^="${p}"]`).forEach((b) => { b.checked = false; });
+    save(); update();
+    return;
+  }
+  const go = e.target.closest('[data-goto]');
+  if (go) {
+    showTab('recipes');
+    setFilter('all');
+    const d = $('#r-' + go.dataset.goto);
+    d.open = true;
+    d.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
+  const fb = e.target.closest('[data-filter]');
+  if (fb) setFilter(fb.dataset.filter);
+});
+
+function setFilter(f) {
+  $$('[data-filter]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.filter === f));
+  $$('#recipes details').forEach((d) => { d.hidden = !(f === 'all' || d.dataset.style === f); });
+  $$('.base-h').forEach((el) => { el.hidden = !(f === 'all' || f === 'base'); });
+}
+</script>
+</body>
+</html>
