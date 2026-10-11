@@ -4,179 +4,338 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#fbf3e8">
 <title>Lazy Prep</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M3 14h26a13 13 0 0 1-26 0z' fill='%23c43a1c'/%3E%3Cpath d='M11 4c-2 2 2 4 0 7M17 3c-2 2 2 4 0 7M23 4c-2 2 2 4 0 7' stroke='%23f3b52f' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
+/* ---------- Tokens */
 :root {
-  --bg: #faf7f2; --surface: #ffffff; --surface-2: #f3eee6; --text: #1f1a16; --muted: #6d645b;
-  --border: #e6dfd4; --accent: #c2410c; --accent-soft: #fde8dc; --ok: #2b8a3e; --shadow: 0 1px 2px rgb(0 0 0 / .05);
-  --mexican: #d9480f; --korean: #c2255c; --indian: #e67700; --italian: #2b8a3e; --diner: #1971c2; --takeaway: #7048e8;
-  --pot: #1971c2; --pan: #e67700; --air: #c92a2a; --you: #5c7c4a;
+  --bg: #fbf3e8; --surface: #fffcf7; --surface-2: #f5eadb; --text: #2b1d13; --muted: #6f5a48; --border: #ead8c1;
+  --accent: #c43a1c; --accent-ink: #ffffff; --accent-soft: #fde3d6;
+  --mustard: #f3b52f; --mustard-soft: #fdefc6; --mustard-ink: #3a2900;
+  --ok: #2f7d32; --ok-soft: #e1f0dc;
+  --shadow: 0 1px 0 rgb(90 45 10 / .05), 0 8px 20px -14px rgb(90 45 10 / .35);
+  --mexican: #b4400f; --korean: #b0245a; --indian: #9a5500; --italian: #2f7a2f; --diner: #1d5fae; --takeaway: #6a3fd0;
+  --pot: #1d5fae; --pan: #9a5500; --air: #c0282a; --you: #4f7a25;
+  --hh: 132px; --navh: 68px;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #141210; --surface: #1d1a17; --surface-2: #27231f; --text: #f2ede6; --muted: #a39a90;
-    --border: #35302a; --accent: #ff8a50; --accent-soft: #3b2417; --ok: #69db7c; --shadow: none;
-    --mexican: #ff8a50; --korean: #f06595; --indian: #ffa94d; --italian: #69db7c; --diner: #74c0fc; --takeaway: #b197fc;
-    --pot: #74c0fc; --pan: #ffa94d; --air: #ff8787; --you: #a9e34b;
+    --bg: #16110d; --surface: #211913; --surface-2: #2c231b; --text: #f7ecdf; --muted: #bca794; --border: #3b2e23;
+    --accent: #ff7f5e; --accent-ink: #2a0d04; --accent-soft: #3d1e12;
+    --mustard: #f5c04a; --mustard-soft: #3b2e10; --mustard-ink: #2a1d00;
+    --ok: #7fd481; --ok-soft: #183019;
+    --shadow: 0 1px 0 rgb(0 0 0 / .3);
+    --mexican: #ff9a6b; --korean: #f57ba6; --indian: #ffb35c; --italian: #7fd481; --diner: #7cc4fa; --takeaway: #b9a2fd;
+    --pot: #7cc4fa; --pan: #ffb35c; --air: #ff8f8a; --you: #b4e36a;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #141210; --surface: #1d1a17; --surface-2: #27231f; --text: #f2ede6; --muted: #a39a90;
-  --border: #35302a; --accent: #ff8a50; --accent-soft: #3b2417; --ok: #69db7c; --shadow: none;
-  --mexican: #ff8a50; --korean: #f06595; --indian: #ffa94d; --italian: #69db7c; --diner: #74c0fc; --takeaway: #b197fc;
-  --pot: #74c0fc; --pan: #ffa94d; --air: #ff8787; --you: #a9e34b;
+  --bg: #16110d; --surface: #211913; --surface-2: #2c231b; --text: #f7ecdf; --muted: #bca794; --border: #3b2e23;
+  --accent: #ff7f5e; --accent-ink: #2a0d04; --accent-soft: #3d1e12;
+  --mustard: #f5c04a; --mustard-soft: #3b2e10; --mustard-ink: #2a1d00;
+  --ok: #7fd481; --ok-soft: #183019;
+  --shadow: 0 1px 0 rgb(0 0 0 / .3);
+  --mexican: #ff9a6b; --korean: #f57ba6; --indian: #ffb35c; --italian: #7fd481; --diner: #7cc4fa; --takeaway: #b9a2fd;
+  --pot: #7cc4fa; --pan: #ffb35c; --air: #ff8f8a; --you: #b4e36a;
 }
+
+/* ---------- Base */
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--hh) + 12px); }
 body {
   margin: 0; background: var(--bg); color: var(--text);
   font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
 }
-.wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+.display { font-family: ui-rounded, "SF Pro Rounded", "Arial Rounded MT Bold", system-ui, sans-serif; }
+.wrap { max-width: 780px; margin: 0 auto; padding: 0 16px; }
 button { font: inherit; color: inherit; cursor: pointer; }
-
-/* header */
-header { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
-.top { display: flex; align-items: center; gap: 12px; padding-top: 14px; }
-.top h1 { font-size: 1.35rem; margin: 0; letter-spacing: -.02em; }
-.top h1 span { color: var(--accent); }
-.top p { margin: 0; color: var(--muted); font-size: .85rem; }
-.top .grow { flex: 1; min-width: 0; }
-.icon-btn { background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 6px 12px; font-size: .8rem; color: var(--muted); }
-.scale { display: flex; align-items: center; gap: 12px; padding: 10px 0 4px; }
-.scale label { font-size: .85rem; color: var(--muted); white-space: nowrap; }
-.scale input { flex: 1; accent-color: var(--accent); min-width: 0; }
-.scale output { font-weight: 600; font-size: .9rem; min-width: 120px; text-align: right; font-variant-numeric: tabular-nums; }
-nav { display: flex; gap: 4px; padding: 6px 0 10px; }
-nav button { flex: 1; background: transparent; border: 1px solid transparent; border-radius: 10px; padding: 8px 6px; font-weight: 600; color: var(--muted); }
-nav button[aria-selected="true"] { background: var(--surface); border-color: var(--border); color: var(--text); box-shadow: var(--shadow); }
-
-main { padding: 18px 0 64px; }
-section[hidden] { display: none; }
-h2 { font-size: 1.15rem; margin: 28px 0 10px; letter-spacing: -.01em; }
-h2:first-child { margin-top: 0; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .muted { color: var(--muted); }
-.small { font-size: .85rem; }
-.card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; box-shadow: var(--shadow); }
+.small { font-size: .86rem; }
+.tnum { font-variant-numeric: tabular-nums; }
+svg.i { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-/* stats */
-.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-.stat { padding: 10px 12px; }
-.stat b { display: block; font-size: 1.2rem; font-variant-numeric: tabular-nums; }
-.stat span { font-size: .78rem; color: var(--muted); }
-@media (max-width: 520px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+/* ---------- Header */
+header.site { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 90%, transparent);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+.top { display: flex; align-items: center; gap: 10px; padding-top: 10px; }
+.logo { width: 40px; height: 40px; flex: none; }
+.top .grow { flex: 1; min-width: 0; }
+.top h1 { font-size: 1.4rem; line-height: 1.1; margin: 0; letter-spacing: -.02em; font-weight: 800; }
+.top h1 span { color: var(--accent); }
+.top p { margin: 0; color: var(--muted); font-size: .8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.icon-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 44px; height: 44px; padding: 0 12px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 999px; color: var(--muted); font-size: .8rem; font-weight: 600; }
+.icon-btn svg.i { width: 18px; height: 18px; }
 
-/* chips */
-.chip { display: inline-block; font-size: .72rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+.scale { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 4px 14px; padding: 8px 0 10px; }
+.scale label { display: flex; flex-direction: column; line-height: 1.1; min-width: 92px; }
+.scale label small { font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 700; }
+.scale output { font-size: 1.25rem; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.scale output em { font-style: normal; font-size: .8rem; font-weight: 700; color: var(--accent); margin-left: 2px; }
+input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; min-width: 0; height: 44px; background: transparent; margin: 0; }
+input[type=range]::-webkit-slider-runnable-track { height: 10px; border-radius: 99px;
+  background: linear-gradient(to right, var(--accent) 0 var(--fill, 0%), var(--surface-2) var(--fill, 0%)); border: 1px solid var(--border); }
+input[type=range]::-moz-range-track { height: 10px; border-radius: 99px; background: var(--surface-2); border: 1px solid var(--border); }
+input[type=range]::-moz-range-progress { height: 10px; border-radius: 99px; background: var(--accent); }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 28px; height: 28px; margin-top: -10px; border-radius: 50%;
+  background: var(--mustard); border: 3px solid var(--surface); box-shadow: 0 0 0 1px var(--border), 0 2px 6px rgb(0 0 0 / .25); }
+input[type=range]::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: var(--mustard); border: 3px solid var(--surface); box-shadow: 0 0 0 1px var(--border); }
+input[type=range]:focus-visible { outline: none; }
+input[type=range]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px var(--accent); }
+input[type=range]:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px var(--accent); }
+
+/* ---------- Tab bar: floating at the bottom */
+nav.tabs { position: fixed; z-index: 30; left: 50%; transform: translateX(-50%); bottom: 10px;
+  width: min(calc(100% - 24px), 520px); display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; padding: 5px;
+  background: color-mix(in srgb, var(--surface) 94%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  border: 1px solid var(--border); border-radius: 22px; box-shadow: 0 10px 30px -12px rgb(0 0 0 / .4); }
+nav.tabs button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; min-height: 52px;
+  background: transparent; border: 0; border-radius: 17px; padding: 4px 2px; font-size: .74rem; font-weight: 700; color: var(--muted); }
+nav.tabs button[aria-selected="true"] { background: var(--accent); color: var(--accent-ink); }
+nav.tabs button:not([aria-selected="true"]):hover { background: var(--surface-2); color: var(--text); }
+
+main { padding: 18px 0 calc(var(--navh) + 40px); }
+section[hidden] { display: none !important; }
+h2 { font-size: 1.25rem; margin: 30px 0 10px; letter-spacing: -.01em; font-weight: 800; line-height: 1.2; }
+h2:first-child { margin-top: 4px; }
+h2 .count { font-size: .8rem; font-weight: 700; color: var(--muted); margin-left: 6px; }
+.lede { margin: -4px 0 12px; color: var(--muted); font-size: .9rem; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; box-shadow: var(--shadow); }
+
+/* ---------- Chips */
+.chip { display: inline-flex; align-items: center; gap: 4px; font-size: .72rem; font-weight: 700; padding: 2px 9px; border-radius: 999px; white-space: nowrap; line-height: 1.6;
   color: var(--c, var(--muted)); background: color-mix(in srgb, var(--c, var(--muted)) 14%, transparent); }
 .chip.frozen { --c: var(--diner); }
+.chip.fridge { --c: var(--ok); }
+.track-pot { --c: var(--pot); } .track-pan { --c: var(--pan); } .track-air { --c: var(--air); } .track-you { --c: var(--you); }
+
+/* ---------- Bump animation for changed numbers */
+@keyframes bump { 0% { background-color: var(--mustard); color: var(--mustard-ink); transform: scale(1.12); } 100% { transform: scale(1); } }
+.bump { animation: bump .6s ease-out; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* ---------- Plan: today */
+.today { padding: 16px; position: relative; overflow: hidden; background:
+  radial-gradient(120% 90% at 100% 0%, var(--mustard-soft), transparent 60%), var(--surface); }
+.today .kicker { font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; font-weight: 800; color: var(--accent); }
+.today h2 { margin: 2px 0 12px; font-size: 1.5rem; }
+.meals2 { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; }
+@media (max-width: 560px) { .meals2 { grid-template-columns: 1fr; } }
+.mtile { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.mtile .when { font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; color: var(--muted); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.mtile .name { font-size: 1.08rem; font-weight: 800; line-height: 1.25; }
+.mtile .how { font-size: .88rem; color: var(--muted); }
+.reminder { display: flex; gap: 10px; align-items: flex-start; margin-top: 12px; padding: 10px 12px; border-radius: 12px; background: var(--accent-soft); font-size: .9rem; font-weight: 600; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 999px; font-weight: 700;
+  background: var(--accent); color: var(--accent-ink); border: 0; text-decoration: none; }
+.btn.ghost { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+
+.link { background: none; border: 0; padding: 0; font-weight: 800; text-align: left; color: inherit; text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent); text-decoration-thickness: 2px; text-underline-offset: 3px; min-height: 0; }
+.link:hover { text-decoration-color: var(--accent); }
+
+/* stats */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
+.stat { padding: 10px 12px; }
+.stat b { display: block; font-size: 1.25rem; font-weight: 800; font-variant-numeric: tabular-nums; border-radius: 6px; width: fit-content; }
+.stat span { font-size: .76rem; color: var(--muted); }
+@media (max-width: 520px) { .stats { grid-template-columns: repeat(2, 1fr); } }
 
 /* week */
 .week { display: grid; gap: 8px; }
-.day { padding: 10px 12px; display: grid; grid-template-columns: 44px 1fr; gap: 4px 10px; }
-.day > b { grid-row: span 2; font-size: .95rem; padding-top: 6px; }
-.meal { display: flex; align-items: flex-start; gap: 8px; padding: 6px 0; }
+.day { padding: 8px 14px; display: grid; grid-template-columns: 48px 1fr; gap: 0 10px; }
+.day > .dname { grid-row: span 2; padding-top: 10px; font-weight: 800; }
+.day > .dname small { display: block; font-size: .64rem; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); }
+.day.is-today { border: 2px solid var(--accent); }
+.meal { display: flex; align-items: flex-start; gap: 8px; padding: 8px 0; }
 .meal + .meal { border-top: 1px dashed var(--border); }
-.meal .when { font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); width: 48px; flex: none; padding-top: 3px; }
-.meal .what { flex: 1; min-width: 0; }
-.link { background: none; border: 0; padding: 0; font-weight: 600; text-align: left; text-decoration: underline; text-decoration-color: var(--border); text-underline-offset: 3px; }
-.link:hover { text-decoration-color: var(--accent); }
-.meal .eat { display: block; font-size: .82rem; color: var(--muted); }
-.callout { background: var(--accent-soft); border-radius: 12px; padding: 10px 14px; margin-top: 10px; font-size: .9rem; }
+.meal .when { font-size: .68rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); width: 50px; flex: none; padding-top: 4px; font-weight: 700; }
+.meal .what { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: center; }
+.meal .what .link { margin-right: 2px; }
+.meal .eat { flex-basis: 100%; font-size: .82rem; color: var(--muted); }
+.callout { background: var(--accent-soft); border-radius: 14px; padding: 10px 14px; margin-top: 10px; font-size: .9rem; }
 .callout ul { margin: 0; padding-left: 18px; }
 
-/* checklists */
-.progress { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; font-size: .85rem; color: var(--muted); }
-.bar { flex: 1; height: 6px; background: var(--surface-2); border-radius: 99px; overflow: hidden; }
-.bar i { display: block; height: 100%; width: 0; background: var(--ok); transition: width .25s; }
-.reset { background: none; border: 1px solid var(--border); border-radius: 8px; padding: 3px 10px; font-size: .78rem; color: var(--muted); }
+/* ---------- Checklists */
+.progress { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; font-size: .86rem; color: var(--muted); font-weight: 700; }
+.progress .count { font-variant-numeric: tabular-nums; min-width: 3.2em; }
+.bar { flex: 1; height: 10px; background: var(--surface-2); border-radius: 99px; overflow: hidden; border: 1px solid var(--border); }
+.bar i { display: block; height: 100%; width: 0; background: var(--ok); border-radius: 99px; transition: width .3s; }
+.reset { background: var(--surface); border: 1px solid var(--border); border-radius: 999px; min-height: 40px; padding: 0 14px; font-size: .8rem; color: var(--muted); font-weight: 700; }
 .list { overflow: hidden; }
-.row { display: flex; gap: 12px; align-items: flex-start; padding: 11px 14px; cursor: pointer; }
+.row { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; cursor: pointer; min-height: 52px; position: relative; }
 .row + .row { border-top: 1px solid var(--border); }
-.row input { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--ok); flex: none; cursor: pointer; }
+.row input[type=checkbox] { -webkit-appearance: none; appearance: none; width: 26px; height: 26px; margin: 0; flex: none; cursor: pointer;
+  border: 2px solid color-mix(in srgb, var(--muted) 70%, transparent); border-radius: 8px; background: var(--surface); display: grid; place-content: center; transition: background .15s, border-color .15s; }
+.row input[type=checkbox]::before { content: ""; width: 12px; height: 7px; border: solid var(--surface); border-width: 0 0 3px 3px; transform: rotate(-45deg) translate(1px, -1px); opacity: 0; }
+.row input[type=checkbox]:checked { background: var(--ok); border-color: var(--ok); }
+.row input[type=checkbox]:checked::before { opacity: 1; }
 .row .body { flex: 1; min-width: 0; }
-.row:has(input:checked) .body, .row:has(input:checked) .price { opacity: .45; text-decoration: line-through; }
-.time { font-variant-numeric: tabular-nums; font-weight: 700; font-size: .85rem; margin-right: 6px; }
-.track-pot { --c: var(--pot); } .track-pan { --c: var(--pan); } .track-air { --c: var(--air); } .track-you { --c: var(--you); }
-.step-text { display: block; margin-top: 3px; font-size: .93rem; }
-.legend { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.row:has(input:checked) .body, .row:has(input:checked) .price { opacity: .5; }
+.row:has(input:checked) .nm { text-decoration: line-through; text-decoration-thickness: 2px; }
+.row:hover { background: color-mix(in srgb, var(--surface-2) 50%, transparent); }
 
-/* recipes */
+/* prep timeline */
+.legend { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.prep .row { padding-left: 18px; }
+.prep .row::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: var(--c); }
+.time { font-variant-numeric: tabular-nums; font-weight: 800; font-size: .9rem; margin-right: 6px; }
+.step-text { display: block; margin-top: 3px; font-size: .94rem; }
+.upnext { display: none; font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; padding: 2px 8px; border-radius: 999px; background: var(--mustard); color: var(--mustard-ink); margin-left: 6px; }
+.prep .row.next { background: color-mix(in srgb, var(--mustard-soft) 80%, transparent); }
+.prep .row.next .upnext { display: inline-block; }
+.prep .row.next .step-text { font-weight: 600; font-size: 1rem; }
+.done-msg { display: none; padding: 12px 14px; text-align: center; font-weight: 800; color: var(--ok); background: var(--ok-soft); border-radius: 14px; margin-top: 10px; }
+.done-msg.show { display: block; }
+.scale-note { margin-top: 10px; }
+
+.rules { margin: 0; padding: 12px 16px 12px 34px; }
+.rules li { margin: 5px 0; }
+
+/* ---------- Recipes */
+.intro { display: flex; gap: 12px; align-items: flex-start; padding: 14px; margin-bottom: 14px; background: var(--mustard-soft); border-color: color-mix(in srgb, var(--mustard) 50%, var(--border)); }
+.intro svg.i { color: var(--accent); margin-top: 2px; }
+.intro p { margin: 0; font-size: .92rem; }
 .filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
-.filters button { border: 1px solid var(--border); background: var(--surface); border-radius: 999px; padding: 5px 12px; font-size: .85rem; }
+.filters button { border: 1px solid var(--border); background: var(--surface); border-radius: 999px; min-height: 40px; padding: 0 14px; font-size: .86rem; font-weight: 700; }
 .filters button[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
-details.card { margin-bottom: 8px; scroll-margin-top: 190px; }
-details > summary { list-style: none; padding: 12px 14px; cursor: pointer; display: flex; gap: 10px; align-items: center; }
+details.card { margin-bottom: 10px; scroll-margin-top: calc(var(--hh) + 12px); overflow: hidden; }
+details > summary { list-style: none; padding: 14px; cursor: pointer; display: flex; gap: 12px; align-items: center; min-height: 64px; }
 details > summary::-webkit-details-marker { display: none; }
-summary .num { font-weight: 700; color: var(--muted); font-variant-numeric: tabular-nums; width: 22px; flex: none; }
+details > summary:focus-visible { outline-offset: -3px; border-radius: 18px; }
+.num { width: 36px; height: 36px; flex: none; border-radius: 12px; display: grid; place-content: center; font-weight: 800; font-variant-numeric: tabular-nums;
+  background: color-mix(in srgb, var(--c, var(--accent)) 16%, transparent); color: var(--c, var(--accent)); }
 summary .title { flex: 1; min-width: 0; }
-summary .title b { display: block; line-height: 1.3; }
-summary .meta { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; align-items: center; font-size: .78rem; color: var(--muted); }
-summary::after { content: "+"; font-size: 1.3rem; color: var(--muted); flex: none; }
-details[open] > summary::after { content: "−"; }
-.rbody { padding: 0 14px 14px 46px; }
-@media (max-width: 520px) { .rbody { padding-left: 14px; } }
-.rbody h4 { margin: 12px 0 4px; font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
-.rbody ul, .rbody ol { margin: 0; padding-left: 20px; }
-.rbody li { margin: 3px 0; }
-.rbody li b { font-variant-numeric: tabular-nums; }
-.facts { display: grid; gap: 6px; margin-top: 12px; }
-.fact { background: var(--surface-2); border-radius: 10px; padding: 8px 12px; font-size: .9rem; }
-.fact strong { display: block; font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
-.fact.reheat { background: var(--accent-soft); }
-.note { font-size: .88rem; color: var(--muted); margin-top: 10px; font-style: italic; }
-.base-tag { --c: var(--accent); }
+summary .title b { display: block; line-height: 1.25; font-size: 1.02rem; }
+summary .meta { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 5px; align-items: center; font-size: .78rem; color: var(--muted); }
+.pp { display: inline-flex; align-items: center; font-weight: 800; font-size: .72rem; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); color: var(--text); white-space: nowrap; line-height: 1.6; }
+.pp.scaled { background: var(--mustard); color: var(--mustard-ink); }
+.chev { width: 20px; height: 20px; flex: none; color: var(--muted); transition: transform .2s; }
+details[open] > summary .chev { transform: rotate(180deg); }
+.rbody { padding: 0 14px 16px; border-top: 1px dashed var(--border); }
 
-/* shop */
-.shop-total { display: flex; justify-content: space-between; align-items: baseline; padding: 14px 16px; margin-bottom: 6px; }
-.shop-total b { font-size: 1.6rem; font-variant-numeric: tabular-nums; }
-.sec-title { font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 18px 0 6px; }
+/* portion stepper */
+.portion-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; margin: 14px 0 4px; padding: 10px 12px; border-radius: 14px; background: var(--surface-2); }
+.stepper { display: inline-flex; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 3px; }
+.stepper button { width: 42px; height: 42px; border-radius: 50%; border: 0; background: var(--accent); color: var(--accent-ink); font-size: 1.4rem; font-weight: 800; line-height: 1; display: grid; place-content: center; }
+.stepper button:disabled { opacity: .35; cursor: not-allowed; }
+.stepper output { min-width: 108px; text-align: center; font-weight: 800; font-variant-numeric: tabular-nums; padding: 0 6px; border-radius: 8px; }
+.sync { font-size: .8rem; color: var(--muted); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.sync .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); flex: none; }
+.sync.custom .dot { background: var(--mustard); }
+.sync button { background: none; border: 1px solid var(--border); border-radius: 999px; min-height: 36px; padding: 0 12px; font-size: .78rem; font-weight: 700; color: var(--text); }
+
+.rbody h4 { margin: 16px 0 6px; font-size: .74rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.scaled-for { text-transform: none; letter-spacing: 0; font-size: .78rem; padding: 1px 8px; border-radius: 999px; background: var(--surface-2); color: var(--text); font-weight: 700; }
+.scaled-for.on { background: var(--mustard); color: var(--mustard-ink); }
+ul.ings { list-style: none; margin: 0; padding: 0; }
+ul.ings li { display: flex; gap: 10px; align-items: baseline; padding: 6px 0; border-bottom: 1px dotted var(--border); }
+ul.ings li:last-child { border-bottom: 0; }
+.amt { flex: none; width: 5.6em; text-align: right; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; padding: 1px 6px; border-radius: 7px; }
+.amt:empty::before { content: "+"; color: var(--muted); font-weight: 600; }
+.ing { min-width: 0; }
+ol.steps { list-style: none; counter-reset: s; margin: 0; padding: 0; }
+ol.steps li { counter-increment: s; position: relative; padding: 4px 0 8px 36px; }
+ol.steps li::before { content: counter(s); position: absolute; left: 0; top: 3px; width: 26px; height: 26px; border-radius: 50%; background: var(--text); color: var(--bg);
+  font-size: .8rem; font-weight: 800; display: grid; place-content: center; }
+.facts { display: grid; gap: 8px; margin-top: 12px; grid-template-columns: 1fr 1fr; }
+.fact { background: var(--surface-2); border-radius: 12px; padding: 9px 12px; font-size: .9rem; min-width: 0; }
+.fact strong { display: block; font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.fact.reheat { background: var(--accent-soft); grid-column: 1 / -1; }
+@media (max-width: 420px) { .facts { grid-template-columns: 1fr; } }
+.note { font-size: .9rem; margin: 12px 0 0; padding: 10px 12px; border-left: 4px solid var(--mustard); background: color-mix(in srgb, var(--mustard-soft) 60%, transparent); border-radius: 0 10px 10px 0; }
+
+/* ---------- Shopping + starter */
+.sticky-sum { position: sticky; top: calc(var(--hh) + 8px); z-index: 10; padding: 12px 14px; margin-bottom: 12px; display: grid; gap: 8px; }
+.sum-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; }
+.sum-top small { display: block; font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; color: var(--muted); }
+.sum-top .big { font-size: 1.6rem; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.1; border-radius: 6px; }
+.sum-top .left { text-align: right; }
+.sum-top .left .big { color: var(--accent); }
+.tools { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 0 0 6px; }
+.tools .lbl { font-size: .78rem; font-weight: 800; color: var(--muted); margin-right: 2px; }
+.seg { border: 1px solid var(--border); background: var(--surface); border-radius: 999px; min-height: 40px; padding: 0 12px; font-size: .82rem; font-weight: 700; }
+.seg[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+.toggle { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; font-size: .84rem; font-weight: 700; cursor: pointer; }
+.toggle input { width: 20px; height: 20px; accent-color: var(--accent); margin: 0; }
+.hide-done .row:has(input:checked) { display: none; }
+.sec-title { font-size: .76rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 20px 0 6px; font-weight: 800; display: flex; justify-content: space-between; }
+.sec-note { margin: -2px 0 8px; font-size: .86rem; color: var(--muted); }
 .item { display: flex; justify-content: space-between; gap: 10px; }
-.where { display: block; font-size: .78rem; color: var(--muted); }
-.price { font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
-.rules { margin: 0; padding-left: 20px; }
-.rules li { margin: 4px 0; }
-.stores { display: grid; gap: 8px; }
-.store { padding: 10px 14px; font-size: .9rem; }
-.store b { display: block; }
-.store .addr { color: var(--accent); font-size: .85rem; font-weight: 600; }
-.life { display: flex; flex-wrap: wrap; gap: 4px 12px; margin-top: 3px; font-size: .8rem; color: var(--muted); }
-.life span b { color: var(--text); font-weight: 600; }
-.tipline { font-size: .82rem; color: var(--muted); font-style: italic; margin-top: 3px; }
-footer { color: var(--muted); font-size: .78rem; text-align: center; padding: 10px 0 30px; }
+.nm { font-weight: 650; }
+.where { display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: center; margin-top: 3px; font-size: .8rem; color: var(--muted); }
+.st { font-size: .7rem; font-weight: 700; padding: 1px 7px; border-radius: 6px; background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
+.price { font-variant-numeric: tabular-nums; font-weight: 800; white-space: nowrap; padding: 0 4px; border-radius: 6px; align-self: flex-start; margin-top: 2px; }
+.opt { font-size: .7rem; font-weight: 700; color: var(--muted); border: 1px dashed var(--muted); border-radius: 6px; padding: 0 5px; margin-left: 4px; }
+.life { display: flex; flex-wrap: wrap; gap: 2px 12px; margin-top: 4px; font-size: .8rem; color: var(--muted); }
+.life span b { color: var(--text); font-weight: 650; }
+.tipline { display: block; font-size: .84rem; margin-top: 6px; padding-left: 8px; border-left: 3px solid var(--mustard); }
+.filtered-out { display: none !important; }
+.empty-sec { display: none; }
+.stores { display: grid; gap: 8px; grid-template-columns: 1fr 1fr; }
+@media (max-width: 560px) { .stores { grid-template-columns: 1fr; } }
+.store { padding: 12px 14px; font-size: .9rem; }
+.store b { display: block; font-size: 1rem; }
+.store .addr { display: flex; gap: 6px; align-items: flex-start; color: var(--accent); font-size: .85rem; font-weight: 700; margin: 2px 0 4px; }
+.store .addr svg.i { width: 16px; height: 16px; margin-top: 2px; }
+.pantry-sum { padding: 2px 0 8px; }
+
+footer { color: var(--muted); font-size: .78rem; text-align: center; padding: 0 16px calc(var(--navh) + 30px); }
+
+@media (min-width: 760px) {
+  .top { padding-top: 14px; }
+  .today { padding: 20px 22px; }
+  .rbody { padding: 0 20px 20px 62px; }
+}
 </style>
 </head>
 <body>
-<header>
+<header class="site" id="siteHeader">
   <div class="wrap">
     <div class="top">
+      <svg class="logo" viewBox="0 0 40 40" aria-hidden="true">
+        <rect width="40" height="40" rx="12" fill="var(--accent)"/>
+        <path d="M7 19h26a13 12 0 0 1-26 0z" fill="var(--accent-ink)"/>
+        <path d="M13 8c-2 2 2 4 0 7M20 7c-2 2 2 4 0 7M27 8c-2 2 2 4 0 7" stroke="var(--mustard)" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      </svg>
       <div class="grow">
-        <h1>Lazy <span>Prep</span></h1>
-        <p>10 meals · 1 hour · no oven</p>
+        <h1 class="display">Lazy <span>Prep</span></h1>
+        <p>10 meals, 1 hour, zero oven</p>
       </div>
-      <button class="icon-btn" id="theme" type="button" aria-label="Toggle colour theme">Auto</button>
+      <button class="icon-btn" id="theme" type="button" aria-label="Colour theme: auto. Tap to change"></button>
     </div>
     <div class="scale">
-      <label for="scale">Portions</label>
-      <input id="scale" type="range" min="0.5" max="4" step="0.5" value="1">
-      <output id="scaleOut" for="scale"></output>
+      <label for="scale"><small>Cooking for</small><output id="scaleOut" for="scale" aria-live="polite"></output></label>
+      <input id="scale" type="range" min="0.5" max="4" step="0.5" value="1" aria-describedby="scaleHint">
+      <span id="scaleHint" class="sr">Scales every amount and price on every tab</span>
     </div>
-    <nav role="tablist">
-      <button role="tab" data-tab="plan" aria-selected="true">Plan</button>
-      <button role="tab" data-tab="recipes" aria-selected="false">Recipes</button>
-      <button role="tab" data-tab="shop" aria-selected="false">Shopping</button>
-      <button role="tab" data-tab="starter" aria-selected="false">Starter</button>
-    </nav>
   </div>
 </header>
 
 <main class="wrap">
-  <section id="plan"></section>
-  <section id="recipes" hidden></section>
-  <section id="shop" hidden></section>
-  <section id="starter" hidden></section>
+  <section id="plan" role="tabpanel" aria-labelledby="tab-plan"></section>
+  <section id="recipes" role="tabpanel" aria-labelledby="tab-recipes" hidden></section>
+  <section id="shop" role="tabpanel" aria-labelledby="tab-shop" lang="da" hidden></section>
+  <section id="starter" role="tabpanel" aria-labelledby="tab-starter" lang="da" hidden></section>
 </main>
-<footer class="wrap">Prices are estimates. Checkboxes are saved on this device.</footer>
+<footer>Prices are rough estimates. Ticks are saved on this device only.</footer>
+
+<nav class="tabs" role="tablist" aria-label="Sections">
+  <button role="tab" id="tab-plan" aria-controls="plan" data-tab="plan" aria-selected="true">
+    <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Plan</button>
+  <button role="tab" id="tab-recipes" aria-controls="recipes" data-tab="recipes" aria-selected="false">
+    <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11h18a9 8 0 0 1-18 0z"/><path d="M8 3c-1 1.5 1 2.5 0 4.5M12 2.5c-1 1.5 1 2.5 0 4.5M16 3c-1 1.5 1 2.5 0 4.5"/></svg>Recipes</button>
+  <button role="tab" id="tab-shop" aria-controls="shop" data-tab="shop" aria-selected="false">
+    <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>Shopping</button>
+  <button role="tab" id="tab-starter" aria-controls="starter" data-tab="starter" aria-selected="false">
+    <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8l9-5 9 5v8l-9 5-9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg>Starter</button>
+</nav>
 
 <script>
 const FRAC = { 0: '', 0.25: '¼', 0.5: '½', 0.75: '¾' };
@@ -209,151 +368,258 @@ function packs(it, f) {
 const DATA = {"STYLES":{"mexican":"Mexican","korean":"Korean","indian":"Indian","italian":"Italian","diner":"American diner","takeaway":"Asian takeaway"},"BASES":[{"id":"A","name":"Crispy airfryer chicken","makes":"6 portions","ingredients":[{"q":1000,"u":"g","n":"chicken breast, thawed (frozen bag is cheapest)"},{"q":1,"u":"tbsp","n":"oil"},{"q":1,"u":"tsp","n":"salt"},{"q":1,"u":"tsp","n":"garlic powder"},{"q":1,"u":"tsp","n":"paprika"},{"q":2,"u":"tbsp","n":"cornstarch (majsstivelse)"}],"steps":["Cut into 3 cm bites. Use kitchen scissors straight over the bowl, no cutting board needed.","Toss everything in a big bowl until coated.","Airfryer 200°C, 12-14 min per batch (about 500 g), single layer. Shake at 7 min.","Done when the biggest piece has no pink inside (75°C if you own a thermometer)."],"fridge":"3 days","freezer":"3 months. Freeze flat in a bag so the bites don't clump.","note":"Cornstarch is the crispy trick. Don't skip it."},{"id":"B","name":"Seasoned mince, 2 ways","makes":"about 500 g taco mince + 650 g bolognese","ingredients":[{"q":500,"u":"g","n":"beef mince 8-12%"},{"q":150,"u":"g","n":"frozen chopped onion"},{"q":1,"u":"tsp","n":"salt"},{"q":1,"u":"jar","n":"pasta sauce (about 500 g)"},{"q":1,"u":"bag","n":"taco spice mix"},{"q":1,"u":"can","n":"kidney beans, drained"},{"q":100,"u":"ml","n":"water"}],"steps":["Pan, medium-high, splash of oil. Mince + onion + salt. Break it up with the spatula and brown for 8 min.","Scoop half into a bowl. That is your taco half.","Pasta sauce into the pan with the other half, simmer 5 min. That is bolognese. Tip it into a box.","Taco half back in the pan with taco mix, beans and water. Bubble 3-4 min until thick."],"fridge":"3 days","freezer":"3 months","note":"Cheeseburger version (recipe 10): skip both sauces and stir in 1 tbsp ketchup + 1 tsp paprika instead."},{"id":"C","name":"Big pot of rice","makes":"6 portions","ingredients":[{"q":450,"u":"g","n":"jasmine rice"},{"q":700,"u":"ml","n":"water"},{"q":0.5,"u":"tsp","n":"salt"}],"steps":["Rinse the rice once in the pot, drain.","Add water + salt, lid on, high heat until it boils.","Lowest heat, 12 min. Don't lift the lid.","Off the heat, lid on, 10 min more.","Spread it on a big plate to cool fast. Fridge within 1 hour."],"fridge":"3 days. Rice is the one to be strict about, cool it fast.","freezer":"2 months","note":"Shortcut: microwave rice pouches, 2 min at 800 W. Pricier, zero work."},{"id":"D","name":"Pasta","makes":"2 portions","ingredients":[{"q":200,"u":"g","n":"penne"},{"q":1,"u":"tsp","n":"salt"}],"steps":["Big pot of salted water, boil.","Cook 1 min LESS than the pack says. It softens more when you reheat it.","Drain and mix with sauce straight away so it doesn't glue together."],"fridge":"3-4 days (with sauce)","freezer":"3 months (with sauce)"},{"id":"E","name":"Frozen potato wedges","makes":"2 portions","ingredients":[{"q":500,"u":"g","n":"frozen potato wedges (kartoffelbåde)"}],"steps":["Never prep these. Cook straight from frozen when you eat, it is zero effort anyway.","Airfryer 200°C, 15-18 min, shake at 8 min."],"fridge":"Don't. Always cook fresh.","freezer":"That's where they live."}],"RECIPES":[{"id":"burrito","name":"Chicken burrito bowl","style":"mexican","bases":["A","C"],"hands":5,"ingredients":[{"q":230,"u":"g","n":"crispy chicken (Base A)"},{"q":0.5,"u":"bag","n":"taco spice mix"},{"q":2,"u":"tbsp","n":"water"},{"q":300,"u":"g","n":"cooked rice (Base C)"},{"q":0.5,"u":"can","n":"sweetcorn, drained"},{"q":60,"u":"g","n":"grated cheese"},{"q":4,"u":"tbsp","n":"salsa"},{"q":2,"u":"tbsp","n":"crème fraîche"}],"steps":["Toss the warm chicken with taco mix and water. It turns into a sticky coating.","Box it: rice, chicken, corn, cheese on top.","Salsa and crème fraîche stay in their jars until you eat."],"fridge":"3 days","freezer":"2 months, without salsa and crème fraîche","reheat":"Microwave 800 W, lid loose, 2-2½ min. Then cold salsa + crème fraîche on top. Hot and cold together is the whole point."},{"id":"quesadilla","name":"Cheesy beef quesadillas","style":"mexican","bases":["B"],"hands":6,"ingredients":[{"q":4,"u":"pcs","n":"large tortillas"},{"q":500,"u":"g","n":"taco mince (Base B)"},{"q":100,"u":"g","n":"grated cheese"},{"q":null,"u":"","n":"salsa + crème fraîche to dip"}],"steps":["Warm the filling 1 min in the microwave so the cheese melts properly.","Filling + cheese on one half of each tortilla, fold.","Airfryer 200°C, 6-7 min, flip at 4 min. If they flap open, weigh them down with the rack.","Cut into triangles and dip."],"fridge":"Filling 3 days. Make the quesadillas fresh, it takes 7 min.","freezer":"Filling 3 months. Or freeze them folded but uncooked, then airfry from frozen at 190°C for 10-12 min, flip halfway.","reheat":"Never microwave a quesadilla, it goes floppy. Leftovers: airfryer 180°C, 3-4 min."},{"id":"tacofries","name":"Taco loaded fries","style":"mexican","bases":["B","E"],"hands":5,"ingredients":[{"q":500,"u":"g","n":"frozen potato wedges (Base E)"},{"q":500,"u":"g","n":"taco mince (Base B)"},{"q":80,"u":"g","n":"grated cheese"},{"q":4,"u":"tbsp","n":"salsa"},{"q":2,"u":"tbsp","n":"crème fraîche"},{"q":null,"u":"","n":"pickled jalapeños (optional)"}],"steps":["Microwave the taco mince 2 min first, keep it covered.","Wedges in the airfryer, 200°C, 15 min, shake at 8.","Pile mince + cheese on the wedges (move to an airfryer-safe dish if your basket is a grill), 200°C, 2-3 min until melty.","Salsa, crème fraîche, jalapeños on top."],"fridge":"Mince 3 days. Fries are always cooked fresh.","freezer":"Mince 3 months.","reheat":"Not a reheat dish. Fresh fries are what keeps it crispy, and they are zero effort."},{"id":"butter","name":"Butter chicken","style":"indian","bases":["A","C"],"hands":3,"ingredients":[{"q":230,"u":"g","n":"crispy chicken (Base A)"},{"q":1,"u":"jar","n":"butter chicken sauce (350-400 g)"},{"q":300,"u":"g","n":"cooked rice (Base C)"},{"q":150,"u":"g","n":"frozen broccoli or peas"},{"q":null,"u":"","n":"frozen naan from Lidl (optional)"}],"steps":["Chicken in the box, pour the sauce over, stir.","Rice on the other side. Frozen broccoli goes straight in, it cooks when you reheat."],"fridge":"3 days","freezer":"3 months. One of the best freezers on this list.","reheat":"Microwave 800 W, lid loose, 3-3½ min, stir halfway. Dry rice? Splash 1 tbsp water on it first. Naan: airfryer 180°C, 2-3 min."},{"id":"korean","name":"Korean sticky chicken bowl","style":"korean","bases":["A","C"],"hands":4,"ingredients":[{"q":230,"u":"g","n":"crispy chicken (Base A)"},{"q":2,"u":"tbsp","n":"gochujang"},{"q":1,"u":"tbsp","n":"soy sauce"},{"q":1,"u":"tbsp","n":"honey"},{"q":1,"u":"tbsp","n":"water"},{"q":300,"u":"g","n":"cooked rice (Base C)"},{"q":150,"u":"g","n":"frozen broccoli"},{"q":null,"u":"","n":"spring onion + sesame seeds (optional)"}],"steps":["Stir gochujang, soy, honey and water in a bowl. No gochujang? Use 2 tbsp sriracha + an extra ½ tbsp honey.","Toss in the chicken.","Box: rice, sticky chicken, frozen broccoli. Spring onion + sesame go on when you eat."],"fridge":"3 days","freezer":"2 months","reheat":"Lazy: microwave 3 min, lid loose. Crispy: keep the sauce in a small cup, airfry the plain chicken 180°C 4 min, then toss.","tip":"Korean beef variant: same sauce on plain browned mince."},{"id":"alforno","name":"Pasta al forno (cheesy bolognese bake)","style":"italian","bases":["B","D"],"hands":5,"ingredients":[{"q":200,"u":"g","n":"penne, cooked (Base D)"},{"q":650,"u":"g","n":"bolognese (Base B)"},{"q":100,"u":"g","n":"grated cheese"}],"steps":["Mix the drained pasta with the hot bolognese.","Split into boxes that can go in the airfryer (oven-safe glass). Cheese on top."],"fridge":"3-4 days","freezer":"3 months. Thaw in the fridge overnight.","reheat":"Microwave 800 W, lid on, 2½ min to heat through. Lid off, then airfryer 200°C, 4-5 min until the cheese bubbles and browns. That's the \"baked\" part, no oven needed."},{"id":"garlicpasta","name":"Creamy garlic parmesan chicken pasta","style":"italian","bases":["A","D"],"hands":6,"ingredients":[{"q":200,"u":"g","n":"penne, cooked (Base D)"},{"q":230,"u":"g","n":"crispy chicken (Base A)"},{"q":150,"u":"g","n":"cream cheese (flødeost naturel)"},{"q":150,"u":"ml","n":"milk"},{"q":40,"u":"g","n":"grated parmesan (Grana Padano)"},{"q":1,"u":"tsp","n":"garlic powder"},{"q":100,"u":"g","n":"frozen chopped spinach"},{"q":null,"u":"","n":"black pepper"}],"steps":["Big microwave bowl: spinach, 2 min.","Add cream cheese, milk, garlic and parmesan. 1½ min, stir until smooth.","Toss in the hot pasta and chicken. Box it."],"fridge":"3 days","freezer":"1 month. The sauce may split a bit, stir in milk and it comes back.","reheat":"Add 2 tbsp milk first, cream sauces thicken in the fridge. Microwave 2 min, stir, 30 s more."},{"id":"sweetsour","name":"Sweet & sour chicken","style":"takeaway","bases":["A","C"],"hands":5,"ingredients":[{"q":230,"u":"g","n":"crispy chicken (Base A)"},{"q":1,"u":"jar","n":"sweet & sour sauce (about 400 g)"},{"q":250,"u":"g","n":"frozen wok vegetables"},{"q":300,"u":"g","n":"cooked rice (Base C)"}],"steps":["Microwave the wok veg in a covered bowl, 4 min. Pour off the water.","Mix veg + sauce + chicken.","Box it with rice."],"fridge":"3 days","freezer":"2 months","reheat":"Microwave 3 min, stir halfway. Takeaway-level crispy: store the chicken dry, airfry 180°C 4 min, toss in the hot sauce."},{"id":"buffalo","name":"Buffalo chicken loaded fries","style":"diner","bases":["A","E"],"hands":5,"ingredients":[{"q":500,"u":"g","n":"frozen potato wedges (Base E)"},{"q":230,"u":"g","n":"crispy chicken (Base A)"},{"q":4,"u":"tbsp","n":"hot sauce (Frank's style or sriracha)"},{"q":1,"u":"tbsp","n":"butter"},{"q":60,"u":"g","n":"grated cheddar"},{"q":3,"u":"tbsp","n":"garlic dressing or ranch"}],"steps":["Microwave butter + hot sauce 30 s, stir. That is buffalo sauce.","Wedges in the airfryer, 200°C, 15 min, shake at 8. Chicken on top for the last 4 min.","Toss the chicken in the sauce, back on the fries, cheese over, 1 more min.","Dressing on top."],"fridge":"Chicken 3 days. Fries always fresh.","freezer":"Chicken 3 months.","reheat":"Nothing to reheat. Everything is cooked fresh in about 20 min, 5 of them hands-on."},{"id":"cheeseburger","name":"Cheeseburger fries bowl","style":"diner","bases":["B","E"],"hands":5,"ingredients":[{"q":500,"u":"g","n":"frozen potato wedges (Base E)"},{"q":250,"u":"g","n":"cheeseburger mince (Base B, see note)"},{"q":60,"u":"g","n":"grated cheddar"},{"q":3,"u":"tbsp","n":"burger dressing"},{"q":6,"u":"pcs","n":"pickle slices, chopped"}],"steps":["Microwave the mince 1½ min, keep it covered.","Wedges in the airfryer, 200°C, 15 min, shake at 8.","Mince + cheese over the wedges, 200°C, 2 min until melted.","Dressing + pickles on top. Basically a Big Mac with fries, in a bowl."],"fridge":"Mince 3 days. Fries always fresh.","freezer":"Mince 3 months.","reheat":"Cook the fries fresh. Only the mince gets reheated."}],"WEEK":[{"day":"Mon","lunch":{"r":"burrito","s":"fridge"},"dinner":{"r":"alforno","s":"fridge"}},{"day":"Tue","lunch":{"r":"butter","s":"fridge"},"dinner":{"r":"tacofries","s":"fridge"}},{"day":"Wed","lunch":{"r":"korean","s":"fridge"},"dinner":{"r":"burrito","s":"fridge"}},{"day":"Thu","lunch":{"r":"alforno","s":"freezer"},"dinner":{"r":"butter","s":"freezer"}},{"day":"Fri","lunch":{"r":"korean","s":"freezer"},"dinner":{"r":"quesadilla","s":"freezer"}}],"EAT":{"burrito":"Microwave 2½ min, then salsa + crème fraîche on top.","alforno":"Microwave 2½ min, then airfryer 200°C 4-5 min for golden cheese.","butter":"Microwave 3-3½ min, stir halfway.","tacofries":"Wedges 200°C 15 min, top with hot mince + cheese, 2 min more.","korean":"Microwave 3 min. Spring onion on top if you bought it.","quesadilla":"2 tortillas, filling + cheese, airfryer 200°C 6-7 min, flip at 4."},"REMINDERS":["Wed evening: move the Thu boxes from freezer to fridge.","Thu evening: move the Fri boxes from freezer to fridge."],"PREP":[{"t":"-1 day","k":"you","x":"Move the {1000|g} frozen chicken to the fridge to thaw. Wash 10 boxes, at least 2 of them oven-safe glass for the pasta bake."},{"t":"0:00","k":"pot","x":"Rinse {450|g} rice, drain. Add {700|ml} water + pinch of salt. Lid on, high heat."},{"t":"0:02","k":"you","x":"Cut the chicken into 3 cm bites with scissors. Toss in a big bowl with {1|tbsp} oil, {1|tsp} salt, {1|tsp} garlic powder, {1|tsp} paprika and {2|tbsp} cornstarch."},{"t":"0:05","k":"pot","x":"Rice boiling? Lowest heat, lid on, timer 12 min."},{"t":"0:08","k":"air","x":"Chicken batch 1 (half), single layer. 200°C, 13 min. Shake at 7 min."},{"t":"0:09","k":"pan","x":"Medium-high, splash of oil. {500|g} mince + {150|g} frozen onion + {1|tsp} salt. Break up, brown 8 min."},{"t":"0:17","k":"pot","x":"Rice off the heat. Lid stays on for 10 min."},{"t":"0:17","k":"pan","x":"Scoop half the mince into a bowl (taco half). Pour {1|jar} pasta sauce into the pan, simmer 5 min. That is your bolognese."},{"t":"0:21","k":"air","x":"Batch 1 out, check no pink inside. Batch 2 in, 200°C, 13 min, shake at 7."},{"t":"0:22","k":"pan","x":"Bolognese into a bowl. Taco half back in the pan + {1|bag} taco mix + {1|can} drained kidney beans + {100|ml} water. Bubble 4 min, then into a box. Pan is done."},{"t":"0:27","k":"pot","x":"Spread the rice on a big plate to cool. Quick rinse, fill the pot with water + salt, lid on, high heat."},{"t":"0:28","k":"you","x":"Korean sauce in a small bowl: {2|tbsp} gochujang + {1|tbsp} soy + {1|tbsp} honey + {1|tbsp} water. Label your boxes with tape: day + meal."},{"t":"0:33","k":"pot","x":"{200|g} penne in. Cook 1 min less than the pack says."},{"t":"0:34","k":"air","x":"Batch 2 out. Airfryer is done."},{"t":"0:35","k":"you","x":"Split the chicken in 3. Third 1: toss with {0.5|bag} taco mix + {2|tbsp} water. Third 2: toss with the Korean sauce. Third 3: into a bowl with {1|jar} butter chicken sauce."},{"t":"0:42","k":"pot","x":"Drain the pasta, back into the pot, stir in the bolognese. Into the 2 glass boxes, {100|g} cheese on top."},{"t":"0:45","k":"you","x":"Assemble the rice boxes (about {150|g} rice each). Burrito x2: rice + taco chicken + {0.5|can} corn + {60|g} cheese. Butter chicken x2 and Korean x2: rice + chicken + {300|g} frozen broccoli split over the 4 boxes."},{"t":"0:52","k":"you","x":"Taco mince into 2 boxes: Tue fries, Fri quesadillas. Lids on loosely while it all steams off."},{"t":"0:55","k":"you","x":"Fridge: Mon, Tue, Wed boxes. Freezer: Thu + Fri boxes. Everything cold within 1 hour of cooking."},{"t":"0:58","k":"you","x":"Wash the pot, pan and bowls. Done. Go lie down."}],"RULES":["Microwave times are for 800 W. At 1000 W take off about 20%.","Lid on loosely in the microwave. Steam keeps sauces saucy and rice soft.","Anything that should be crispy finishes in the airfryer, 180-200°C for 3-5 min. Never just microwave it.","Combo oven: no foil, no metal trays in microwave mode. Glass and ceramic are fine in both modes.","Thaw frozen boxes in the fridge overnight. Forgot? Microwave on defrost 4-5 min, then reheat as normal.","Stir halfway. Microwaves heat edges first, stirring kills the cold middle."],"SHOP":[{"sec":"Frugt & grønt","items":[{"n":"Forårsløg","need":1,"size":1,"label":"1 bundt","price":8,"where":"Alle","opt":true}]},{"sec":"Kød & køl","items":[{"n":"Hakket oksekød 8-12%","u":"g","need":500,"size":500,"label":"500 g","price":48,"where":"Netto / Rema"},{"n":"Revet ost (pizzatopping)","u":"g","need":280,"size":400,"label":"400 g","price":32,"where":"Netto"},{"n":"Cremefraiche 18%","u":"ml","need":120,"size":200,"label":"200 ml","price":12,"where":"Alle"}]},{"sec":"Frost","items":[{"n":"Kyllingebrystfilet, frost","u":"g","need":1000,"size":1000,"label":"1 kg","price":65,"where":"Lidl / Netto"},{"n":"Hakkede løg, frost","u":"g","need":150,"size":300,"label":"300 g","price":12,"where":"Rema / Netto"},{"n":"Broccolibuketter, frost","u":"g","need":300,"size":500,"label":"500 g","price":14,"where":"Lidl / Netto"},{"n":"Kartoffelbåde, frost","u":"g","need":250,"size":1000,"label":"1 kg","price":20,"where":"Lidl"}]},{"sec":"Kolonial","items":[{"n":"Jasminris","u":"g","need":450,"size":1000,"label":"1 kg","price":20,"where":"Alle"},{"n":"Penne","u":"g","need":200,"size":500,"label":"500 g","price":8,"where":"Alle"},{"n":"Pastasauce, basilikum","need":1,"size":1,"label":"1 glas, ca. 500 g","price":12,"where":"Netto / Lidl"},{"n":"Butter chicken sauce","need":1,"size":1,"label":"1 glas","price":25,"where":"Rema / Lidl"},{"n":"Taco krydderimix","need":1.5,"size":1,"label":"1 brev","price":6,"where":"Alle"},{"n":"Kidneybønner","need":1,"size":1,"label":"1 dåse","price":6,"where":"Alle"},{"n":"Majs","need":0.5,"size":1,"label":"1 dåse","price":7,"where":"Alle"},{"n":"Salsa / tacosauce","need":0.5,"size":1,"label":"1 glas","price":15,"where":"Alle"}]},{"sec":"Brød","items":[{"n":"Tortillas, store","u":"stk","need":2,"size":8,"label":"8 stk","price":12,"where":"Lidl / Netto"}]}],"PANTRY":[{"n":"Rapsolie","label":"1 L","price":20},{"n":"Hvidløgspulver","label":"1 bøtte","price":12},{"n":"Paprika","label":"1 bøtte","price":10},{"n":"Majsstivelse (Maizena)","label":"400 g","price":12},{"n":"Sojasauce","label":"1 flaske","price":15},{"n":"Honning","label":"1 glas","price":25},{"n":"Gochujang (eller Sriracha)","label":"1 bøtte","price":30},{"n":"Sesamfrø (valgfri)","label":"1 pose","price":12}],"STARTER":[{"sec":"Frost","note":"Fryseren er din bedste ven. Alt her holder mindst 6 måneder.","items":[{"n":"Kyllingebrystfilet, frost","need":1000,"size":1000,"u":"g","label":"1 kg","price":65,"where":"Lidl","life":"12 mdr. i fryser","open":"Optøet: 1-2 dage i køl","use":["burrito","butter","korean","garlicpasta","sweetsour","buffalo"]},{"n":"Hakket oksekød 8-12%","need":500,"size":500,"u":"g","label":"500 g","price":48,"where":"Netto / Rema","life":"Køl: se datoen. Frys samme dag: 3 mdr.","open":"Optøet: 1 dag i køl","use":["quesadilla","tacofries","alforno","cheeseburger"]},{"n":"Hakkede løg, frost","need":150,"size":300,"u":"g","label":"300 g","price":12,"where":"Netto / Rema","life":"12 mdr.","open":"Luk posen med en klips","use":["quesadilla","tacofries","alforno","cheeseburger"]},{"n":"Broccolibuketter, frost","need":150,"size":500,"u":"g","label":"500 g","price":14,"where":"Lidl / Netto","life":"12 mdr.","open":"Luk posen med en klips","use":["butter","korean"]},{"n":"Wokgrøntsager, frost","need":125,"size":500,"u":"g","label":"500 g","price":15,"where":"Lidl / Netto","life":"12 mdr.","open":"Luk posen med en klips","use":["sweetsour"]},{"n":"Hakket spinat, frost (portioner)","need":50,"size":450,"u":"g","label":"450 g","price":12,"where":"Netto / Rema","life":"12 mdr.","open":"Tag 2 klumper ad gangen","use":["garlicpasta"]},{"n":"Kartoffelbåde, frost","need":750,"size":1000,"u":"g","label":"1 kg","price":20,"where":"Lidl","life":"12 mdr.","open":"Luk posen med en klips","use":["tacofries","buffalo","cheeseburger"]}]},{"sec":"Tørvarer & dåser","note":"Holder i et år eller mere i skabet.","items":[{"n":"Jasminris","need":300,"size":1000,"u":"g","label":"1 kg","price":20,"where":"Alle","life":"2 år","open":"1 år i skabet, lukket pose","use":["burrito","butter","korean","sweetsour"]},{"n":"Penne","need":200,"size":500,"u":"g","label":"500 g","price":8,"where":"Alle","life":"2 år","open":"1 år i skabet","use":["alforno","garlicpasta"]},{"n":"Tortillas, store","need":2,"size":8,"u":"stk","label":"8 stk","price":12,"where":"Lidl / Netto","life":"2-3 mdr.","open":"1 uge. Frys resten, de tør på 1 min","use":["quesadilla"]},{"n":"Kidneybønner","need":1,"size":1,"label":"1 dåse","price":6,"where":"Alle","life":"2-3 år","open":"3 dage i køl, i en boks","use":["quesadilla","tacofries"]},{"n":"Majs","need":0.25,"size":1,"label":"1 dåse","price":7,"where":"Alle","life":"2-3 år","open":"3 dage i køl, eller frys resten","use":["burrito"]},{"n":"Naanbrød (valgfri)","need":1,"size":2,"u":"stk","label":"2 stk","price":15,"where":"Lidl","life":"1-2 uger","open":"Frys dem, 3 mdr.","use":["butter"],"opt":true}]},{"sec":"Saucer & glas","note":"Uåbnet holder de i månedsvis. Efter åbning skal de i køleskabet.","items":[{"n":"Pastasauce, basilikum","need":0.5,"size":1,"label":"500 g glas","price":12,"where":"Netto / Lidl","life":"1-2 år","open":"5 dage i køl","use":["alforno"]},{"n":"Butter chicken sauce","need":0.5,"size":1,"label":"1 glas","price":25,"where":"Rema / Lidl","life":"1 år","open":"3-4 dage i køl","use":["butter"]},{"n":"Sursød sauce","need":0.5,"size":1,"label":"1 glas","price":18,"where":"Rema / Netto","life":"1 år","open":"1 uge i køl","use":["sweetsour"]},{"n":"Salsa / tacosauce","need":0.4,"size":1,"label":"1 glas","price":15,"where":"Alle","life":"1 år","open":"2 uger i køl","use":["burrito","quesadilla","tacofries"]},{"n":"Gochujang","need":0.08,"size":1,"label":"1 bøtte","price":30,"where":"Asian Market / Rema","life":"1-2 år","open":"1 år i køl","use":["korean"]},{"n":"Sriracha","need":0.1,"size":1,"label":"1 flaske","price":22,"where":"Alle","life":"2 år","open":"6+ mdr. (køl er bedst)","use":["korean","buffalo"],"tip":"Dækker både buffalo og som gochujang-erstatning. Køb den hvis du kun vil have én chilisauce."},{"n":"Sojasauce","need":0.05,"size":1,"label":"1 flaske","price":15,"where":"Alle / Asian Market","life":"2-3 år","open":"1 år","use":["korean"]},{"n":"Honning","need":0.03,"size":1,"label":"1 glas","price":25,"where":"Alle","life":"Årevis","open":"Årevis, ikke i køl","use":["korean"]},{"n":"Burgerdressing","need":0.06,"size":1,"label":"1 flaske","price":15,"where":"Netto / Rema","life":"6-12 mdr.","open":"4 uger i køl","use":["cheeseburger"]},{"n":"Hvidløgsdressing","need":0.06,"size":1,"label":"1 flaske","price":15,"where":"Alle","life":"3-6 mdr.","open":"2-3 uger i køl","use":["buffalo"]},{"n":"Pickles / syltede agurker, skiver","need":0.08,"size":1,"label":"1 glas","price":15,"where":"Alle","life":"1-2 år","open":"1-2 mdr. i køl","use":["cheeseburger"]},{"n":"Syltede jalapeños (valgfri)","need":0.05,"size":1,"label":"1 glas","price":15,"where":"Rema / Netto","life":"1-2 år","open":"1 mdr. i køl","use":["tacofries"],"opt":true}]},{"sec":"Krydderier & basis","note":"Købes én gang, holder til mange uger.","items":[{"n":"Taco krydderimix","need":0.75,"size":1,"label":"1 brev","price":6,"where":"Alle","life":"1-2 år","open":"Fold brevet og klips det","use":["burrito","quesadilla","tacofries"]},{"n":"Hvidløgspulver","need":0.02,"size":1,"label":"1 bøtte","price":12,"where":"Alle","life":"2-3 år","open":"1 år med fuld smag","use":["garlicpasta"]},{"n":"Paprika","need":0.02,"size":1,"label":"1 bøtte","price":10,"where":"Alle","life":"2-3 år","open":"1 år med fuld smag","use":["cheeseburger"]},{"n":"Majsstivelse (Maizena)","need":0.05,"size":1,"label":"400 g","price":12,"where":"Alle","life":"Årevis","open":"Årevis, tør og lukket","use":[]},{"n":"Rapsolie","need":0.03,"size":1,"label":"1 L","price":20,"where":"Alle","life":"1-2 år","open":"6 mdr., mørkt sted","use":[]},{"n":"Ketchup","need":0.03,"size":1,"label":"1 flaske","price":15,"where":"Alle","life":"1 år","open":"1-2 mdr. i køl","use":["cheeseburger"]},{"n":"Sesamfrø (valgfri)","need":0.05,"size":1,"label":"1 pose","price":12,"where":"Alle / Asian Market","life":"1 år","open":"6 mdr.","use":["korean"],"opt":true}]},{"sec":"Køl (købes friskt hver uge)","note":"Ikke noget at hamstre. Køb til den uge du skal bruge det.","items":[{"n":"Revet ost (pizzatopping)","need":230,"size":400,"u":"g","label":"400 g","price":32,"where":"Netto","life":"Se datoen, typisk 4-6 uger","open":"5-7 dage. Kan fryses i posen, 3 mdr.","use":["burrito","quesadilla","tacofries","alforno","buffalo","cheeseburger"]},{"n":"Cremefraiche 18%","need":45,"size":200,"u":"ml","label":"200 ml","price":12,"where":"Alle","life":"Se datoen","open":"4-5 dage","use":["burrito","quesadilla","tacofries"]},{"n":"Flødeost naturel","need":75,"size":150,"u":"g","label":"150 g","price":12,"where":"Alle","life":"Se datoen","open":"5 dage","use":["garlicpasta"]},{"n":"Revet parmesan / Grana Padano","need":20,"size":100,"u":"g","label":"100 g","price":20,"where":"Lidl / Netto","life":"2-3 mdr.","open":"3-4 uger i køl","use":["garlicpasta"]},{"n":"Mælk","need":100,"size":1000,"u":"ml","label":"1 L","price":12,"where":"Alle","life":"Se datoen","open":"5-7 dage","use":["garlicpasta"]},{"n":"Smør","need":7,"size":250,"u":"g","label":"250 g","price":20,"where":"Alle","life":"2-3 mdr.","open":"1 mdr. i køl","use":["buffalo"]},{"n":"Forårsløg (valgfri)","need":0.3,"size":1,"label":"1 bundt","price":8,"where":"Alle","life":"1 uge i køl","open":"Skær i ringe og frys, 3 mdr.","use":["korean","buffalo"],"opt":true}]}],"STORES":[{"chain":"Lidl","where":"Mølmarksvej 185","why":"Billigst på frost kylling, kartoffelbåde, tortillas og naan."},{"chain":"Netto","where":"Mølmarksvej 50, Ørbækvej 11, Ole Rømers Vej 65","why":"Godt til ost, mejeri, glas og dåser. Mølmarksvej 50 ligger på samme vej som Lidl, så tag begge på én tur."},{"chain":"Rema 1000","where":"Nyborgvej 99, Vestergade 100 A, Tvedvej 69-75, Bregningevej 58 (Vindeby)","why":"Bredest udvalg af saucer på glas (butter chicken, sursød, hot sauce)."},{"chain":"Asian Market","where":"Indre by, Møllergade/Tinghusgade (er flyttet et par gange, tjek Google Maps)","why":"Bedste bud på gochujang og billig sojasauce. Ring evt. og spørg først."}]};
 
 const KEY = 'lazyprep:v1';
-let state = { checks: {}, scale: 1, tab: 'plan', theme: 'auto' };
+let state = { checks: {}, scale: 1, tab: 'plan', theme: 'auto', rf: {}, hide: false, store: 'all' };
 try { Object.assign(state, JSON.parse(localStorage.getItem(KEY)) || {}); } catch (e) {}
+if (!state.checks || typeof state.checks !== 'object') state.checks = {};
+if (!state.rf || typeof state.rf !== 'object') state.rf = {};
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} };
 
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
-const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const R = Object.fromEntries(DATA.RECIPES.map((r, i) => [r.id, Object.assign({ num: i + 1 }, r)]));
 const TRACK = { pot: 'Pot', pan: 'Pan', air: 'Airfryer', you: 'You' };
-const styleChip = (s) => `<span class="chip" style="--c:var(--${s})">${esc(DATA.STYLES[s])}</span>`;
+const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const LONG = { Sun: 'Sunday', Mon: 'Monday', Tue: 'Tuesday', Wed: 'Wednesday', Thu: 'Thursday', Fri: 'Friday', Sat: 'Saturday' };
+const styleChip = (s) => `<span class="chip" style="--c:var(--${s})">${esc(DATA.STYLES[s] || s)}</span>`;
 const raw = (s) => `<span data-raw="${esc(s)}"></span>`;
-const check = (key) => `<input type="checkbox" data-key="${key}"${state.checks[key] ? ' checked' : ''}>`;
+const check = (key, label) => `<input type="checkbox" data-key="${key}"${state.checks[key] ? ' checked' : ''}${label ? ` aria-label="${esc(label)}"` : ''}>`;
+const storeChips = (w) => String(w || '').split('/').map((x) => x.trim()).filter(Boolean).map((x) => `<span class="st">${esc(x)}</span>`).join('');
+const fmtF = (f) => String(f).replace('.', ',');
+const ICON = {
+  pin: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>',
+  bell: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/></svg>',
+  scale: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M12 4v16"/><circle cx="12" cy="12" r="10"/></svg>',
+  chev: '<svg class="chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
+  sun: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+  moon: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>',
+  auto: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>',
+};
+
+/* Set text and flash it when the value actually changes. */
+function setText(el, t) {
+  if (!el) return;
+  t = String(t);
+  if (el.textContent === t) return;
+  const had = el.textContent !== '';
+  el.textContent = t;
+  if (had) { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
+}
 
 /* ---------- Plan */
+function todayName() {
+  const q = new URLSearchParams(location.search).get('day');
+  return q && DAYS.includes(q) ? q : DAYS[new Date().getDay()];
+}
+
 function renderPlan() {
-  const styles = new Set(DATA.WEEK.flatMap((d) => [R[d.lunch.r].style, R[d.dinner.r].style]));
+  const tn = todayName();
+  const styles = new Set(DATA.WEEK.flatMap((d) => [d.lunch, d.dinner].filter((m) => R[m.r]).map((m) => R[m.r].style)));
+  const nameOf = (m) => (R[m.r] ? R[m.r].name : m.r);
+  const eatOf = (m) => DATA.EAT[m.r] || (R[m.r] && R[m.r].reheat) || '';
+  const store = (m) => m.s === 'freezer' ? '<span class="chip frozen">Freezer</span>' : '<span class="chip fridge">Fridge</span>';
   const meal = (label, m) => `
     <div class="meal">
       <span class="when">${label}</span>
       <span class="what">
-        <button class="link" data-goto="${m.r}">${esc(R[m.r].name)}</button>
-        ${styleChip(R[m.r].style)} ${m.s === 'freezer' ? '<span class="chip frozen">❄ freezer</span>' : ''}
-        <span class="eat">${esc(DATA.EAT[m.r])}</span>
+        <button class="link" type="button" data-goto="${esc(m.r)}">${esc(nameOf(m))}</button>
+        ${R[m.r] ? styleChip(R[m.r].style) : ''} ${m.s === 'freezer' ? '<span class="chip frozen">Freezer</span>' : ''}
+        <span class="eat">${esc(eatOf(m))}</span>
       </span>
     </div>`;
+  const tile = (label, m) => `
+    <div class="mtile">
+      <span class="when">${label} ${store(m)}</span>
+      <button class="link name" type="button" data-goto="${esc(m.r)}">${esc(nameOf(m))}</button>
+      <span class="how">${esc(eatOf(m))}</span>
+    </div>`;
+  const today = DATA.WEEK.find((d) => d.day === tn);
+  const rem = DATA.REMINDERS.filter((x) => x.startsWith(tn));
+  let hero;
+  if (today) {
+    hero = `<div class="card today">
+      <div class="kicker">Today, ${LONG[tn] || tn}</div>
+      <h2 class="display">Grab it, heat it, eat it</h2>
+      <div class="meals2">${tile('Lunch', today.lunch)}${tile('Dinner', today.dinner)}</div>
+      ${rem.map((x) => `<div class="reminder">${ICON.bell}<span>${esc(x)}</span></div>`).join('')}
+    </div>`;
+  } else {
+    const first = DATA.WEEK[0];
+    hero = `<div class="card today">
+      <div class="kicker">${LONG[tn] || tn}</div>
+      <h2 class="display">No boxes today. Prep day?</h2>
+      <p class="muted" style="margin:-4px 0 12px">One hour now buys you ${DATA.WEEK.length * 2} meals. Put a podcast on.</p>
+      ${first ? `<div class="meals2">${tile(first.day + ' lunch', first.lunch)}${tile(first.day + ' dinner', first.dinner)}</div>` : ''}
+      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+        <a class="btn" href="#prepH">Start the prep timeline</a>
+        <button class="btn ghost" type="button" data-tab-go="shop">Shopping list</button>
+      </div>
+    </div>`;
+  }
   $('#plan').innerHTML = `
+    ${hero}
     <div class="stats">
-      <div class="card stat"><b>~60 min</b><span>prep, once</span></div>
+      <div class="card stat"><b>~60 min</b><span>prep, once a week</span></div>
       <div class="card stat"><b id="statMeals">10</b><span>meals</span></div>
-      <div class="card stat"><b>${styles.size}</b><span>flavor styles</span></div>
+      <div class="card stat"><b>${styles.size}</b><span>flavour styles</span></div>
       <div class="card stat"><b id="statPer">-</b><span>per meal</span></div>
     </div>
 
-    <h2>The week</h2>
+    <h2 class="display">The week</h2>
     <div class="week">
-      ${DATA.WEEK.map((d) => `<div class="card day"><b>${d.day}</b>${meal('Lunch', d.lunch)}${meal('Dinner', d.dinner)}</div>`).join('')}
+      ${DATA.WEEK.map((d) => `<div class="card day${d.day === tn ? ' is-today' : ''}"${d.day === tn ? ' aria-current="date"' : ''}>
+        <span class="dname">${esc(d.day)}${d.day === tn ? '<small>Today</small>' : ''}</span>${meal('Lunch', d.lunch)}${meal('Dinner', d.dinner)}</div>`).join('')}
     </div>
     <div class="callout"><ul>${DATA.REMINDERS.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>
 
-    <h2>Prep day timeline</h2>
-    <p class="muted small" style="margin-top:0">Four things run at once. Tick as you go. The combo can't microwave and airfry together, so prep day skips the microwave.</p>
+    <h2 class="display" id="prepH">Prep day timeline</h2>
+    <p class="lede">Four things run at once. Tick as you go, the next step lights up. The combo can't microwave and airfry together, so prep day skips the microwave.</p>
     <div class="legend">${Object.keys(TRACK).map((k) => `<span class="chip track-${k}">${TRACK[k]}</span>`).join('')}</div>
-    <div class="progress"><span id="prepCount"></span><div class="bar"><i id="prepBar"></i></div><button class="reset" data-reset="p:">Reset</button></div>
-    <div class="card list">
+    <div class="progress"><span class="count" id="prepCount"></span><div class="bar" role="presentation"><i id="prepBar"></i></div><button class="reset" type="button" data-reset="p:">Reset</button></div>
+    <div class="card list prep">
       ${DATA.PREP.map((s, i) => `
-        <label class="row">${check('p:' + i)}
-          <span class="body"><span class="time">${esc(s.t)}</span><span class="chip track-${s.k}">${TRACK[s.k]}</span>
+        <label class="row track-${s.k}">${check('p:' + i)}
+          <span class="body"><span class="time">${esc(s.t)}</span><span class="chip track-${s.k}">${TRACK[s.k] || esc(s.k)}</span><span class="upnext">Up next</span>
           <span class="step-text">${raw(s.x)}</span></span>
         </label>`).join('')}
     </div>
-    <p class="muted small" id="scaleNote" hidden>Scaled up? Every extra 500 g chicken is one more airfryer batch, about +13 min.</p>
+    <div class="done-msg" id="prepDone">All done. Fridge is full, go lie down.</div>
+    <p class="muted small scale-note" id="scaleNote" hidden>Scaled up? Every extra 500 g chicken is one more airfryer batch, about +13 min.</p>
 
-    <h2>Reheat rules</h2>
-    <div class="card" style="padding:12px 16px"><ul class="rules">${DATA.RULES.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>`;
+    <h2 class="display">Reheat rules</h2>
+    <div class="card"><ul class="rules">${DATA.RULES.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>`;
 }
 
 /* ---------- Recipes */
-const ingList = (list) => `<ul>${list.map((x) => `<li>${x.q == null ? '' : `<b data-q="${x.q}" data-u="${x.u}"></b> `}${esc(x.n)}</li>`).join('')}</ul>`;
+const ingList = (list) => `<ul class="ings">${list.map((x) => `<li><span class="amt"${x.q == null ? '' : ` data-q="${x.q}" data-u="${esc(x.u)}"`}></span><span class="ing">${esc(x.n)}</span></li>`).join('')}</ul>`;
 const facts = (o, reheat) => `<div class="facts">
-  <div class="fact"><strong>Fridge</strong>${esc(o.fridge)}</div>
-  <div class="fact"><strong>Freezer</strong>${esc(o.freezer)}</div>
-  ${reheat ? `<div class="fact reheat"><strong>Reheat</strong>${esc(reheat)}</div>` : ''}</div>`;
+  ${o.fridge ? `<div class="fact"><strong>Fridge</strong>${esc(o.fridge)}</div>` : ''}
+  ${o.freezer ? `<div class="fact"><strong>Freezer</strong>${esc(o.freezer)}</div>` : ''}
+  ${reheat ? `<div class="fact reheat"><strong>Reheat</strong>${raw(reheat)}</div>` : ''}</div>`;
+const portionBar = (key, name, isBase) => `
+  <div class="portion-bar">
+    <div class="stepper" role="group" aria-label="${isBase ? 'Batch size' : 'Portions'} for ${esc(name)}">
+      <button type="button" data-step="-1" aria-label="Less">-</button>
+      <output class="pout" aria-live="polite"></output>
+      <button type="button" data-step="1" aria-label="More">+</button>
+    </div>
+    <div class="sync"><span class="dot" aria-hidden="true"></span><span class="sync-txt"></span><button type="button" data-sync hidden>Match slider</button></div>
+  </div>`;
 
 function renderRecipes() {
   const used = [...new Set(DATA.RECIPES.map((r) => r.style))];
   const bases = DATA.BASES.map((b) => `
-    <details class="card" data-style="base">
-      <summary><span class="num">${b.id}</span><span class="title"><b>${esc(b.name)}</b>
-        <span class="meta"><span class="chip base-tag">Base</span> makes ${esc(b.makes)}</span></span></summary>
+    <details class="card" id="b-${esc(b.id)}" data-style="base" data-card="b:${esc(b.id)}" data-kind="base">
+      <summary><span class="num">${esc(b.id)}</span><span class="title"><b>${esc(b.name)}</b>
+        <span class="meta"><span class="chip" style="--c:var(--accent)">Base</span><span class="pp"></span> makes ${raw(b.makes)}</span></span>${ICON.chev}</summary>
       <div class="rbody">
-        <h4>You need</h4>${ingList(b.ingredients)}
-        <h4>Do this</h4><ol>${b.steps.map((s) => `<li>${esc(s)}</li>`).join('')}</ol>
-        ${facts(b)}${b.note ? `<p class="note">${esc(b.note)}</p>` : ''}
+        ${portionBar('b:' + b.id, b.name, true)}
+        <h4>You need <span class="scaled-for"></span></h4>${ingList(b.ingredients)}
+        <h4>Do this</h4><ol class="steps">${b.steps.map((s) => `<li>${raw(s)}</li>`).join('')}</ol>
+        ${facts(b)}${b.note ? `<p class="note">${raw(b.note)}</p>` : ''}
       </div>
     </details>`).join('');
   const dishes = Object.values(R).map((r) => `
-    <details class="card" id="r-${r.id}" data-style="${r.style}">
+    <details class="card" id="r-${esc(r.id)}" data-style="${esc(r.style)}" data-card="r:${esc(r.id)}" data-kind="dish" style="--c:var(--${esc(r.style)})">
       <summary><span class="num">${r.num}</span><span class="title"><b>${esc(r.name)}</b>
-        <span class="meta">${styleChip(r.style)} ${r.hands} min hands-on · Base ${r.bases.join(' + ')}</span></span></summary>
+        <span class="meta">${styleChip(r.style)}<span class="pp"></span>${r.hands} min hands-on, base ${esc(r.bases.join(' + '))}</span></span>${ICON.chev}</summary>
       <div class="rbody">
-        <h4>You need · <span class="portions"></span></h4>${ingList(r.ingredients)}
-        <h4>Do this</h4><ol>${r.steps.map((s) => `<li>${esc(s)}</li>`).join('')}</ol>
-        ${facts(r, r.reheat)}${r.tip ? `<p class="note">${esc(r.tip)}</p>` : ''}
+        ${portionBar('r:' + r.id, r.name, false)}
+        <h4>You need <span class="scaled-for"></span></h4>${ingList(r.ingredients)}
+        <h4>Do this</h4><ol class="steps">${r.steps.map((s) => `<li>${raw(s)}</li>`).join('')}</ol>
+        ${facts(r, r.reheat)}${r.tip ? `<p class="note">${raw(r.tip)}</p>` : ''}
       </div>
     </details>`).join('');
   $('#recipes').innerHTML = `
-    <div class="filters">
-      <button aria-pressed="true" data-filter="all">All</button>
-      ${used.map((s) => `<button aria-pressed="false" data-filter="${s}">${esc(DATA.STYLES[s])}</button>`).join('')}
-      <button aria-pressed="false" data-filter="base">Bases</button>
+    <div class="card intro">${ICON.scale}<p><b>Every amount scales.</b> Open a recipe and hit <b>-</b> or <b>+</b> to cook more or less, or drag the slider up top to scale everything at once. Changed numbers flash yellow.</p></div>
+    <div class="filters" role="group" aria-label="Filter recipes">
+      <button type="button" aria-pressed="true" data-filter="all">All</button>
+      ${used.map((s) => `<button type="button" aria-pressed="false" data-filter="${esc(s)}">${esc(DATA.STYLES[s] || s)}</button>`).join('')}
+      <button type="button" aria-pressed="false" data-filter="base">Bases</button>
     </div>
     <div id="dishes">${dishes}</div>
-    <h2 class="base-h">Base components</h2>
-    <p class="muted small base-h" style="margin-top:0">Cook these on prep day. Every dish above is just bases + a sauce.</p>
+    <h2 class="display base-h">Base components</h2>
+    <p class="lede base-h">Cook these on prep day. Every dish above is just bases + a sauce.</p>
     <div>${bases}</div>`;
 }
 
 /* ---------- Shopping */
+const storeKeys = () => DATA.STORES.map((s) => s.chain.split(' ')[0]);
+const storeTools = () => `
+  <div class="tools" role="group" aria-label="Vis varer fra butik">
+    <span class="lbl">Butik</span>
+    <button type="button" class="seg" data-store="all" aria-pressed="false">Alle</button>
+    ${storeKeys().map((k) => `<button type="button" class="seg" data-store="${esc(k)}" aria-pressed="false">${esc(k)}</button>`).join('')}
+  </div>
+  <div class="tools"><label class="toggle"><input type="checkbox" data-hide> Skjul det jeg har købt</label></div>`;
+
 function renderShop() {
   const row = (key, it, extra) => `
-    <label class="row">${check(key)}
-      <span class="body item"><span>${esc(it.n)}${it.opt ? ' <span class="muted small">(valgfri)</span>' : ''}
+    <label class="row" data-where="${esc(it.where || '')}">${check(key)}
+      <span class="body item"><span><span class="nm">${esc(it.n)}</span>${it.opt ? '<span class="opt">valgfri</span>' : ''}
         <span class="where">${extra}</span></span></span>
       <span class="price" ${it.need != null ? `data-price="${key}"` : ''}>${it.need != null ? '' : it.price + ' kr'}</span>
     </label>`;
   $('#shop').innerHTML = `
-    <div class="card shop-total"><span><span class="muted small">Uge i alt</span><br><b id="shopTotal"></b></span>
-      <span class="muted small" style="text-align:right">Tilbage at købe<br><b id="shopLeft" style="font-size:1.1rem"></b></span></div>
-    <div class="progress"><span id="shopCount"></span><div class="bar"><i id="shopBar"></i></div><button class="reset" data-reset="s:">Nulstil</button></div>
+    <div class="card sticky-sum">
+      <div class="sum-top">
+        <span><small>Ugen i alt</small><span class="big" id="shopTotal"></span></span>
+        <span class="left"><small>Tilbage at købe</small><span class="big" id="shopLeft"></span></span>
+      </div>
+      <div class="progress" style="margin:0"><span class="count" id="shopCount"></span><div class="bar" role="presentation"><i id="shopBar"></i></div><button class="reset" type="button" data-reset="s:">Nulstil</button></div>
+    </div>
+    ${storeTools()}
+    <div class="checklist">
     ${DATA.SHOP.map((s, si) => `
-      <div class="sec-title">${esc(s.sec)}</div>
-      <div class="card list">${s.items.map((it, ii) => row(`s:${si}:${ii}`, it, `<span data-pack="s:${si}:${ii}"></span> · ${esc(it.where)}`)).join('')}</div>`).join('')}
-    <p class="muted small" style="margin-top:14px">Første gang? Tjek <button class="link" data-tab-go="starter">Starter-listen</button> med alt til alle 10 opskrifter.</p>
-    <h2>Basisvarer</h2>
-    <p class="muted small" style="margin-top:0">Købes én gang og holder i ugevis. Ikke med i ugens total. I alt ca. <b>${DATA.PANTRY.reduce((a, x) => a + x.price, 0)} kr</b>.</p>
+      <div class="grp">
+      <div class="sec-title"><span>${esc(s.sec)}</span></div>
+      <div class="card list">${s.items.map((it, ii) => row(`s:${si}:${ii}`, it, `<span class="tnum" data-pack="s:${si}:${ii}"></span>${storeChips(it.where)}`)).join('')}</div>
+      </div>`).join('')}
+    </div>
+    <p class="muted small" style="margin-top:14px">Første gang? Tjek <button class="link" type="button" data-tab-go="starter">Starter-listen</button> med alt til alle ${DATA.RECIPES.length} opskrifter.</p>
+    <h2 class="display">Basisvarer</h2>
+    <p class="lede">Købes én gang og holder i ugevis. Ikke med i ugens total. I alt ca. <b>${DATA.PANTRY.reduce((a, x) => a + x.price, 0)} kr</b>.</p>
     <div class="card list">${DATA.PANTRY.map((it, i) => row('b:' + i, it, esc(it.label))).join('')}</div>`;
 }
 
 /* ---------- Starter kit */
 function renderStarter() {
-  const all = DATA.STARTER.flatMap((g) => g.items);
-  const nums = (ids) => ids.length ? ids.map((id) => '#' + R[id].num).join(' ') : 'alt';
+  const nums = (ids) => ids && ids.length ? ids.filter((id) => R[id]).map((id) => '#' + R[id].num).join(' ') : 'alt';
   $('#starter').innerHTML = `
-    <h2>Starter-indkøbsliste</h2>
-    <p class="muted small" style="margin-top:0">Alt til alle 10 opskrifter. Køb én gang, så skal du kun købe kød, ost og mejeri hver uge.
-      Ca. <b id="kitTotal"></b> uden de valgfrie ting. Holdbarhed er tommelfingerregler, pakken vinder altid.</p>
-    <p class="muted small">Skalerer med slideren: ×1 = 10 måltider, én af hver ret. ×4 = 40 måltider, fire af hver. Køl-varerne skal du stadig købe løbende, de holder ikke en måned.</p>
-    <div class="progress"><span id="kitCount"></span><div class="bar"><i id="kitBar"></i></div><button class="reset" data-reset="k:">Nulstil</button></div>
-    <h2>Hvor i Svendborg</h2>
-    <div class="stores">${DATA.STORES.map((s) => `<div class="card store"><b>${esc(s.chain)}</b><span class="addr">${esc(s.where)}</span><div class="muted small">${esc(s.why)}</div></div>`).join('')}</div>
+    <h2 class="display">Starter-indkøbsliste</h2>
+    <p class="lede">Alt til alle ${DATA.RECIPES.length} opskrifter. Køb én gang, så skal du kun købe kød, ost og mejeri hver uge. Holdbarhed er tommelfingerregler, pakken vinder altid.</p>
+    <div class="card sticky-sum">
+      <div class="sum-top">
+        <span><small>Starter i alt</small><span class="big" id="kitTotal"></span></span>
+        <span class="left"><small>Tilbage at købe</small><span class="big" id="kitLeft"></span></span>
+      </div>
+      <div class="progress" style="margin:0"><span class="count" id="kitCount"></span><div class="bar" role="presentation"><i id="kitBar"></i></div><button class="reset" type="button" data-reset="k:">Nulstil</button></div>
+    </div>
+    <p class="muted small">Uden de valgfrie ting. Skalerer med slideren: x1 = 10 måltider, én af hver ret. x4 = 40 måltider. Køl-varerne skal du stadig købe løbende, de holder ikke en måned.</p>
+    <h2 class="display">Hvor i Svendborg</h2>
+    <div class="stores">${DATA.STORES.map((s) => `<div class="card store"><b>${esc(s.chain)}</b><span class="addr">${ICON.pin}<span>${esc(s.where)}</span></span><div class="muted small">${esc(s.why)}</div></div>`).join('')}</div>
     <div class="callout">Nemmeste tur: Lidl (Mølmarksvej 185) + Netto (Mølmarksvej 50) ligger på samme vej og dækker næsten det hele.</div>
+    <h2 class="display">Listen</h2>
+    ${storeTools()}
+    <div class="checklist">
     ${DATA.STARTER.map((g, gi) => `
-      <div class="sec-title">${esc(g.sec)}</div>
-      <p class="muted small" style="margin:0 0 6px">${esc(g.note)}</p>
+      <div class="grp">
+      <div class="sec-title"><span>${esc(g.sec)}</span></div>
+      ${g.note ? `<p class="sec-note">${esc(g.note)}</p>` : ''}
       <div class="card list">${g.items.map((x, i) => `
-        <label class="row">${check(`k:${gi}:${i}`)}
-          <span class="body"><span class="item"><span>${esc(x.n)} <span class="muted small" data-kpack="k:${gi}:${i}"></span></span></span>
+        <label class="row" data-where="${esc(x.where || '')}">${check(`k:${gi}:${i}`)}
+          <span class="body"><span class="nm">${esc(x.n)}</span>${x.opt ? '<span class="opt">valgfri</span>' : ''}
+            <span class="where"><span class="tnum" data-kpack="k:${gi}:${i}"></span>${storeChips(x.where)}</span>
             <span class="life"><span>Uåbnet <b>${esc(x.life)}</b></span><span>Åbnet <b>${esc(x.open)}</b></span></span>
-            <span class="where">${esc(x.where)} · bruges i ${nums(x.use)}</span>
+            <span class="where">Bruges i ${nums(x.use)}</span>
             ${x.tip ? `<span class="tipline">${esc(x.tip)}</span>` : ''}</span>
           <span class="price" data-kprice="k:${gi}:${i}"></span>
-        </label>`).join('')}</div>`).join('')}`;
+        </label>`).join('')}</div>
+      </div>`).join('')}
+    </div>`;
 }
 
-/* ---------- Scale + counters */
+/* ---------- Scaling */
 function usedLabel(it, f) {
   if (!it.u) return '';
   let v = it.need * f;
@@ -362,15 +628,39 @@ function usedLabel(it, f) {
   return `bruger ca. ${Math.round(v / 10) * 10 || Math.round(v)} ${it.u}`;
 }
 const packLabel = (it, n) => (n > 1 ? n + ' x ' : '') + it.label;
+const cardF = (key) => (state.rf[key] != null ? state.rf[key] : state.scale);
+
+function updateCard(card) {
+  const key = card.dataset.card, f = cardF(key), base = card.dataset.kind === 'base';
+  const custom = state.rf[key] != null;
+  const label = base ? `x${fmtF(f)} batch` : `${2 * f} portion${2 * f === 1 ? '' : 's'}`;
+  setText($('.pout', card), label);
+  const pp = $('.pp', card);
+  setText(pp, label);
+  pp.classList.toggle('scaled', f !== 1);
+  const sf = $('.scaled-for', card);
+  setText(sf, base ? (f === 1 ? 'normal batch' : `scaled x${fmtF(f)}`) : `for ${label}`);
+  sf.classList.toggle('on', f !== 1);
+  const [minus, plus] = $$('[data-step]', card);
+  minus.disabled = f <= 0.5; plus.disabled = f >= 8;
+  const sync = $('.sync', card);
+  sync.classList.toggle('custom', custom);
+  $('.sync-txt', sync).textContent = custom ? 'Just this recipe' : 'Follows the slider';
+  $('[data-sync]', sync).hidden = !custom;
+  $$('[data-q]', card).forEach((el) => setText(el, fmtQty(parseFloat(el.dataset.q), el.dataset.u, f)));
+  $$('[data-raw]', card).forEach((el) => setText(el, fmtText(el.dataset.raw, f)));
+}
 
 function update() {
   const f = state.scale;
-  $('#scale').value = f;
-  $('#scaleOut').textContent = `×${f} · ${10 * f} meals`;
-  $$('[data-raw]').forEach((el) => { el.textContent = fmtText(el.dataset.raw, f); });
-  $$('[data-q]').forEach((el) => { el.textContent = fmtQty(parseFloat(el.dataset.q), el.dataset.u, f); });
-  $$('.portions').forEach((el) => { el.textContent = `${2 * f} portion${2 * f === 1 ? '' : 's'}`; });
-  $('#statMeals').textContent = 10 * f;
+  const sl = $('#scale');
+  sl.value = f;
+  sl.style.setProperty('--fill', ((f - 0.5) / 3.5 * 100) + '%');
+  sl.setAttribute('aria-valuetext', `${10 * f} meals, times ${f}`);
+  $('#scaleOut').innerHTML = `${10 * f} meals<em>x${fmtF(f)}</em>`;
+  $$('[data-raw]').forEach((el) => { if (!el.closest('[data-card]')) setText(el, fmtText(el.dataset.raw, f)); });
+  $$('[data-card]').forEach(updateCard);
+  setText($('#statMeals'), 10 * f);
   $('#scaleNote').hidden = f <= 1;
 
   let total = 0, left = 0;
@@ -378,20 +668,21 @@ function update() {
     const key = `s:${si}:${ii}`, n = packs(it, f), price = n * it.price;
     total += price;
     if (!state.checks[key]) left += price;
-    $(`[data-pack="${key}"]`).textContent = packLabel(it, n) + (it.u ? ` (${usedLabel(it, f)})` : '');
-    $(`[data-price="${key}"]`).textContent = price + ' kr';
+    setText($(`[data-pack="${key}"]`), packLabel(it, n) + (it.u ? ` (${usedLabel(it, f)})` : ''));
+    setText($(`[data-price="${key}"]`), price + ' kr');
   }));
-  $('#shopTotal').textContent = `ca. ${total} kr`;
-  $('#shopLeft').textContent = `${left} kr`;
-  let kit = 0;
+  setText($('#shopTotal'), `ca. ${total} kr`);
+  setText($('#shopLeft'), `${left} kr`);
+  let kit = 0, kitLeft = 0;
   DATA.STARTER.forEach((g, gi) => g.items.forEach((it, i) => {
     const key = `k:${gi}:${i}`, n = packs(it, f), price = n * it.price;
-    if (!it.opt) kit += price;
-    $(`[data-kpack="${key}"]`).textContent = packLabel(it, n) + (it.u ? ` · ${usedLabel(it, f)}` : '');
-    $(`[data-kprice="${key}"]`).textContent = price + ' kr';
+    if (!it.opt) { kit += price; if (!state.checks[key]) kitLeft += price; }
+    setText($(`[data-kpack="${key}"]`), packLabel(it, n) + (it.u ? `, ${usedLabel(it, f)}` : ''));
+    setText($(`[data-kprice="${key}"]`), price + ' kr');
   }));
-  $('#kitTotal').textContent = kit + ' kr';
-  $('#statPer').textContent = `${Math.round(total / (10 * f))} kr`;
+  setText($('#kitTotal'), `ca. ${kit} kr`);
+  setText($('#kitLeft'), `${kitLeft} kr`);
+  setText($('#statPer'), `${Math.round(total / (10 * f))} kr`);
   counters();
 }
 
@@ -399,17 +690,42 @@ function counters() {
   const count = (prefix, label, bar) => {
     const boxes = $$(`input[data-key^="${prefix}"]`), done = boxes.filter((b) => b.checked).length;
     $(label).textContent = `${done}/${boxes.length}`;
-    $(bar).style.width = (100 * done / boxes.length) + '%';
+    $(bar).style.width = (boxes.length ? 100 * done / boxes.length : 0) + '%';
+    return done === boxes.length;
   };
-  count('p:', '#prepCount', '#prepBar');
+  const prepDone = count('p:', '#prepCount', '#prepBar');
   count('s:', '#shopCount', '#shopBar');
   count('k:', '#kitCount', '#kitBar');
+  $$('.prep .row').forEach((r) => r.classList.remove('next'));
+  const next = $$('.prep input[data-key]').find((b) => !b.checked);
+  if (next) next.closest('.row').classList.add('next');
+  $('#prepDone').classList.toggle('show', prepDone);
+}
+
+/* ---------- Store filter + hide bought */
+function applyListTools() {
+  const s = state.store || 'all';
+  $$('[data-store]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.store === s));
+  $$('[data-hide]').forEach((b) => { b.checked = !!state.hide; });
+  $$('.checklist').forEach((c) => c.classList.toggle('hide-done', !!state.hide));
+  $$('.checklist .row[data-where]').forEach((r) => {
+    const w = r.dataset.where.toLowerCase();
+    r.classList.toggle('filtered-out', s !== 'all' && !(w.includes(s.toLowerCase()) || w.includes('alle')));
+  });
+  $$('.checklist .grp').forEach((g) => {
+    g.classList.toggle('filtered-out', !$$('.row', g).some((r) => !r.classList.contains('filtered-out')));
+  });
 }
 
 /* ---------- Tabs, theme, events */
 function showTab(tab) {
+  if (!$('#' + tab)) tab = 'plan';
   state.tab = tab;
-  $$('nav button').forEach((b) => b.setAttribute('aria-selected', b.dataset.tab === tab));
+  $$('nav.tabs button').forEach((b) => {
+    const on = b.dataset.tab === tab;
+    b.setAttribute('aria-selected', on);
+    b.tabIndex = on ? 0 : -1;
+  });
   $$('main > section').forEach((s) => { s.hidden = s.id !== tab; });
   save();
 }
@@ -417,28 +733,63 @@ function showTab(tab) {
 function applyTheme() {
   if (state.theme === 'auto') document.documentElement.removeAttribute('data-theme');
   else document.documentElement.dataset.theme = state.theme;
-  $('#theme').textContent = { auto: 'Auto', light: 'Light', dark: 'Dark' }[state.theme];
+  const name = { auto: 'Auto', light: 'Light', dark: 'Dark' }[state.theme] || 'Auto';
+  const b = $('#theme');
+  b.innerHTML = ICON[state.theme] + `<span>${name}</span>`;
+  b.setAttribute('aria-label', `Colour theme: ${name}. Tap to change`);
+  const dark = state.theme === 'dark' || (state.theme === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
+  $('meta[name="theme-color"]').setAttribute('content', dark ? '#16110d' : '#fbf3e8');
 }
 
-renderPlan(); renderRecipes(); renderShop(); renderStarter();
-applyTheme(); showTab(state.tab); update();
+function measureHeader() {
+  const h = $('#siteHeader').offsetHeight;
+  document.documentElement.style.setProperty('--hh', h + 'px');
+}
 
-$('#scale').addEventListener('input', (e) => { state.scale = parseFloat(e.target.value); update(); save(); });
+if (!['auto', 'light', 'dark'].includes(state.theme)) state.theme = 'auto';
+renderPlan(); renderRecipes(); renderShop(); renderStarter();
+applyTheme(); showTab(state.tab); update(); applyListTools(); measureHeader();
+window.addEventListener('resize', measureHeader);
+
+$('#scale').addEventListener('input', (e) => { state.scale = parseFloat(e.target.value); state.rf = {}; update(); save(); });
 $('#theme').addEventListener('click', () => {
   state.theme = { auto: 'light', light: 'dark', dark: 'auto' }[state.theme];
   applyTheme(); save();
 });
-$$('nav button').forEach((b) => b.addEventListener('click', () => { showTab(b.dataset.tab); window.scrollTo(0, 0); }));
+const tabs = $$('nav.tabs button');
+tabs.forEach((b, i) => {
+  b.addEventListener('click', () => { showTab(b.dataset.tab); window.scrollTo(0, 0); });
+  b.addEventListener('keydown', (e) => {
+    const d = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+    if (!d) return;
+    const t = tabs[(i + d + tabs.length) % tabs.length];
+    t.focus(); showTab(t.dataset.tab);
+  });
+});
+try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme); } catch (e) {}
 
 document.addEventListener('change', (e) => {
+  if (e.target.matches('[data-hide]')) { state.hide = e.target.checked; applyListTools(); save(); return; }
   const k = e.target.dataset && e.target.dataset.key;
   if (!k) return;
   if (e.target.checked) state.checks[k] = 1; else delete state.checks[k];
   save();
-  if (k.startsWith('s:')) update(); else counters();
+  if (k.startsWith('s:') || k.startsWith('k:')) update(); else counters();
 });
 
 document.addEventListener('click', (e) => {
+  const step = e.target.closest('[data-step]');
+  if (step) {
+    const card = step.closest('[data-card]'), key = card.dataset.card;
+    const f = Math.min(8, Math.max(0.5, cardF(key) + 0.5 * parseInt(step.dataset.step, 10)));
+    if (f === state.scale) delete state.rf[key]; else state.rf[key] = f;
+    updateCard(card); save();
+    return;
+  }
+  const sync = e.target.closest('[data-sync]');
+  if (sync) { const card = sync.closest('[data-card]'); delete state.rf[card.dataset.card]; updateCard(card); save(); return; }
+  const st = e.target.closest('[data-store]');
+  if (st) { state.store = st.dataset.store; applyListTools(); save(); return; }
   const reset = e.target.closest('[data-reset]');
   if (reset) {
     const p = reset.dataset.reset;
@@ -451,11 +802,13 @@ document.addEventListener('click', (e) => {
   if (tg) { showTab(tg.dataset.tabGo); window.scrollTo(0, 0); return; }
   const go = e.target.closest('[data-goto]');
   if (go) {
+    const d = $('#r-' + go.dataset.goto);
+    if (!d) return;
     showTab('recipes');
     setFilter('all');
-    const d = $('#r-' + go.dataset.goto);
     d.open = true;
-    d.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    d.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
     return;
   }
   const fb = e.target.closest('[data-filter]');
