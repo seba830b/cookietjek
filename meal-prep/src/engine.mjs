@@ -86,7 +86,7 @@ export const PREP_TEXT = {
   leadSecond: 'Kødet fra boksen tilbage i panden: ',
   park: '{{Def}} over i {{what}}. Det venter der på {{wait}}.',
   panWash: 'Vask panden. Den er færdig for i dag.',
-  cool: 'Låg af, boksene side om side, ikke stablet. Vask skål og gryde imens, ca. 10 min.',
+  cool: 'Låg af, boksene side om side, ikke stablet. Vask {{what}} imens, ca. 10 min.',
 };
 
 // ---------- small helpers
@@ -196,14 +196,16 @@ function hardOk(assigned, s, r, n, level) {
     if (a.r.id === r.id) { same++; if (a.s.day === s.day) return false; }
   }
   if (same >= 2) return false;
-  if (level > 0) return true;
+  if (level >= 1) return true;
   const list = [r];
   for (const k in assigned) if (k !== s.key) list.push(assigned[k].r);
-  if (list.filter(isTaco).length > 3) return false;
   const vars = new Set(list.map(minceOf).filter(Boolean));
   if (vars.size > 2) return false;
-  const sauces = new Set(list.filter((x) => chickenOf(x) > 0).map((x) => x.id));
-  if (sauces.size > 3) return false;
+  if (level === 0) {
+    if (list.filter(isTaco).length > 3) return false;
+    const sauces = new Set(list.filter((x) => chickenOf(x) > 0).map((x) => x.id));
+    if (sauces.size > 3) return false;
+  }
   if (list.reduce((a, x) => a + chickenOf(x), 0) > chickenLimit(n) + 1e-6) return false;
   if (estPrep(list) > 90) return false;
   return true;
@@ -334,9 +336,14 @@ export function alternatives(recipes, plan, slotKey) {
   delete rest[slotKey];
   const n = Math.max(1, slots.length);
   const rank = (r) => (s.slot === 'dinner' ? (r.slot === 'dinner' ? 0 : r.slot === 'both' ? 1 : 2) : 0);
-  let ok = list.filter((r) => r.id !== cur && hardOk(rest, s, r, n, 0));
-  if (!ok.length) ok = list.filter((r) => r.id !== cur && hardOk(rest, s, r, n, 1));
-  return ok.sort((a, b) => rank(a) - rank(b) || String(a.name).localeCompare(String(b.name), 'da')).map((r) => r.id);
+  // Strict fits first, then ones that only bend the soft limits (4th chicken sauce, 4th taco meal), then anything that fits the slot.
+  const sort = (a) => a.sort((x, y) => rank(x) - rank(y) || String(x.name).localeCompare(String(y.name), 'da'));
+  const out = [];
+  for (const level of [0, 0.5, 1]) {
+    if (level === 1 && out.length) break;
+    sort(list.filter((r) => r.id !== cur && !out.includes(r) && hardOk(rest, s, r, n, level))).forEach((r) => out.push(r));
+  }
+  return out.map((r) => r.id);
 }
 
 // ---------- needs
@@ -539,7 +546,7 @@ export function buildPrep(plan, needs, recipes, data, f) {
   const ph = (k, a, x, hands, wait, extra) => Object.assign({ k, a, x, hands: hands || 0, wait: wait || 0 }, extra || {});
 
   // Chicken
-  let batches = [], chickenOut = [], batchG = 0, nb = 0, lastBatch = null;
+  let batches = [], chickenOut = [], batchG = 0, nb = 0, lastBatch = null, rawEmpty = false;
   if (chickenG > 0) {
     const kg = chickenG / 1000;
     const klip = Math.max(3, Math.round(6 * kg));
@@ -556,10 +563,12 @@ export function buildPrep(plan, needs, recipes, data, f) {
       const phases = [];
       if (i === 0) {
         phases.push(ph('air', 'TÆND', T.airOn, 1, 3));
-        phases.push(ph('air', 'IND', nb === 1 ? tpl(T.batchOnly, { g: chickenG }) : tpl(T.batchFirst, { nb, g: batchG }), 1, 7));
+        phases.push(ph('air', 'IND', nb === 1 ? tpl(T.batchOnly, { g: chickenG }) : tpl(T.batchFirst, { nb, g: batchG }), 1, 7,
+          { onRun: () => { if (nb === 1) rawEmpty = true; } }));
       } else {
         const idx = i - 1;
-        phases.push(ph('air', 'SKIFT', tpl(T.batchSwap, { prev: String(i), i: String(i + 1), g: batchG }), 1, 7, { onRun: (t) => { chickenOut[idx] = t + 1; } }));
+        phases.push(ph('air', 'SKIFT', tpl(T.batchSwap, { prev: String(i), i: String(i + 1), g: batchG }), 1, 7,
+          { onRun: (t) => { chickenOut[idx] = t + 1; if (i === nb - 1) rawEmpty = true; } }));
       }
       phases.push(ph('air', 'VEND', T.batchTurn, 1, 7));
       if (i === nb - 1) phases.push(ph('air', 'UD', nb === 1 ? T.batchOut : T.batchLast, 1, 0, { onRun: (t) => { chickenOut[i] = t + 1; } }));
@@ -568,7 +577,7 @@ export function buildPrep(plan, needs, recipes, data, f) {
       prev = j;
     }
     lastBatch = batches[nb - 1];
-    job({ id: 'rawBowl', prio: 7, ready: (st) => st.started[lastBatch.id] != null, phases: [ph('you', 'VASK', T.rawBowl, 2)] });
+    job({ id: 'rawBowl', prio: 7, ready: () => rawEmpty, phases: [ph('you', 'VASK', T.rawBowl, 2)] });
   }
   const chickenAt = (g) => (st) => {
     if (!nb) return true;
@@ -738,7 +747,7 @@ export function buildPrep(plan, needs, recipes, data, f) {
   else store = `${listDa(fridgeDays.map((d, i) => (i ? lc1(d) : d)))} i køleskabet, resten i fryseren.`;
   const doneTxt = `Låg på${hasPose ? ', posen lukket' : ''}. ${store} Alt er i køl/frys inden for 1 time.`;
   const allIds = jobs.map((j) => j.id);
-  job({ id: 'cool', prio: 9, deps: allIds, phases: [ph('you', 'DAMP AF', T.cool, 10), ph('you', 'FÆRDIG', doneTxt, 2)] });
+  job({ id: 'cool', prio: 9, deps: allIds, phases: [ph('you', 'DAMP AF', tpl(T.cool, { what: riceJobs.length || pastaJob ? (chickenG ? 'skål og gryde' : 'gryden') : chickenG ? 'skålene' : 'op' }), 10), ph('you', 'FÆRDIG', doneTxt, 2)] });
 
   // ---- simulate, minute by minute
   const st = { t: 0, started: {}, done: {} };
@@ -814,10 +823,11 @@ export function buildPrep(plan, needs, recipes, data, f) {
   if (boxes.fpose) extra.push(`{${boxes.fpose}|fpose}`);
   if (boxes.baeger) extra.push(`{${boxes.baeger}|baeger} med låg`);
   if (totalBoxes || extra.length) {
-    let x = totalBoxes ? `Find {${totalBoxes}|box} med låg frem` : 'Find';
-    if (boxes.glasboks) x += `, heraf {${boxes.glasboks}|glasboks}`;
-    x += '.';
-    if (extra.length) x += totalBoxes ? ` Plus ${listDa(extra)}.` : ` ${listDa(extra)} frem.`;
+    let x;
+    if (totalBoxes) {
+      x = `Find {${totalBoxes}|box} med låg frem` + (boxes.glasboks ? `, heraf {${boxes.glasboks}|glasboks}` : '') + '.';
+      if (extra.length) x += ` Plus ${listDa(extra)}.`;
+    } else x = `Find ${listDa(extra)} frem.`;
     pre.push({ t: 'Dagen før', k: 'you', a: 'FIND', x });
   }
   if (chickenG > 0) pre.push({ t: 'Nødplan', k: 'you', a: 'TØ OP', opt: true, x: usesMicro ? T.emergencyMicro : T.emergency });
