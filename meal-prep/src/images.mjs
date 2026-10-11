@@ -97,6 +97,14 @@ export const IMAGES = {
     licenseUrl: 'https://creativecommons.org/licenses/by-sa/2.0/',
     src: 'https://www.flickr.com/photos/27874898@N00/51859685502',
   },
+  gochupasta: {
+    file: 'img/gochupasta.jpg',
+    title: 'Spicy Italian Sausage Pasta',
+    by: 'kurmanstaff',
+    license: 'CC BY 2.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/2.0/',
+    src: 'https://www.flickr.com/photos/62558987@N07/52930710645',
+  },
   keema: {
     file: 'img/keema.jpg',
     title: 'Mowgli House Keema - Mowgli Street Food, Cardiff',

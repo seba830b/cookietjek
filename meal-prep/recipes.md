@@ -586,6 +586,10 @@ Giver 2 portioner.
 
 ### 17. Cremet gochujang-pasta med kylling
 
+![Cremet gochujang-pasta med kylling](img/gochupasta.jpg)
+
+<sub>Foto: kurmanstaff, CC BY 2.0 ([kilde](https://www.flickr.com/photos/62558987@N07/52930710645))</sub>
+
 **Koreansk** · Base A + D · 3 min arbejdstid · 2 portioner · frokost (kun mikro)
 
 - 200 g penne, tør vægt (ca. 1 krus pr. portion), kogt (Base D)
