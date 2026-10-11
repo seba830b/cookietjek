@@ -298,8 +298,15 @@ ol.steps li::before { content: counter(s); position: absolute; left: 0; top: 3px
 
 /* ---------- Shopping + starter */
 .sum-anchor { height: 0; }
-.sticky-sum { position: sticky; top: calc(var(--hh) + 8px); z-index: 10; padding: 10px 14px; margin-bottom: 12px; display: grid; gap: 6px; transition: top .25s ease; }
-.hdr-hidden .sticky-sum { top: 8px; }
+.sticky-sum { position: relative; padding: 10px 14px; margin-bottom: 12px; display: grid; gap: 6px; }
+/* Floating one-line total once the big card has scrolled away. Fixed, so it never changes the page height. */
+.minisum { position: fixed; z-index: 15; left: 50%; transform: translateX(-50%); top: calc(var(--hh) + 8px); width: min(calc(100% - 32px), 748px);
+  display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 14px; transition: top .25s ease; box-shadow: 0 8px 20px -12px rgb(0 0 0 / .45); }
+.minisum[hidden] { display: none; }
+.minisum small { font-size: .72rem; font-weight: 800; color: var(--muted); margin-right: 6px; }
+.minisum b { color: var(--accent); font-variant-numeric: tabular-nums; }
+.minisum .tnum { font-size: .8rem; font-weight: 800; color: var(--muted); }
+.hdr-hidden .minisum { top: 8px; }
 .sum-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; }
 .sum-top small { display: block; font-size: .68rem; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; color: var(--muted); }
 .sum-top .big { display: block; font-size: 1.4rem; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.1; border-radius: 6px; }
@@ -904,7 +911,8 @@ const sumCard = (list, label) => `
         <span class="stuck-count" id="${list}Count2"></span>
       </div>
       <div class="mini"><span class="count" id="${list}Count"></span><div class="bar" role="presentation"><i id="${list}Bar"></i></div></div>
-    </div>`;
+    </div>
+    <div class="card minisum" data-mini="${list}" hidden aria-hidden="true"><span><small>Tilbage</small><b id="${list}MLeft"></b></span><span class="tnum" id="${list}MCount"></span></div>`;
 
 function renderShop() {
   LIST_ROWS.shop = [];
@@ -1070,6 +1078,8 @@ function totals() {
     setText($(`#${list}Left`), `${left} kr`);
     $(`#${list}Count`).textContent = `${done}/${count}`;
     $(`#${list}Count2`).textContent = `${done}/${count}`;
+    $(`#${list}MCount`).textContent = `${done}/${count} i kurven`;
+    $(`#${list}MLeft`).textContent = `${left} kr`;
     $(`#${list}Bar`).style.width = (count ? 100 * done / count : 0) + '%';
     if (list === 'shop') {
       let weekly = 0;
@@ -1279,8 +1289,8 @@ function applyTheme() {
 function measureHeader() {
   document.documentElement.style.setProperty('--hh', $('#siteHeader').offsetHeight + 'px');
 }
-/* Hide the header on scroll down, show on scroll up. Sticky totals collapse to one line once stuck.
-   Collapsing keeps the same layout height (negative margin), so nothing below jumps. */
+/* Hide the header on scroll down, show on scroll up. Once the totals card scrolls away,
+   a fixed one-line bar shows instead. It never changes the page height, so it can't fight touch scrolling. */
 let lastY = 0, scrollQueued = false, holdHeader = 0;
 function onScroll() {
   scrollQueued = false;
@@ -1292,18 +1302,9 @@ function onScroll() {
   lastY = y;
   const topPx = document.body.classList.contains('hdr-hidden') ? 8 : hdr.offsetHeight + 8;
   $$('.sticky-sum').forEach((s) => {
-    if (s.offsetParent === null) return;
-    const anchor = s.previousElementSibling;
-    const stuck = anchor.getBoundingClientRect().top < topPx - 4;
-    if (stuck === s.classList.contains('stuck')) return;
-    if (stuck) {
-      const full = s.offsetHeight;
-      s.classList.add('stuck');
-      s.style.marginBottom = (12 + full - s.offsetHeight) + 'px';
-    } else {
-      s.classList.remove('stuck');
-      s.style.marginBottom = '';
-    }
+    const mini = s.nextElementSibling;
+    if (!mini || !mini.matches('[data-mini]')) return;
+    mini.hidden = s.offsetParent === null || s.getBoundingClientRect().bottom > topPx;
   });
 }
 window.addEventListener('scroll', () => { if (!scrollQueued) { scrollQueued = true; requestAnimationFrame(onScroll); } }, { passive: true });
