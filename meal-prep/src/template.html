@@ -639,20 +639,19 @@ function renderPlan() {
     </div>`;
   /* Thaw reminders for tonight, from WEEK.thaw; falls back to REMINDERS that start with today's name. */
   const thawing = DATA.WEEK.filter((d) => [d.lunch, d.dinner].some((m) => m && m.thaw === TODAY));
-  const BOX_PL = { boks: 'bokse', frysepose: 'fryseposer', glasboks: 'glasbokse', bæger: 'bægre', pose: 'poser' };
+  const BOX_PL = { boks: 'bokse', frysepose: 'fryseposer', glasboks: 'glasbokse', bæger: 'bægre', pose: 'fryseposer' };
   let rem = thawing.map((d) => {
     const ms = [d.lunch, d.dinner].filter((m) => m && m.thaw === TODAY);
     let what = 'mad';
     if (ms.every((m) => m.box)) {
       const c = {};
       ms.forEach((m) => { c[m.box] = (c[m.box] || 0) + 1; });
-      what = Object.keys(c).map((b) => `${c[b]} ${c[b] > 1 ? BOX_PL[b] || b : b}`).join(' og ');
+      what = Object.keys(c).map((b) => (c[b] > 1 ? `${c[b]} ${BOX_PL[b] || b}` : b === 'pose' ? 'fryseposen' : `${b}en`)).join(' og ');
     }
     return `I aften: flyt ${dayName(d).toLowerCase()}ens ${what} fra fryseren til køleskabet.`;
   });
-  if (!DATA.WEEK.some((d) => [d.lunch, d.dinner].some((m) => m && m.thaw))) {
-    rem = DATA.REMINDERS.filter((x) => { const s = lc(x); return s.startsWith(lc(TODAY)) || s.startsWith(DA_DAY[TODAY]); });
-  }
+  const exact = DATA.REMINDERS.filter((x) => lc(x).startsWith(DA_DAY[TODAY] + ' aften'));
+  if (exact.length) rem = exact.map((x) => x.replace(/^[^:]+aften:\s*/i, 'I aften: '));
   const flowStep = TODAY === 'Sat' ? 0 : TODAY === 'Sun' ? 1 : 2;
   const firstVisit = !Object.keys(state.checks).length;
   const fs = (i, t, d) => `<div role="listitem" class="fs${flowStep === i ? ' on' : ''}"${flowStep === i ? ' aria-current="step"' : ''}>${t}<small>${d}</small></div>`;
@@ -692,9 +691,9 @@ function renderPlan() {
   }
   const kitName = (k, c) => { const nm = String(c > 1 && k.pl ? k.pl : k.n || ''); return c != null ? nm.charAt(0).toLowerCase() + nm.slice(1) : nm; };
   const kitLi = (k) => {
-    if (!Number.isFinite(k.count)) return `<li><span>${esc(k.n)}${k.note ? ` <small>${esc(k.note)}</small>` : ''}</span></li>`;
-    const scal = /boks|pose/i.test(k.n || '') && (k.pl || k.count > 1);
-    return `<li><span>${scal ? `<b class="tnum" data-kc="${k.count}"></b> <span data-kn="${esc(k.n)}" data-kpl="${esc(k.pl || k.n)}"></span>` : `<b class="tnum">${k.count}</b> ${esc(kitName(k, k.count))}`}${k.note ? ` <small>${esc(k.note)}</small>` : ''}</span></li>`;
+    if (!Number.isFinite(k.count)) return `<li><span>${esc(k.n)}${k.note ? ` <small>${raw(k.note)}</small>` : ''}</span></li>`;
+    const scal = !!k.u;
+    return `<li><span>${scal ? `<b class="tnum" data-kc="${k.count}"></b> <span data-kn="${esc(k.n)}" data-kpl="${esc(k.pl || k.n)}"></span>` : `<b class="tnum">${k.count}</b> ${esc(kitName(k, k.count))}`}${k.note ? ` <small>${raw(k.note)}</small>` : ''}</span></li>`;
   };
   const kit = DATA.KIT.length ? `<details class="card kit" id="kitBox"${state.prepStart == null ? ' open' : ''}><summary><h3>Det skal du bruge</h3>${ICON.chev}</summary><ul>${DATA.KIT.map(kitLi).join('')}</ul></details>` : '';
   $('#plan').innerHTML = `
@@ -940,10 +939,11 @@ function update() {
   $$('[data-meals]').forEach((el) => setText(el, comma(MEALS * f)));
   $$('[data-boxes]').forEach((el) => setText(el, Math.ceil(BOXES * f)));
   $$('[data-kc]').forEach((el) => {
-    const c = Math.max(1, Math.ceil(parseFloat(el.dataset.kc) * f));
+    const c = Math.max(1, Math.ceil(parseFloat(el.dataset.kc) * f - 1e-9));
     setText(el, c);
     const nm = el.nextElementSibling, w = String(c > 1 ? nm.dataset.kpl : nm.dataset.kn);
-    nm.textContent = w.charAt(0).toLowerCase() + w.slice(1);
+    const low = w.charAt(0).toLowerCase() + w.slice(1);
+    nm.textContent = c === 1 ? fmtT('1 ' + low, 1).slice(2) : low;
   });
   $$('[data-card]').forEach(updateCard);
   setText($('#statMeals'), comma(MEALS * f));
@@ -1097,11 +1097,10 @@ function tickClock() {
     $('#clockT').textContent = tt;
     STEP_MIN.forEach((t, i) => { if (t != null && t * ratio <= m) nowI = i; });
     const nb = $('#prepList .row.next');
-    if (nb) {
-      const ni = +nb.dataset.i, s = DATA.PREP[ni];
-      nextTxt = `${s.a ? s.a + ' ' : ''}${fmtT(s.x, state.scale)}`;
-      if (STEP_MIN[ni] != null) behind = Math.floor(m - STEP_MIN[ni] * ratio);
-    }
+    if (nb) { const s = DATA.PREP[+nb.dataset.i]; nextTxt = `${s.a ? s.a + ' ' : ''}${fmtT(s.x, state.scale)}`; }
+    /* Behind = how late the first unticked step with a clock time is. */
+    const firstTimed = $$('#prepList input[data-key]:not([data-opt])').map((b) => +b.closest('.row').dataset.i).find((i) => STEP_MIN[i] != null && !state.checks['p:' + i]);
+    if (firstTimed != null) behind = Math.floor(m - STEP_MIN[firstTimed] * ratio);
     const end = hm(new Date(state.prepStart + timeMin(state.scale) * 60000));
     $('#clockNote').textContent = (nowI >= 0 ? `Nu: trin ${nowI + 1} (${DATA.PREP[nowI].t}). ` : 'Lige startet. ') + `Færdig ca. kl. ${end}.` +
       (behind > 3 ? ` Du er ca. ${behind} min bagud, bare fortsæt i rækkefølge.` : '');
