@@ -1,4 +1,5 @@
-// Single source of truth. build.mjs turns this into the .md files and index.html.
+// Single source of truth for content. build.mjs turns it (plus engine.mjs) into the .md files and index.html.
+// Recipes live in recipes/core.mjs (original 10) and recipes/pool.mjs (the growing pool).
 // All text is Danish. Ids and unit codes stay ASCII.
 // Quantities: {q, u, n}. q is for scale x1 (recipes = 2 portions, bases = 1 batch). q null = efter smag / valgfri.
 // Unit codes (see fmt.mjs): g, ml, tsp, tbsp (vådt, bliver til dl), dtbsp (tørt), pcs, can, jar, bag, cube,
@@ -126,371 +127,6 @@ export const BASES = [
   },
 ];
 
-export const RECIPES = [
-  {
-    id: 'burrito',
-    short: 'Burrito bowl',
-    name: 'Burrito bowl med kylling',
-    style: 'mexican',
-    bases: ['A', 'C'],
-    hands: 5,
-    ingredients: [
-      { q: 230, u: 'g', n: 'færdig kylling (Base A, ca. 10 stykker pr. portion)' },
-      { q: 0.5, u: 'bag', n: 'tacokrydderi' },
-      { q: 3, u: 'tbsp', n: 'vand' },
-      { q: 400, u: 'g', n: 'kogte ris (Base C, ca. 1 krus pr. portion)' },
-      { q: 0.5, u: 'can', n: 'majs, drænet' },
-      { q: 60, u: 'g', n: 'revet ost (ca. 1 håndfuld pr. portion)' },
-      { q: 4, u: 'tbsp', n: 'salsa' },
-      { q: 4, u: 'tbsp', n: 'cremefraiche' },
-      { q: null, u: '', n: 'lime, knuste tortillachips eller ristede løg (valgfrit)' },
-    ],
-    steps: [
-      'Pande, middel varme: kylling, tacokrydderi og vand. Vend 1-2 min, til krydderiet sidder fast.',
-      'På prepdagen: brug den uvaskede pande lige efter tacokødet. Gratis smag.',
-      'I boksen: ris, tacokylling, majs og ost ovenpå.',
-      'Salsa og cremefraiche bliver i køleskabet, til du skal spise.',
-    ],
-    fridge: '2 dage (ris)',
-    freezer: '2 mdr., uden salsa og cremefraiche',
-    reheat: 'Mikro 800 W: 1 spsk vand på risen, låg på skrå, 3-4 min, rør halvvejs, til det damper. Kold salsa og cremefraiche på bagefter. Varmt og koldt sammen er hele pointen.',
-    tip: 'Et skvæt lime og en håndfuld knuste tortillachips = takeaway-niveau. Lyst til mere? Hurtigt syltede rødløg: tynde skiver, eddike over og en knivspids sukker og salt, 15 min. Holder en uge i køleskabet.',
-  },
-  {
-    id: 'quesadilla',
-    short: 'Quesadillas',
-    name: 'Quesadillas med oksekød',
-    style: 'mexican',
-    bases: ['B'],
-    hands: 8,
-    ingredients: [
-      { q: 6, u: 'pcs', n: 'tortillas (20 cm)' },
-      { q: 450, u: 'g', n: 'tacokød (Base B)' },
-      { q: 120, u: 'g', n: 'revet ost (ca. 2 håndfulde pr. portion)' },
-      { q: 1, u: 'tsp', n: 'olie til ydersiden' },
-      { q: 4, u: 'tbsp', n: 'salsa til dip' },
-      { q: 4, u: 'tbsp', n: 'cremefraiche til dip' },
-      { q: null, u: '', n: 'syltede jalapeños (valgfrit)' },
-    ],
-    steps: [
-      'Varm fyldet i mikroen under låg, 2 min, til det damper. Rør rundt.',
-      'Hver tortilla: ost på den ene halvdel, fyld, mere ost ovenpå, fold. Ost på begge sider limer den sammen.',
-      'Gnid ydersiden med lidt olie, bare med fingrene. Det giver den gyldne farve.',
-      'På pladen med folden nedad (eller en tandstik i). Airfry 200°C, 6-8 min, vend halvvejs. Der er plads til ca. 3 ad gangen.',
-      'Skær i trekanter og dip.',
-    ],
-    fridge: 'Fyld 2-3 dage. Saml dem, når du skal spise, ca. 8 min.',
-    freezer: 'Fyld 3 mdr. Tø det op i køleskabet natten over.',
-    reheat: 'Mikro aldrig en færdig quesadilla, den bliver slap. Rester: airfryer 180°C, 3-4 min.',
-  },
-  {
-    id: 'tacofries',
-    short: 'Taco fries',
-    name: 'Taco loaded fries',
-    style: 'mexican',
-    bases: ['B', 'E'],
-    hands: 5,
-    ingredients: [
-      { q: 500, u: 'g', n: 'frosne kartoffelbåde (Base E, ca. ⅓ pose pr. portion)' },
-      { q: 450, u: 'g', n: 'tacokød (Base B)' },
-      { q: 80, u: 'g', n: 'revet ost' },
-      { q: 4, u: 'tbsp', n: 'salsa' },
-      { q: 4, u: 'tbsp', n: 'cremefraiche' },
-      { q: null, u: '', n: 'syltede jalapeños, lime, ristede løg (valgfrit)' },
-    ],
-    steps: [
-      'Bådene i ét lag på pladen, 200°C, 20-25 min, vend 2 gange.',
-      'Tag pladen ud (bådene bliver på den). Kødet i mikroen under låg, 2-3 min, til det damper, rør halvvejs.',
-      'Kød og ost på bådene, pladen ind igen, 200°C, 2 min, til osten smelter.',
-      'Salsa, cremefraiche og jalapeños ovenpå.',
-    ],
-    fridge: 'Kød 2-3 dage. Bådene laves altid friske.',
-    freezer: 'Kød 3 mdr.',
-    reheat: 'Ikke en opvarmningsret. Friske både er det, der holder det sprødt, og de er nul arbejde.',
-  },
-  {
-    id: 'butter',
-    short: 'Butter chicken',
-    name: 'Butter chicken',
-    style: 'indian',
-    bases: ['A', 'C'],
-    hands: 3,
-    ingredients: [
-      { q: 230, u: 'g', n: 'færdig kylling (Base A, ca. 10 stykker pr. portion)' },
-      { q: 1, u: 'jar', n: 'tikka masala- eller butter chicken-sauce (350 g)' },
-      { q: 400, u: 'g', n: 'kogte ris (Base C, ca. 1 krus pr. portion)' },
-      { q: 150, u: 'g', n: 'frosne ærter (ca. ½ krus pr. portion)' },
-      { q: null, u: '', n: 'en klat smør eller 1 spsk cremefraiche pr. boks, når du spiser (valgfrit)' },
-      { q: null, u: '', n: 'naan (valgfrit)' },
-    ],
-    steps: [
-      'Kylling direkte i boksene ved siden af risen. Saucen over, rør rundt.',
-      'Frosne ærter ovenpå. De bliver kogt, når du varmer op.',
-    ],
-    fridge: '2 dage (ris)',
-    freezer: '3 mdr. Tåler frost bedre end de fleste.',
-    reheat: 'Mikro 800 W: låg på skrå, 4-5 min, rør halvvejs, til det damper. Rør en klat smør eller cremefraiche i. Naan bagefter: airfryer 180°C, 2-3 min.',
-    tip: 'Et glas tikka masala + en klat smør er stort set butter chicken. Rema har tikka-glasset billigst.',
-  },
-  {
-    id: 'korean',
-    short: 'Koreansk kylling',
-    name: 'Koreansk sticky chicken',
-    style: 'korean',
-    bases: ['A', 'C'],
-    hands: 4,
-    ingredients: [
-      { q: 230, u: 'g', n: 'færdig kylling (Base A, ca. 10 stykker pr. portion), uden sauce' },
-      { q: 2, u: 'tbsp', n: 'stærk chilisauce eller gochujang' },
-      { q: 1, u: 'tbsp', n: 'sojasauce' },
-      { q: 1, u: 'tbsp', n: 'honning' },
-      { q: 1, u: 'tsp', n: 'hvidløgspulver' },
-      { q: 1, u: 'tbsp', n: 'vand' },
-      { q: 400, u: 'g', n: 'kogte ris (Base C, ca. 1 krus pr. portion)' },
-      { q: 150, u: 'g', n: 'frossen broccoli (ca. 2 håndfulde pr. portion)' },
-      { q: null, u: '', n: 'spicy mayo (mayo + chilisauce 3:1), forårsløg, sesam (valgfrit)' },
-    ],
-    steps: [
-      'Rør chilisauce, soja, honning, hvidløg og vand sammen i et krus. Med chilisauce: {0.5|tbsp} ekstra honning i.',
-      'Fordel saucen i små bægre, ét pr. boks.',
-      'I boksen: ris, kylling uden sauce ovenpå, frossen broccoli. Saucebægeret ned i boksen.',
-    ],
-    fridge: '2 dage (ris)',
-    freezer: '2 mdr., med saucebæger og det hele',
-    reheat: 'Sprød version (hjemme): tag saucebæger og kylling ud. Boksen i mikro med 1 spsk vand på risen, 4-5 min, rør halvvejs. Kyllingen 1 min i mikro, så på pladen ved 200°C i 3-4 min. Vend i saucen. Kun mikro: saucen over det hele, 1 spsk vand på risen, 4-5 min, rør halvvejs.',
-    tip: 'Gochujang er den ægte vare, men findes kun i Asian Market. Stærk chilisauce + lidt ekstra honning smager næsten lige så godt.',
-  },
-  {
-    id: 'alforno',
-    short: 'Pasta al forno',
-    name: 'Pasta al forno',
-    style: 'italian',
-    bases: ['B', 'D'],
-    hands: 5,
-    ingredients: [
-      { q: 200, u: 'g', n: 'penne, tør vægt (ca. 1 krus pr. portion), kogt (Base D)' },
-      { q: 600, u: 'g', n: 'bolognese (Base B)' },
-      { q: 100, u: 'g', n: 'revet ost (ca. 2 håndfulde pr. portion)' },
-    ],
-    steps: [
-      'Bland den afdryppede pasta med den varme bolognese.',
-      'Fordel i ovnfaste glasbokse. Ost ovenpå, ca. 2 håndfulde pr. boks.',
-    ],
-    fridge: '2-3 dage',
-    freezer: '3 mdr. Tø op i køleskabet natten over.',
-    reheat: 'Mikro 800 W, låg på skrå, 3½-4 min, til det damper. Plastlåget AF, glasboksen i airfryeren, 200°C, 4-5 min, til osten bobler. Det er "ovn"-delen. Ingen tid? Kun mikro, stadig godt.',
-  },
-  {
-    id: 'garlicpasta',
-    short: 'Hvidløgspasta',
-    name: 'Cremet hvidløgspasta med kylling og parmesan',
-    style: 'italian',
-    bases: ['A', 'D'],
-    hands: 6,
-    ingredients: [
-      { q: 200, u: 'g', n: 'penne, tør vægt (ca. 1 krus pr. portion), kogt (Base D)' },
-      { q: 230, u: 'g', n: 'færdig kylling (Base A, ca. 10 stykker pr. portion)' },
-      { q: 150, u: 'g', n: 'flødeost naturel' },
-      { q: 150, u: 'ml', n: 'mælk' },
-      { q: 40, u: 'g', n: 'revet parmesan (Grana Padano)' },
-      { q: 1, u: 'tsp', n: 'hvidløgspulver' },
-      { q: 100, u: 'g', n: 'frossen hakket spinat (ca. 2 klumper pr. portion)' },
-      { q: null, u: '', n: 'sort peber' },
-    ],
-    steps: [
-      'Stor mikroskål: spinat under låg, 2 min.',
-      'Flødeost, mælk, hvidløg og parmesan i. 1½ min, rør, til det er glat.',
-      'Den varme pasta og kyllingen i. Masser af sort peber. I bokse.',
-    ],
-    fridge: '2-3 dage',
-    freezer: '1 md. Saucen kan skille lidt. Rør lidt mælk i, så samler den sig igen.',
-    reheat: 'Et skvæt mælk (2 spsk) i først, flødesaucer bliver tykke i køleskabet. Mikro med låg på skrå 3 min, rør, 1 min mere, til det damper.',
-  },
-  {
-    id: 'sweetsour',
-    short: 'Sweet chili-kylling',
-    name: 'Sweet chili-kylling',
-    style: 'takeaway',
-    bases: ['A', 'C'],
-    hands: 6,
-    ingredients: [
-      { q: 230, u: 'g', n: 'færdig kylling (Base A, ca. 10 stykker pr. portion), uden sauce' },
-      { q: 90, u: 'ml', n: 'sød chilisauce' },
-      { q: 2, u: 'tbsp', n: 'ketchup' },
-      { q: 1, u: 'tbsp', n: 'sojasauce' },
-      { q: 1, u: 'tbsp', n: 'eddike' },
-      { q: 250, u: 'g', n: 'frosne wokgrøntsager (ca. ¼ pose pr. portion)' },
-      { q: 400, u: 'g', n: 'kogte ris (Base C, ca. 1 krus pr. portion)' },
-      { q: null, u: '', n: 'lille dåse ananas i stykker, drænet (valgfrit)' },
-    ],
-    steps: [
-      'Wokgrønt i en mikroskål under låg, 4-5 min. Hæld vandet fra.',
-      'Rør sød chili, ketchup, soja og eddike i (+ ananas). Det er saucen.',
-      'I boksen: ris og grønt i sauce. Kyllingen ovenpå uden sauce, så den kan blive sprød igen.',
-    ],
-    fridge: '2 dage (ris)',
-    freezer: '2 mdr.',
-    reheat: 'Tag kyllingen ud. Boksen i mikro med 1 spsk vand på risen, låg på skrå, 4-5 min, rør halvvejs. Kyllingen 1 min i mikro, så på pladen ved 200°C i 3-4 min. Vend den i den varme sauce.',
-    tip: 'Du behøver ikke sursød sauce på glas: sød chili + ketchup + eddike er den klassiske takeaway-sauce, og den er billigere.',
-  },
-  {
-    id: 'buffalo',
-    short: 'Buffalo fries',
-    name: 'Buffalo chicken fries',
-    style: 'diner',
-    bases: ['A', 'E'],
-    hands: 5,
-    ingredients: [
-      { q: 500, u: 'g', n: 'frosne kartoffelbåde (Base E, ca. ⅓ pose pr. portion)' },
-      { q: 230, u: 'g', n: 'færdig kylling (Base A, ca. 10 stykker pr. portion), uden sauce' },
-      { q: 3, u: 'tbsp', n: 'sriracha eller stærk chilisauce' },
-      { q: 2, u: 'dtbsp', n: 'smør' },
-      { q: 1, u: 'tbsp', n: 'eddike' },
-      { q: 60, u: 'g', n: 'revet ost (ca. 1 håndfuld pr. portion)' },
-      { q: 3, u: 'tbsp', n: 'hvidløgsdressing' },
-      { q: null, u: '', n: 'forårsløg eller ristede løg (valgfrit)' },
-    ],
-    steps: [
-      'Smør, chilisauce og eddike i et krus. Mikro 30-40 sek., rør. Det er buffalosauce.',
-      'Bådene i ét lag på pladen, 200°C, 20-25 min, vend 2 gange. Kyllingen på pladen de sidste 6 min.',
-      'Vend kyllingen i saucen, tilbage på bådene, ost over, 1-2 min mere.',
-      'Hvidløgsdressing ovenpå.',
-    ],
-    fridge: 'Kylling 2-3 dage. Bådene altid friske.',
-    freezer: 'Kylling uden sauce 3 mdr., fladt i en pose. Tø op i køleskabet natten over.',
-    reheat: 'Intet at varme op, alt laves frisk på ca. 30 min, heraf 5 min arbejdstid. Kyllingen skal dampe indeni. Ikke endnu? 2 min mere.',
-    tip: 'Frank\'s RedHot er den amerikanske original, men svær at finde i Danmark. Chilisauce + smør + eddike kommer tæt på.',
-  },
-  {
-    id: 'cheeseburger',
-    short: 'Cheeseburger fries',
-    name: 'Cheeseburger fries',
-    style: 'diner',
-    bases: ['B', 'E'],
-    hands: 5,
-    ingredients: [
-      { q: 500, u: 'g', n: 'frosne kartoffelbåde (Base E, ca. ⅓ pose pr. portion)' },
-      { q: 200, u: 'g', n: 'cheeseburgerkød (Base B, se note)' },
-      { q: 60, u: 'g', n: 'revet ost (ca. 1 håndfuld pr. portion)' },
-      { q: 3, u: 'tbsp', n: 'burgerdressing' },
-      { q: 6, u: 'pcs', n: 'agurkeskiver, hakket' },
-      { q: null, u: '', n: 'ristede løg (valgfrit, meget burger)' },
-    ],
-    steps: [
-      'Bådene i ét lag på pladen, 200°C, 20-25 min, vend 2 gange.',
-      'Tag pladen ud. Kødet i mikroen under låg, 2-3 min, til det damper.',
-      'Kød og ost over bådene, pladen ind igen, 200°C, 2 min, til osten smelter.',
-      'Dressing, agurker og ristede løg ovenpå. Drive-in-burger i en skål.',
-    ],
-    fridge: 'Kød 2-3 dage. Bådene altid friske.',
-    freezer: 'Kød 3 mdr.',
-    reheat: 'Bådene laves friske. Kun kødet varmes op.',
-  },
-];
-
-// Week plan. day = code (Mon..Fri), name = Danish. s: fridge | freezer.
-// thaw = the evening (day code) the box moves from freezer to fridge.
-// Lunches are microwave-only (eaten at uni), airfryer dishes are dinners.
-// Fridge only Mon-Tue (FVST: rester inden for 2-3 dage, ris 2).
-export const WEEK = [
-  { day: 'Mon', name: 'Mandag', lunch: { r: 'burrito', s: 'fridge', box: 'boks' }, dinner: { r: 'alforno', s: 'fridge', box: 'boks' } },
-  { day: 'Tue', name: 'Tirsdag', lunch: { r: 'butter', s: 'fridge', box: 'boks' }, dinner: { r: 'tacofries', s: 'fridge', box: 'boks' } },
-  { day: 'Wed', name: 'Onsdag', lunch: { r: 'korean', s: 'freezer', thaw: 'Tue', box: 'boks' }, dinner: { r: 'buffalo', s: 'freezer', thaw: 'Tue', box: 'pose' } },
-  { day: 'Thu', name: 'Torsdag', lunch: { r: 'butter', s: 'freezer', thaw: 'Wed', box: 'boks' }, dinner: { r: 'alforno', s: 'freezer', thaw: 'Wed', box: 'boks' } },
-  { day: 'Fri', name: 'Fredag', lunch: { r: 'korean', s: 'freezer', thaw: 'Thu', box: 'boks' }, dinner: { r: 'quesadilla', s: 'freezer', thaw: 'Thu', box: 'boks' } },
-];
-
-// What to do at meal time, per box (not scaled). Lunch dishes are microwave-only.
-export const EAT = {
-  burrito: 'Kun mikro: 1 spsk vand på risen, låg på skrå, 3-4 min, rør halvvejs. Kold salsa og cremefraiche på bagefter. På uni: spring cremefraichen over.',
-  butter: 'Kun mikro: låg på skrå, 4-5 min, rør halvvejs, til det damper. En klat smør eller cremefraiche i, hvis du er hjemme.',
-  korean: 'Kun mikro: saucen over det hele, 1 spsk vand på risen, låg på skrå, 4-5 min, rør halvvejs.',
-  alforno: 'Mikro 3½-4 min, låg på skrå. Plastlåget af, glasboksen i airfryeren 200°C 4-5 min, til osten bobler.',
-  tacofries: 'Bådene 200°C 20-25 min, vend 2 gange. Pladen ud, kødet i mikro 2-3 min. Kød og ost på bådene, 2 min i airfryeren.',
-  buffalo: 'Krus: 1 spsk smør + 1½ spsk chilisauce + 1½ tsk eddike, mikro 30 sek. Bådene 200°C 20-25 min, kyllingen på de sidste 6. Vend i saucen, ost over, 1-2 min.',
-  quesadilla: 'Fyldet i mikro 2 min, til det damper. 3 tortillas: ost, fyld, ost, fold, lidt olie udenpå. Airfryer 200°C 6-8 min, vend halvvejs.',
-  garlicpasta: 'Et skvæt mælk i, mikro 3 min, rør, 1 min mere.',
-  sweetsour: 'Tag kyllingen ud. Boksen i mikro 4-5 min. Kyllingen 1 min i mikro, så på pladen ved 200°C i 3-4 min. Vend i saucen.',
-  cheeseburger: 'Bådene 200°C 20-25 min. Pladen ud, kødet i mikro 2-3 min. Kød og ost på bådene, 2 min i airfryeren.',
-};
-
-export const REMINDERS = [
-  'Tirsdag aften: flyt onsdagens boks (koreansk) og fryseposen (buffalo-kylling) fra fryser til køleskab.',
-  'Onsdag aften: flyt torsdagens 2 bokse (butter chicken og pasta al forno) fra fryser til køleskab.',
-  'Torsdag aften: flyt fredagens 2 bokse (koreansk og tacokød) fra fryser til køleskab.',
-  'Optøede bokse: spis dem inden for 24 timer, og frys dem aldrig igen.',
-  'Frokost på uni: læg boksen i et køleskab, eller tag den med i en køletaske med et køleelement.',
-];
-
-// How long prep day takes, in minutes.
-export const PREP_TIME = { rutine: 85, foersteGang: 110, aktiv: 55 };
-
-// Equipment. count = how many at x1. u = container unit code (fmtQty: whole numbers, rounded up, same as PREP).
-// pl = plural name. note may hold {n|unit} markers and scales like PREP.
-export const KIT = [
-  { n: 'Madbokse med låg', count: 9, u: 'box', pl: 'madbokse med låg', note: 'Heraf {2|glasboks} til pasta al forno.' },
-  { n: 'Frysepose', count: 1, u: 'fpose', pl: 'fryseposer', note: 'Til buffalo-kyllingen.' },
-  { n: 'Små bægre med låg', count: 2, u: 'baeger', pl: 'små bægre med låg', note: 'Til den koreanske sauce. Små syltetøjsglas virker fint.' },
-  { n: 'Skåle', count: 2, pl: 'skåle', note: 'Én til rå kylling, én til færdig kylling. Ikke flere.' },
-  { n: 'Gryde og pande', note: 'Én af hver.' },
-  { n: 'Stegespade eller grydeske', note: 'Til at dele kødet og røre.' },
-  { n: 'Køkkensaks', note: 'Til kyllingen. Så slipper du for skærebræt.' },
-  { n: 'Kniv og en tallerken', note: 'Til løget. Tallerkenen er dit skærebræt.' },
-  { n: 'Et krus', note: 'Dit målebæger: ris, vand, ærter, pasta. Ca. 2,4 dl. Intet dørslag? Hold låget på skrå og hæld vandet ud i vasken.' },
-  { n: 'Spiseske og teske', note: 'Til krydderier og saucer.' },
-  { n: 'Tusch', note: 'Valgfri. Skriv dag og måltid på låget.' },
-  { n: 'Køletaske med køleelement', note: 'Valgfri. Til frokosten på uni.' },
-];
-
-// Prep day. k = track: pot | pan | air | you. a = short action word.
-// Hands never do two things at once. The combo never microwaves while it airfries.
-export const PREP = [
-  { t: 'Dagen før', k: 'you', a: 'TØ OP', x: 'Frossen kylling? Læg den i en skål nederst i køleskabet, ca. 24 timer. Frisk kylling: brug den bare før datoen.' },
-  { t: 'Dagen før', k: 'you', a: 'FIND', x: 'Find {9|box} med låg frem, heraf {2|glasboks}. Plus {1|fpose} og {2|baeger} med låg.' },
-  { t: 'Nødplan', k: 'you', a: 'TØ OP', opt: true, x: 'Er kyllingen stadig frossen? Brug mikroens optøningsprogram, og lav den med det samme. Det er eneste gang, mikroen bruges i dag.' },
-  { t: '0:00', k: 'you', a: 'KLIP', x: 'Klip {1000|g} kylling i 3 cm stykker direkte ned i en stor skål. Tager ca. 6 min.' },
-  { t: '0:06', k: 'you', a: 'KRYDR', x: 'Smuldr {1|cube} hønsebouillon over. Plus {0.5|tsp} salt, {0.5|tsp} peber, {1|tsp} hvidløgspulver og {1|tsp} paprika.' },
-  { t: '0:08', k: 'you', a: 'VEND', x: '{3|dtbsp} majsstivelse og {1|tsp} bagepulver over. Vend, til der ikke er tørt pulver. Til sidst {1|tbsp} olie, vend igen.' },
-  { t: '0:11', k: 'you', a: 'VASK', x: 'Vask hænder og saks med sæbe. Skålen med rå kylling må ikke røre andet.' },
-  { t: '0:12', k: 'air', a: 'TÆND', x: 'Airfry-funktion, 200°C. Forvarm, hvis din model beder om det.' },
-  { t: '0:13', k: 'pot', a: 'SKYL', x: 'Skyl {2|krus} ris i gryden. Låget på skrå, hæld vandet ud i vasken. {2.75|krus} vand og {0.5|tsp} salt i. Låg på, fuld varme.' },
-  { t: '0:15', k: 'you', a: 'HAK', x: 'Skær {1|onion} groft på en tallerken. Pænt behøver det ikke være.' },
-  { t: '0:17', k: 'air', a: 'IND', x: 'Første hold: en tredjedel af kyllingen, ét lag (ca. 350 g). 200°C, 16 min. Laver du til flere: flere hold, se boksen øverst.' },
-  { t: '0:18', k: 'pan', a: 'BRUN', x: 'Høj varme, lidt olie. {400|g} oksekød, løget og {1|tsp} salt. Del kødet med stegespaden, brun 8 min. Over 400 g: 2 omgange.' },
-  { t: '0:20', k: 'pot', a: 'SKRU NED', x: 'Koger risen? Laveste varme, låg på, 12 min. Løft ikke låget.' },
-  { t: '0:21', k: 'you', a: 'RØR', x: 'Koreansk sauce i et krus: {2|tbsp} chilisauce (eller gochujang), {1|tbsp} soja, {1.5|tbsp} honning, {1|tsp} hvidløgspulver, {1|tbsp} vand.' },
-  { t: '0:23', k: 'you', a: 'FORDEL', x: 'Saucen i de små bægre, og skyl kruset. Skriv dag og måltid på lågene med tusch, hvis du gider.' },
-  { t: '0:25', k: 'air', a: 'VEND', x: 'Vend kyllingen.' },
-  { t: '0:26', k: 'pan', a: 'DEL', x: 'Halvdelen af kødet over i en glasboks. Det bliver bolognese om lidt.' },
-  { t: '0:27', k: 'pan', a: 'TACO', x: 'Resten i panden: {1|bag} tacokrydderi, {1|can} drænede kidneybønner, {1|tbsp} ketchup og {0.5|krus} vand. Mos bønnerne lidt. Lad det boble 4 min.' },
-  { t: '0:31', k: 'pan', a: 'FYLD', x: 'Tacokødet direkte i {2|box}, låg af. Halvdelen er til tirsdag, halvdelen til fredag.' },
-  { t: '0:32', k: 'pot', a: 'SLUK', x: 'Risen af varmen. Låget bliver på, 8 min.' },
-  { t: '0:33', k: 'air', a: 'UD', x: 'Kyllingen ud i den rene skål. Skær det største stykke over: hvidt hele vejen? Så er den færdig.' },
-  { t: '0:34', k: 'air', a: 'IND', x: 'Andet hold ind, 200°C, 16 min. Laver du til flere: flere hold, se boksen øverst.' },
-  { t: '0:35', k: 'pan', a: 'SIMR', x: 'Kødet fra glasboksen tilbage i panden. {1|jar} pastasauce, {1|cube} oksebouillon, {1|tsp} hvidløgspulver, {1|tsp} oregano, {0.5|krus} vand. Simr 5 min.' },
-  { t: '0:40', k: 'pot', a: 'FORDEL', x: 'Fordel risen i {5|box}, ca. halvt op. Bred den ud, låg af, så den køler hurtigt.' },
-  { t: '0:41', k: 'pan', a: 'PARKÉR', x: 'Bolognesen over i de ovnfaste glasbokse. Den venter der på pastaen.' },
-  { t: '0:42', k: 'air', a: 'VEND', x: 'Vend kyllingen.' },
-  { t: '0:43', k: 'pan', a: 'GLASÉR', x: 'Uvasket pande, middel varme: {1|portion} kylling (ca. 10 stykker pr. portion), {0.25|bag} tacokrydderi, {1.5|tbsp} vand. Vend 1-2 min.' },
-  { t: '0:45', k: 'you', a: 'BURRITO', x: 'Tacokyllingen i {1|box} med ris. {0.25|can} majs og en håndfuld ost pr. boks ovenpå.' },
-  { t: '0:46', k: 'pot', a: 'KOG', x: 'Skyl gryden. Fyld den halvt med vand, {1|tsp} salt, låg på, fuld varme.' },
-  { t: '0:47', k: 'you', a: 'VASK', x: 'Vask panden. Den er færdig for i dag.' },
-  { t: '0:50', k: 'air', a: 'SKIFT', x: 'Andet hold ud i skålen. Tredje hold ind, 200°C, 16-18 min.' },
-  { t: '0:52', k: 'you', a: 'BUTTER', x: '{2|portion} kylling i {2|box} med ris. {1|jar} tikka masala over, rør rundt.' },
-  { t: '0:54', k: 'you', a: 'ÆRTER', x: '{1|krus} frosne ærter fordelt ovenpå. De bliver kogt, når du varmer op.' },
-  { t: '0:55', k: 'pot', a: 'PENNE', x: 'Koger vandet? {2|krus} penne i. Kog 1 min kortere, end der står på pakken.' },
-  { t: '0:57', k: 'you', a: 'KØL', x: 'Tacokødet og burritoen har dampet af. Låg på: mandag og tirsdag i køleskabet, fredag i fryseren.' },
-  { t: '0:58', k: 'air', a: 'VEND', x: 'Vend kyllingen.' },
-  { t: '0:59', k: 'you', a: 'VASK', x: 'Skålen med rå kylling er tom nu. Vask den og saksen.' },
-  { t: '1:05', k: 'pot', a: 'HÆLD FRA', x: 'Låget på skrå, hæld vandet ud i vasken. Bolognesen fra glasboksene i, rør rundt.' },
-  { t: '1:06', k: 'pot', a: 'FORDEL', x: 'Tilbage i glasboksene. {100|g} revet ost ovenpå, ca. 2 håndfulde pr. boks.' },
-  { t: '1:08', k: 'air', a: 'UD', x: 'Tredje hold ud, tjek det. Sluk airfryeren.' },
-  { t: '1:09', k: 'you', a: 'KOREANSK', x: 'Resten af risboksene ({2|box}): {2|portion} kylling fordelt ligeligt, plus 2 håndfulde frossen broccoli og et saucebæger i hver.' },
-  { t: '1:11', k: 'you', a: 'BUFFALO', x: 'Resten af kyllingen ({1|portion}) i fryseposen, uden sauce. Lad den stå åben, til den har dampet af.' },
-  { t: '1:12', k: 'you', a: 'DAMP AF', x: 'Låg af, boksene side om side, ikke stablet. Vask skål og gryde imens, ca. 10 min.' },
-  { t: '1:22', k: 'you', a: 'FÆRDIG', x: 'Låg på, posen lukket. Mandag og tirsdag i køleskabet, resten i fryseren. Alt er i køl/frys inden for 1 time.' },
-];
-
 // Shown under the timeline when the slider is at or above min.
 export const SCALE_NOTES = [
   { min: 1.5, minutes: 110, text: 'Hver ekstra ca. 350 g rå kylling er et hold mere i airfryeren, ca. +16 min.' },
@@ -512,84 +148,6 @@ export const RULES = [
   'Tø frosne bokse op i køleskabet natten over. Optøet: spis inden for 24 timer, frys aldrig igen. Glemt det? Optøning 4-5 min, så normal opvarmning.',
 ];
 
-// Shopping list. need = amount used by the week plan at x1, size = pack size (same unit), price = DKK per pack.
-// id = same product id in SHOP, STARTER and PANTRY. unit/plural = the pack noun, label = what one pack is.
-// Prices: Rema 1000 catalog + Lidl/Netto offers, Svendborg, Oct 2026.
-export const SHOP = [
-  {
-    sec: 'Frugt og grønt',
-    items: [
-      { id: 'loeg', n: 'Løg', u: 'stk', need: 1, size: 8, label: '1 kg net', unit: 'net', plural: 'net', price: 12, where: 'Alle' },
-      { id: 'lime', n: 'Lime', u: 'stk', need: 1, size: 1, label: '1 stk', unit: 'stk', plural: 'stk', price: 5, where: 'Alle', opt: true },
-      { id: 'foraarsloeg', n: 'Forårsløg', need: 1, size: 1, label: '1 bundt', unit: 'bundt', plural: 'bundter', price: 8, where: 'Alle', opt: true },
-    ],
-  },
-  {
-    sec: 'Kød og køl',
-    items: [
-      { id: 'kylling', n: 'Kyllingebrystfilet, storpakning', u: 'g', need: 1000, size: 1000, label: 'ca. 1 kg', unit: 'pakke', plural: 'pakker', price: 65, where: 'Lidl' },
-      { id: 'oksekoed', n: 'Hakket oksekød 8-12%', u: 'g', need: 400, size: 400, label: '400 g', unit: 'bakke', plural: 'bakker', price: 40, where: 'Netto / Rema / Lidl' },
-      { id: 'ost', n: 'Revet ost (pizzatopping)', u: 'g', need: 260, size: 500, label: '500 g', unit: 'pose', plural: 'poser', price: 25, where: 'Rema / Lidl' },
-      { id: 'cremefraiche', n: 'Cremefraiche 18%', u: 'g', need: 120, size: 250, label: '250 g', unit: 'bæger', plural: 'bægre', price: 13, where: 'Alle' },
-    ],
-  },
-  {
-    sec: 'Frost',
-    items: [
-      { id: 'kartoffelbaade', n: 'Kartoffelbåde', u: 'g', need: 500, size: 750, label: '750 g', unit: 'pose', plural: 'poser', price: 14, where: 'Lidl' },
-      { id: 'aerter', n: 'Ærter', u: 'g', need: 150, size: 500, label: '500 g', unit: 'pose', plural: 'poser', price: 13, where: 'Alle' },
-      { id: 'broccoli', n: 'Broccolibuketter', u: 'g', need: 150, size: 750, label: '750 g', unit: 'pose', plural: 'poser', price: 19, where: 'Lidl' },
-    ],
-  },
-  {
-    sec: 'Kolonial',
-    items: [
-      { id: 'ris', n: 'Jasminris', u: 'g', need: 400, size: 1000, label: '1 kg', unit: 'pose', plural: 'poser', price: 15, where: 'Alle' },
-      { id: 'penne', n: 'Penne', u: 'g', need: 200, size: 500, label: '500 g', unit: 'pose', plural: 'poser', price: 8, where: 'Alle' },
-      { id: 'pastasauce', n: 'Pastasauce, tomat og basilikum', need: 1, size: 1, label: '1 glas, 400 g', unit: 'glas', plural: 'glas', price: 17, where: 'Alle' },
-      { id: 'tikka', alt: 'Patak\'s i Føtex/Bilka', n: 'Tikka masala- eller butter chicken-sauce', need: 1, size: 1, label: '1 glas, 350 g', unit: 'glas', plural: 'glas', price: 19, where: 'Rema' },
-      { id: 'taco', n: 'Tacokrydderi', need: 1.25, size: 1, label: '1 brev', unit: 'brev', plural: 'breve', price: 6, where: 'Alle' },
-      { id: 'kidney', n: 'Kidneybønner', need: 1, size: 1, label: '1 dåse', unit: 'dåse', plural: 'dåser', price: 7, where: 'Alle' },
-      { id: 'majs', n: 'Majs', need: 0.25, size: 1, label: '1 dåse', unit: 'dåse', plural: 'dåser', price: 8, where: 'Alle' },
-      { id: 'salsa', n: 'Salsa / tacosauce', u: 'g', need: 90, size: 230, label: '1 glas', unit: 'glas', plural: 'glas', price: 11, where: 'Alle' },
-      { id: 'hvidloegsdressing', n: 'Hvidløgsdressing', u: 'ml', need: 20, size: 500, label: '1 flaske', unit: 'flaske', plural: 'flasker', price: 15, where: 'Alle' },
-      { id: 'jalapenos', n: 'Syltede jalapeños', need: 0.05, size: 1, label: '1 glas', unit: 'glas', plural: 'glas', price: 9, where: 'Rema / Netto', opt: true },
-      { id: 'tortillachips', n: 'Tortillachips', need: 0.1, size: 1, label: '1 pose', unit: 'pose', plural: 'poser', price: 12, where: 'Alle', opt: true },
-      { id: 'ristedeloeg', n: 'Ristede løg', need: 0.1, size: 1, label: '1 bæger', unit: 'bæger', plural: 'bægre', price: 10, where: 'Alle', opt: true },
-      { id: 'mayo', n: 'Mayonnaise', need: 0.05, size: 1, label: '1 tube', unit: 'tube', plural: 'tuber', price: 12, where: 'Alle', opt: true },
-    ],
-  },
-  {
-    sec: 'Brød',
-    items: [
-      { id: 'tortillas', n: 'Hvedetortillas', u: 'stk', need: 3, size: 8, label: '8 stk (20 cm)', unit: 'pose', plural: 'poser', price: 11, where: 'Rema / Netto' },
-      { id: 'naan', alt: 'tortillas fra Lidl/Netto', n: 'Naanbrød', need: 0.5, size: 1, label: '1 pakke, 260 g', unit: 'pakke', plural: 'pakker', price: 12, where: 'Rema', opt: true },
-    ],
-  },
-];
-
-// Bought once, lasts for weeks. Not scaled, not in the weekly total. opt items are not in the md total.
-export const PANTRY = [
-  { id: 'salt', n: 'Salt', label: '1 kg', unit: 'pakke', plural: 'pakker', price: 5 },
-  { id: 'olie', n: 'Rapsolie', label: '1 L', unit: 'flaske', plural: 'flasker', price: 20 },
-  { id: 'peber', n: 'Sort peber', label: '1 bøtte', unit: 'bøtte', plural: 'bøtter', price: 12 },
-  { id: 'hvidloegspulver', n: 'Hvidløgspulver', label: '1 bøtte', unit: 'bøtte', plural: 'bøtter', price: 12 },
-  { id: 'paprika', n: 'Paprika', label: '1 bøtte', unit: 'bøtte', plural: 'bøtter', price: 10 },
-  { id: 'oregano', n: 'Oregano eller italienske krydderurter', label: '1 bøtte', unit: 'bøtte', plural: 'bøtter', price: 10 },
-  { id: 'hoensebouillon', n: 'Hønsebouillon', label: '1 pakke terninger', unit: 'pakke', plural: 'pakker', price: 10 },
-  { id: 'oksebouillon', n: 'Oksebouillon', label: '1 pakke terninger', unit: 'pakke', plural: 'pakker', price: 10 },
-  { id: 'majsstivelse', n: 'Majsstivelse (Maizena)', label: '400 g', unit: 'pakke', plural: 'pakker', price: 12 },
-  { id: 'bagepulver', n: 'Bagepulver', label: '1 pakke', unit: 'pakke', plural: 'pakker', price: 8 },
-  { id: 'soja', n: 'Sojasauce', label: '1 flaske', unit: 'flaske', plural: 'flasker', price: 11 },
-  { id: 'honning', n: 'Honning', label: '1 glas', unit: 'glas', plural: 'glas', price: 19 },
-  { id: 'ketchup', n: 'Ketchup', label: '1 flaske', unit: 'flaske', plural: 'flasker', price: 9 },
-  { id: 'eddike', n: 'Eddike (lagereddike)', label: '1 flaske', unit: 'flaske', plural: 'flasker', price: 8 },
-  { id: 'smoer', n: 'Smør', label: '200 g', unit: 'pakke', plural: 'pakker', price: 10 },
-  { id: 'chilisauce', n: 'Sriracha / stærk chilisauce', label: '1 flaske', unit: 'flaske', plural: 'flasker', price: 10 },
-  { id: 'gochujang', alt: 'chilisauce + lidt honning', n: 'Gochujang', label: '1 bøtte', unit: 'bøtte', plural: 'bøtter', price: 35, where: 'Asian Market', opt: true },
-  { id: 'sesam', n: 'Sesamfrø', label: '1 pose', unit: 'pose', plural: 'poser', price: 12, opt: true },
-];
-
 export const STORES = [
   { chain: 'Lidl', where: 'Mølmarksvej 185', why: 'Billig kylling i storpakning, kartoffelbåde, broccoli og revet ost.' },
   { chain: 'Netto', where: 'Mølmarksvej 50, Ørbækvej 11, Ole Rømers Vej 65', why: 'Mejeri, dåser og tortillas. Mølmarksvej 50 ligger på samme vej som Lidl, så tag begge på én tur.' },
@@ -597,103 +155,115 @@ export const STORES = [
   { chain: 'Asian Market', where: 'Indre by, Møllergade/Tinghusgade (er flyttet et par gange, tjek Google Maps)', why: 'Eneste sted med gochujang (ca. 25-40 kr) og billig sojasauce. Ring evt. og spørg først.' },
 ];
 
-// Starter kit: everything for all 10 recipes. need = ONE portion of each recipe at x1 (10 meals).
-// use = recipe ids, life = holdbarhed uåbnet, open = efter åbning.
-export const STARTER = [
-  {
-    sec: 'Kød, ost og mejeri (købes friskt hver uge)',
-    note: 'Ikke noget at hamstre. Køb til den uge, du skal bruge det. Kan du ikke nå at lave mad inden datoen, så frys kødet samme dag.',
-    items: [
-      { id: 'kylling', n: 'Kyllingebrystfilet, storpakning', need: 1000, size: 1000, u: 'g', label: 'ca. 1 kg', unit: 'pakke', plural: 'pakker', price: 65, where: 'Lidl', life: 'Se datoen, ellers frys samme dag (12 mdr.)', open: 'Optøet: 1-2 dage i køl', use: ['burrito', 'butter', 'korean', 'garlicpasta', 'sweetsour', 'buffalo'] },
-      { id: 'oksekoed', n: 'Hakket oksekød 8-12%', need: 400, size: 400, u: 'g', label: '400 g', unit: 'bakke', plural: 'bakker', price: 40, where: 'Netto / Rema / Lidl', life: 'Se datoen, ellers frys samme dag (3 mdr.)', open: 'Optøet: 1 dag i køl', use: ['quesadilla', 'tacofries', 'alforno', 'cheeseburger'] },
-      { id: 'ost', n: 'Revet ost (pizzatopping)', need: 240, size: 500, u: 'g', label: '500 g', unit: 'pose', plural: 'poser', price: 25, where: 'Rema / Lidl', life: 'Se datoen, typisk 4-6 uger', open: '5-7 dage. Kan fryses i posen, 3 mdr.', use: ['burrito', 'quesadilla', 'tacofries', 'alforno', 'buffalo', 'cheeseburger'] },
-      { id: 'cremefraiche', n: 'Cremefraiche 18%', need: 110, size: 250, u: 'g', label: '250 g', unit: 'bæger', plural: 'bægre', price: 13, where: 'Alle', life: 'Se datoen', open: '4-5 dage', use: ['burrito', 'quesadilla', 'tacofries', 'butter'] },
-      { id: 'floedeost', n: 'Flødeost naturel', need: 80, size: 200, u: 'g', label: '200 g', unit: 'bæger', plural: 'bægre', price: 15, where: 'Alle', life: 'Se datoen', open: '5 dage', use: ['garlicpasta'] },
-      { id: 'parmesan', n: 'Revet parmesan / Grana Padano', need: 20, size: 100, u: 'g', label: '100 g', unit: 'pose', plural: 'poser', price: 16, where: 'Lidl / Netto', life: '2-3 mdr.', open: '3-4 uger i køl', use: ['garlicpasta'] },
-      { id: 'maelk', n: 'Mælk', need: 100, size: 1000, u: 'ml', label: '1 L', unit: 'karton', plural: 'kartoner', price: 12, where: 'Alle', life: 'Se datoen', open: '3-5 dage', use: ['garlicpasta'] },
-      { id: 'smoer', n: 'Smør', need: 20, size: 200, u: 'g', label: '200 g', unit: 'pakke', plural: 'pakker', price: 10, where: 'Alle', life: '2-3 mdr.', open: '1 md. i køl', use: ['buffalo', 'butter'] },
-    ],
-  },
-  {
-    sec: 'Frost',
-    note: 'Fryseren er din bedste ven. Alt her holder i månedsvis.',
-    items: [
-      { id: 'kartoffelbaade', n: 'Kartoffelbåde', need: 750, size: 750, u: 'g', label: '750 g', unit: 'pose', plural: 'poser', price: 14, where: 'Lidl', life: '12 mdr.', open: 'Luk posen med en klips', use: ['tacofries', 'buffalo', 'cheeseburger'] },
-      { id: 'aerter', n: 'Ærter', need: 80, size: 500, u: 'g', label: '500 g', unit: 'pose', plural: 'poser', price: 13, where: 'Alle', life: '12 mdr.', open: 'Luk posen med en klips', use: ['butter'] },
-      { id: 'broccoli', n: 'Broccolibuketter', need: 80, size: 750, u: 'g', label: '750 g', unit: 'pose', plural: 'poser', price: 19, where: 'Lidl', life: '12 mdr.', open: 'Luk posen med en klips', use: ['korean'] },
-      { id: 'wok', n: 'Wokgrøntsager', need: 130, size: 500, u: 'g', label: '500 g', unit: 'pose', plural: 'poser', price: 16, where: 'Lidl / Netto', life: '12 mdr.', open: 'Luk posen med en klips', use: ['sweetsour'] },
-      { id: 'spinat', n: 'Hakket spinat i portioner', need: 50, size: 750, u: 'g', label: '750 g', unit: 'pose', plural: 'poser', price: 12, where: 'Netto / Rema', life: '12 mdr.', open: 'Tag 2 klumper ad gangen', use: ['garlicpasta'] },
-    ],
-  },
-  {
-    sec: 'Grønt',
-    note: 'Løg holder længe i et mørkt skab, ikke i køleskabet.',
-    items: [
-      { id: 'loeg', n: 'Løg', need: 1, size: 8, u: 'stk', label: '1 kg net', unit: 'net', plural: 'net', price: 12, where: 'Alle', life: '1-2 mdr. mørkt og køligt', open: 'Halvt løg: 3-4 dage i køl, i en boks', use: ['quesadilla', 'tacofries', 'alforno', 'cheeseburger'] },
-      { id: 'lime', n: 'Lime', need: 1, size: 1, u: 'stk', label: '1 stk', unit: 'stk', plural: 'stk', price: 5, where: 'Alle', life: '2-3 uger i køl', open: '3-4 dage, med snitfladen nedad', use: ['burrito', 'tacofries'], opt: true },
-      { id: 'foraarsloeg', n: 'Forårsløg', need: 0.3, size: 1, label: '1 bundt', unit: 'bundt', plural: 'bundter', price: 8, where: 'Alle', life: '1 uge i køl', open: 'Klip i ringe og frys, 3 mdr.', use: ['korean', 'buffalo'], opt: true },
-    ],
-  },
-  {
-    sec: 'Tørvarer og dåser',
-    note: 'Holder i et år eller mere i skabet.',
-    items: [
-      { id: 'ris', n: 'Jasminris', need: 320, size: 1000, u: 'g', label: '1 kg', unit: 'pose', plural: 'poser', price: 15, where: 'Alle', life: '2 år', open: '1 år i skabet, lukket pose', use: ['burrito', 'butter', 'korean', 'sweetsour'] },
-      { id: 'penne', n: 'Penne', need: 200, size: 500, u: 'g', label: '500 g', unit: 'pose', plural: 'poser', price: 8, where: 'Alle', life: '2 år', open: '1 år i skabet', use: ['alforno', 'garlicpasta'] },
-      { id: 'tortillas', n: 'Hvedetortillas', need: 3, size: 8, u: 'stk', label: '8 stk (20 cm)', unit: 'pose', plural: 'poser', price: 11, where: 'Rema / Netto', life: '2-3 mdr.', open: '1 uge. Frys resten, de tør op på 1 min', use: ['quesadilla'] },
-      { id: 'kidney', n: 'Kidneybønner', need: 1, size: 1, label: '1 dåse', unit: 'dåse', plural: 'dåser', price: 7, where: 'Alle', life: '2-3 år', open: '3 dage i køl, i en boks', use: ['quesadilla', 'tacofries'] },
-      { id: 'majs', n: 'Majs', need: 0.25, size: 1, label: '1 dåse', unit: 'dåse', plural: 'dåser', price: 8, where: 'Alle', life: '2-3 år', open: '3 dage i køl, eller frys resten', use: ['burrito'] },
-      { id: 'ananas', n: 'Ananas i stykker', need: 0.5, size: 1, label: '1 lille dåse', unit: 'dåse', plural: 'dåser', price: 8, where: 'Alle', life: '2 år', open: '3 dage i køl, i en boks', use: ['sweetsour'], opt: true },
-      { id: 'naan', alt: 'tortillas fra Lidl/Netto', n: 'Naanbrød', need: 0.5, size: 1, label: '1 pakke, 260 g', unit: 'pakke', plural: 'pakker', price: 12, where: 'Rema', life: '1-2 uger', open: 'Frys dem, 3 mdr.', use: ['butter'], opt: true },
-      { id: 'tortillachips', n: 'Tortillachips', need: 0.1, size: 1, label: '1 pose', unit: 'pose', plural: 'poser', price: 12, where: 'Alle', life: '3-6 mdr.', open: '1-2 uger med en klips', use: ['burrito'], opt: true },
-      { id: 'ristedeloeg', n: 'Ristede løg', need: 0.1, size: 1, label: '1 bæger', unit: 'bæger', plural: 'bægre', price: 10, where: 'Alle', life: '6-12 mdr.', open: '1-2 mdr., låg på', use: ['burrito', 'tacofries', 'buffalo', 'cheeseburger'], opt: true },
-    ],
-  },
-  {
-    sec: 'Saucer og glas',
-    note: 'Uåbnet holder de i månedsvis. Efter åbning skal de i køleskabet.',
-    items: [
-      { id: 'pastasauce', n: 'Pastasauce, tomat og basilikum', need: 0.5, size: 1, label: '1 glas, 400 g', unit: 'glas', plural: 'glas', price: 17, where: 'Alle', life: '1-2 år', open: '5 dage i køl', use: ['alforno'] },
-      { id: 'tikka', alt: 'Patak\'s i Føtex/Bilka', n: 'Tikka masala- eller butter chicken-sauce', need: 0.5, size: 1, label: '1 glas, 350 g', unit: 'glas', plural: 'glas', price: 19, where: 'Rema', life: '1 år', open: '3-4 dage i køl', use: ['butter'], tip: 'Kun Rema er tjekket. Glasset holder et år, så køb et par stykker, når du er forbi. Ægte Patak\'s butter chicken koster ca. 40 kr i Føtex/Bilka.' },
-      { id: 'soedchili', n: 'Sød chilisauce', need: 50, size: 500, u: 'ml', label: '500 ml', unit: 'flaske', plural: 'flasker', price: 17, where: 'Rema', life: '1-2 år', open: '1-2 mdr. i køl', use: ['sweetsour'] },
-      { id: 'salsa', n: 'Salsa / tacosauce', need: 90, size: 230, u: 'g', label: '1 glas', unit: 'glas', plural: 'glas', price: 11, where: 'Alle', life: '1 år', open: 'Se etiketten, typisk 1-2 uger', use: ['burrito', 'quesadilla', 'tacofries'] },
-      { id: 'chilisauce', n: 'Sriracha / stærk chilisauce', need: 0.12, size: 1, label: '1 flaske', unit: 'flaske', plural: 'flasker', price: 10, where: 'Rema (Lidl på tilbud)', life: '1-2 år', open: '6+ mdr., helst i køl', use: ['korean', 'buffalo'], tip: 'Dækker både buffalo og den koreanske sauce. Køb den, hvis du kun vil have én chilisauce.' },
-      { id: 'gochujang', alt: 'chilisauce + lidt honning', n: 'Gochujang', need: 0.06, size: 1, label: '1 bøtte', unit: 'bøtte', plural: 'bøtter', price: 35, where: 'Asian Market', life: '1-2 år', open: '1 år i køl', use: ['korean'], opt: true, tip: 'Findes ikke i Netto, Rema eller Lidl. Spring den over og brug chilisauce + lidt ekstra honning.' },
-      { id: 'soja', n: 'Sojasauce', need: 0.05, size: 1, label: '1 flaske', unit: 'flaske', plural: 'flasker', price: 11, where: 'Alle / Asian Market', life: '2-3 år', open: '1 år', use: ['korean', 'sweetsour'] },
-      { id: 'honning', n: 'Honning', need: 0.03, size: 1, label: '1 glas', unit: 'glas', plural: 'glas', price: 19, where: 'Alle', life: 'Årevis', open: 'Årevis, ikke i køl', use: ['korean'] },
-      { id: 'ketchup', n: 'Ketchup', need: 0.1, size: 1, label: '1 flaske', unit: 'flaske', plural: 'flasker', price: 9, where: 'Alle', life: '1 år', open: '1-2 mdr. i køl', use: ['quesadilla', 'tacofries', 'sweetsour', 'cheeseburger'] },
-      { id: 'eddike', n: 'Eddike (lagereddike)', need: 0.02, size: 1, label: '1 flaske', unit: 'flaske', plural: 'flasker', price: 8, where: 'Alle', life: 'Årevis', open: 'Årevis', use: ['buffalo', 'sweetsour'] },
-      { id: 'sennep', n: 'Sennep', need: 0.03, size: 1, label: '1 tube', unit: 'tube', plural: 'tuber', price: 10, where: 'Alle', life: '1 år', open: '3 mdr. i køl', use: ['cheeseburger'] },
-      { id: 'burgerdressing', n: 'Burgerdressing', need: 0.05, size: 1, label: '1 flaske', unit: 'flaske', plural: 'flasker', price: 24, where: 'Netto / Rema', life: '6-12 mdr.', open: '4 uger i køl', use: ['cheeseburger'] },
-      { id: 'hvidloegsdressing', n: 'Hvidløgsdressing', need: 20, size: 500, u: 'ml', label: '1 flaske', unit: 'flaske', plural: 'flasker', price: 15, where: 'Alle', life: '3-6 mdr.', open: 'Se etiketten', use: ['buffalo'] },
-      { id: 'pickles', n: 'Syltede agurkeskiver (burgeragurker)', need: 0.08, size: 1, label: '1 glas', unit: 'glas', plural: 'glas', price: 15, where: 'Alle', life: '1-2 år', open: '1-2 mdr. i køl', use: ['cheeseburger'] },
-      { id: 'jalapenos', n: 'Syltede jalapeños', need: 0.05, size: 1, label: '1 glas', unit: 'glas', plural: 'glas', price: 9, where: 'Rema / Netto', life: '1-2 år', open: '1 md. i køl', use: ['quesadilla', 'tacofries'], opt: true },
-      { id: 'mayo', n: 'Mayonnaise', need: 0.05, size: 1, label: '1 tube', unit: 'tube', plural: 'tuber', price: 12, where: 'Alle', life: '6-12 mdr.', open: '1-2 mdr. i køl', use: ['korean'], opt: true },
-    ],
-  },
-  {
-    sec: 'Krydderier og basis',
-    note: 'Købes én gang, holder til mange uger.',
-    items: [
-      { id: 'taco', n: 'Tacokrydderi', need: 1.25, size: 1, label: '1 brev', unit: 'brev', plural: 'breve', price: 6, where: 'Alle', life: '1-2 år', open: 'Fold brevet sammen og luk med en klips', use: ['burrito', 'quesadilla', 'tacofries'] },
-      { id: 'hoensebouillon', n: 'Hønsebouillon', need: 0.1, size: 1, label: '1 pakke terninger', unit: 'pakke', plural: 'pakker', price: 10, where: 'Alle', life: '1-2 år', open: '1 år, tørt', use: ['burrito', 'butter', 'korean', 'garlicpasta', 'sweetsour', 'buffalo'] },
-      { id: 'oksebouillon', n: 'Oksebouillon', need: 0.05, size: 1, label: '1 pakke terninger', unit: 'pakke', plural: 'pakker', price: 10, where: 'Alle', life: '1-2 år', open: '1 år, tørt', use: ['alforno'] },
-      { id: 'hvidloegspulver', n: 'Hvidløgspulver', need: 0.05, size: 1, label: '1 bøtte', unit: 'bøtte', plural: 'bøtter', price: 12, where: 'Alle', life: '2-3 år', open: '1 år med fuld smag', use: ['burrito', 'butter', 'korean', 'alforno', 'garlicpasta', 'sweetsour', 'buffalo'] },
-      { id: 'paprika', n: 'Paprika', need: 0.02, size: 1, label: '1 bøtte', unit: 'bøtte', plural: 'bøtter', price: 10, where: 'Alle', life: '2-3 år', open: '1 år med fuld smag', use: ['burrito', 'butter', 'korean', 'garlicpasta', 'sweetsour', 'buffalo'] },
-      { id: 'oregano', n: 'Oregano eller italienske krydderurter', need: 0.02, size: 1, label: '1 bøtte', unit: 'bøtte', plural: 'bøtter', price: 10, where: 'Alle', life: '2 år', open: '1 år med fuld smag', use: ['alforno'] },
-      { id: 'peber', n: 'Sort peber', need: 0.02, size: 1, label: '1 bøtte', unit: 'bøtte', plural: 'bøtter', price: 12, where: 'Alle', life: '2-3 år', open: '1 år', use: ['burrito', 'butter', 'korean', 'garlicpasta', 'sweetsour', 'buffalo'] },
-      { id: 'majsstivelse', n: 'Majsstivelse (Maizena)', need: 0.06, size: 1, label: '400 g', unit: 'pakke', plural: 'pakker', price: 12, where: 'Alle', life: 'Årevis', open: 'Årevis, tørt og lukket', use: ['burrito', 'butter', 'korean', 'garlicpasta', 'sweetsour', 'buffalo'] },
-      { id: 'bagepulver', n: 'Bagepulver', need: 0.1, size: 1, label: '1 pakke', unit: 'pakke', plural: 'pakker', price: 8, where: 'Alle', life: '1-2 år', open: '6 mdr., tørt', use: ['burrito', 'butter', 'korean', 'garlicpasta', 'sweetsour', 'buffalo'] },
-      { id: 'salt', n: 'Salt', need: 0.01, size: 1, label: '1 kg', unit: 'pakke', plural: 'pakker', price: 5, where: 'Alle', life: 'Evigt', open: 'Evigt, tørt', use: [] },
-      { id: 'olie', n: 'Rapsolie', need: 0.03, size: 1, label: '1 L', unit: 'flaske', plural: 'flasker', price: 20, where: 'Alle', life: '1-2 år', open: '6 mdr., mørkt sted', use: [] },
-      { id: 'sesam', n: 'Sesamfrø', need: 0.05, size: 1, label: '1 pose', unit: 'pose', plural: 'poser', price: 12, where: 'Alle / Asian Market', life: '1 år', open: '6 mdr.', use: ['korean'], opt: true },
-    ],
-  },
-  {
-    sec: 'Udstyr',
-    note: 'Har du det allerede, så spring over.',
-    items: [
-      { id: 'glasbokse', n: 'Ovnfaste glasbokse med låg', need: 2, size: 2, u: 'stk', label: '2 stk', unit: 'sæt', plural: 'sæt', price: 40, where: 'Lidl / Netto', life: 'Årevis', open: 'Glasset tåler airfryer, plastlåget kun mikro', use: ['alforno'], opt: true },
-    ],
-  },
+
+// Equipment that never changes with the plan. The engine adds the counted items (boxes, freezer bags, small cups) in front.
+export const KIT_BASE = [
+  { n: 'Skåle', count: 2, pl: 'skåle', note: 'Én til rå kylling, én til færdig kylling. Ikke flere.' },
+  { n: 'Gryde og pande', note: 'Én af hver.' },
+  { n: 'Stegespade eller grydeske', note: 'Til at dele kødet og røre.' },
+  { n: 'Køkkensaks', note: 'Til kyllingen. Så slipper du for skærebræt.' },
+  { n: 'Kniv og en tallerken', note: 'Til løget. Tallerkenen er dit skærebræt.' },
+  { n: 'Et krus', note: 'Dit målebæger: ris, vand, ærter, pasta. Ca. 2,4 dl. Intet dørslag? Hold låget på skrå og hæld vandet ud i vasken.' },
+  { n: 'Spiseske og teske', note: 'Til krydderier og saucer.' },
+  { n: 'Tusch', note: 'Valgfri. Skriv dag og måltid på låget.' },
+  { n: 'Køletaske med køleelement', note: 'Valgfri. Til frokosten på uni.' },
 ];
+
+// Product catalog. q in recipes and size here use the same unit u: g | ml | stk | pack (a whole jar, can, bag, bottle...).
+// sec = section on the weekly shopping list, ssec = section on the starter list (STARTER_SECS).
+// staple = bought once, lasts for weeks: never on the weekly list, shown under "Basisvarer". gear = equipment.
+// Prices: Rema 1000 catalog + Lidl/Netto offers, Svendborg, Oct 2026.
+const LIFE_FROST = { life: '12 mdr.', open: 'Luk posen med en klips' };
+export const CORE_PRODUCTS = {
+  // Frugt og grønt
+  loeg: { n: 'Løg', sec: 'Frugt og grønt', ssec: 'groent', u: 'stk', size: 8, label: '1 kg net', unit: 'net', plural: 'net', price: 12, where: 'Alle', life: '1-2 mdr. mørkt og køligt', open: 'Halvt løg: 3-4 dage i køl, i en boks' },
+  lime: { n: 'Lime', sec: 'Frugt og grønt', ssec: 'groent', u: 'stk', size: 1, label: '1 stk', unit: 'stk', plural: 'stk', price: 5, where: 'Alle', opt: true, life: '2-3 uger i køl', open: '3-4 dage, med snitfladen nedad' },
+  foraarsloeg: { n: 'Forårsløg', sec: 'Frugt og grønt', ssec: 'groent', u: 'pack', size: 1, label: '1 bundt', unit: 'bundt', plural: 'bundter', price: 8, where: 'Alle', opt: true, life: '1 uge i køl', open: 'Klip i ringe og frys, 3 mdr.' },
+  // Kød og køl
+  kylling: { n: 'Kyllingebrystfilet, storpakning', sec: 'Kød og køl', ssec: 'koel', u: 'g', size: 1000, label: 'ca. 1 kg', unit: 'pakke', plural: 'pakker', price: 65, where: 'Lidl', life: 'Se datoen, ellers frys samme dag (12 mdr.)', open: 'Optøet: 1-2 dage i køl' },
+  oksekoed: { n: 'Hakket oksekød 8-12%', sec: 'Kød og køl', ssec: 'koel', u: 'g', size: 400, label: '400 g', unit: 'bakke', plural: 'bakker', price: 40, where: 'Netto / Rema / Lidl', life: 'Se datoen, ellers frys samme dag (3 mdr.)', open: 'Optøet: 1 dag i køl' },
+  ost: { n: 'Revet ost (pizzatopping)', sec: 'Kød og køl', ssec: 'koel', u: 'g', size: 500, label: '500 g', unit: 'pose', plural: 'poser', price: 25, where: 'Rema / Lidl', life: 'Se datoen, typisk 4-6 uger', open: '5-7 dage. Kan fryses i posen, 3 mdr.' },
+  cremefraiche: { n: 'Cremefraiche 18%', sec: 'Kød og køl', ssec: 'koel', u: 'g', size: 250, label: '250 g', unit: 'bæger', plural: 'bægre', price: 13, where: 'Alle', life: 'Se datoen', open: '4-5 dage' },
+  floedeost: { n: 'Flødeost naturel', sec: 'Kød og køl', ssec: 'koel', u: 'g', size: 200, label: '200 g', unit: 'bæger', plural: 'bægre', price: 15, where: 'Alle', life: 'Se datoen', open: '5 dage' },
+  parmesan: { n: 'Revet parmesan / Grana Padano', sec: 'Kød og køl', ssec: 'koel', u: 'g', size: 100, label: '100 g', unit: 'pose', plural: 'poser', price: 16, where: 'Lidl / Netto', life: '2-3 mdr.', open: '3-4 uger i køl' },
+  maelk: { n: 'Mælk', sec: 'Kød og køl', ssec: 'koel', u: 'ml', size: 1000, label: '1 L', unit: 'karton', plural: 'kartoner', price: 12, where: 'Alle', life: 'Se datoen', open: '3-5 dage' },
+  // Frost
+  kartoffelbaade: { n: 'Kartoffelbåde', sec: 'Frost', ssec: 'frost', u: 'g', size: 750, label: '750 g', unit: 'pose', plural: 'poser', price: 14, where: 'Lidl', ...LIFE_FROST },
+  aerter: { n: 'Ærter', sec: 'Frost', ssec: 'frost', u: 'g', size: 500, label: '500 g', unit: 'pose', plural: 'poser', price: 13, where: 'Alle', ...LIFE_FROST },
+  broccoli: { n: 'Broccolibuketter', sec: 'Frost', ssec: 'frost', u: 'g', size: 750, label: '750 g', unit: 'pose', plural: 'poser', price: 19, where: 'Lidl', ...LIFE_FROST },
+  wok: { n: 'Wokgrøntsager', sec: 'Frost', ssec: 'frost', u: 'g', size: 500, label: '500 g', unit: 'pose', plural: 'poser', price: 16, where: 'Lidl / Netto', ...LIFE_FROST },
+  spinat: { n: 'Hakket spinat i portioner', sec: 'Frost', ssec: 'frost', u: 'g', size: 750, label: '750 g', unit: 'pose', plural: 'poser', price: 12, where: 'Netto / Rema', life: '12 mdr.', open: 'Tag 2 klumper ad gangen' },
+  // Kolonial: tørvarer og dåser
+  ris: { n: 'Jasminris', sec: 'Kolonial', ssec: 'toer', u: 'g', size: 1000, label: '1 kg', unit: 'pose', plural: 'poser', price: 15, where: 'Alle', life: '2 år', open: '1 år i skabet, lukket pose' },
+  penne: { n: 'Penne', sec: 'Kolonial', ssec: 'toer', u: 'g', size: 500, label: '500 g', unit: 'pose', plural: 'poser', price: 8, where: 'Alle', life: '2 år', open: '1 år i skabet' },
+  kidney: { n: 'Kidneybønner', sec: 'Kolonial', ssec: 'toer', u: 'pack', size: 1, label: '1 dåse', unit: 'dåse', plural: 'dåser', price: 7, where: 'Alle', life: '2-3 år', open: '3 dage i køl, i en boks' },
+  majs: { n: 'Majs', sec: 'Kolonial', ssec: 'toer', u: 'pack', size: 1, label: '1 dåse', unit: 'dåse', plural: 'dåser', price: 8, where: 'Alle', life: '2-3 år', open: '3 dage i køl, eller frys resten' },
+  ananas: { n: 'Ananas i stykker', sec: 'Kolonial', ssec: 'toer', u: 'pack', size: 1, label: '1 lille dåse', unit: 'dåse', plural: 'dåser', price: 8, where: 'Alle', opt: true, life: '2 år', open: '3 dage i køl, i en boks' },
+  tortillachips: { n: 'Tortillachips', sec: 'Kolonial', ssec: 'toer', u: 'pack', size: 1, label: '1 pose', unit: 'pose', plural: 'poser', price: 12, where: 'Alle', opt: true, life: '3-6 mdr.', open: '1-2 uger med en klips' },
+  ristedeloeg: { n: 'Ristede løg', sec: 'Kolonial', ssec: 'toer', u: 'pack', size: 1, label: '1 bæger', unit: 'bæger', plural: 'bægre', price: 10, where: 'Alle', opt: true, life: '6-12 mdr.', open: '1-2 mdr., låg på' },
+  taco: { n: 'Tacokrydderi', sec: 'Kolonial', ssec: 'basis', u: 'pack', size: 1, label: '1 brev', unit: 'brev', plural: 'breve', price: 6, where: 'Alle', life: '1-2 år', open: 'Fold brevet sammen og luk med en klips' },
+  // Kolonial: saucer og glas
+  pastasauce: { n: 'Pastasauce, tomat og basilikum', sec: 'Kolonial', ssec: 'saucer', u: 'pack', size: 1, label: '1 glas, 400 g', unit: 'glas', plural: 'glas', price: 17, where: 'Alle', life: '1-2 år', open: '5 dage i køl' },
+  tikka: { n: 'Tikka masala- eller butter chicken-sauce', sec: 'Kolonial', ssec: 'saucer', u: 'pack', size: 1, label: '1 glas, 350 g', unit: 'glas', plural: 'glas', price: 19, where: 'Rema', alt: 'Patak\'s i Føtex/Bilka', life: '1 år', open: '3-4 dage i køl', tip: 'Kun Rema er tjekket. Glasset holder et år, så køb et par stykker, når du er forbi. Ægte Patak\'s butter chicken koster ca. 40 kr i Føtex/Bilka.' },
+  soedchili: { n: 'Sød chilisauce', sec: 'Kolonial', ssec: 'saucer', u: 'ml', size: 500, label: '500 ml', unit: 'flaske', plural: 'flasker', price: 17, where: 'Rema', life: '1-2 år', open: '1-2 mdr. i køl' },
+  salsa: { n: 'Salsa / tacosauce', sec: 'Kolonial', ssec: 'saucer', u: 'g', size: 230, label: '1 glas', unit: 'glas', plural: 'glas', price: 11, where: 'Alle', life: '1 år', open: 'Se etiketten, typisk 1-2 uger' },
+  hvidloegsdressing: { n: 'Hvidløgsdressing', sec: 'Kolonial', ssec: 'saucer', u: 'ml', size: 500, label: '1 flaske', unit: 'flaske', plural: 'flasker', price: 15, where: 'Alle', life: '3-6 mdr.', open: 'Se etiketten' },
+  burgerdressing: { n: 'Burgerdressing', sec: 'Kolonial', ssec: 'saucer', u: 'pack', size: 1, label: '1 flaske', unit: 'flaske', plural: 'flasker', price: 24, where: 'Netto / Rema', life: '6-12 mdr.', open: '4 uger i køl' },
+  pickles: { n: 'Syltede agurkeskiver (burgeragurker)', sec: 'Kolonial', ssec: 'saucer', u: 'pack', size: 1, label: '1 glas', unit: 'glas', plural: 'glas', price: 15, where: 'Alle', life: '1-2 år', open: '1-2 mdr. i køl' },
+  jalapenos: { n: 'Syltede jalapeños', sec: 'Kolonial', ssec: 'saucer', u: 'pack', size: 1, label: '1 glas', unit: 'glas', plural: 'glas', price: 9, where: 'Rema / Netto', opt: true, life: '1-2 år', open: '1 md. i køl' },
+  mayo: { n: 'Mayonnaise', sec: 'Kolonial', ssec: 'saucer', u: 'pack', size: 1, label: '1 tube', unit: 'tube', plural: 'tuber', price: 12, where: 'Alle', opt: true, life: '6-12 mdr.', open: '1-2 mdr. i køl' },
+  // Brød
+  tortillas: { n: 'Hvedetortillas', sec: 'Brød', ssec: 'toer', u: 'stk', size: 8, label: '8 stk (20 cm)', unit: 'pose', plural: 'poser', price: 11, where: 'Rema / Netto', life: '2-3 mdr.', open: '1 uge. Frys resten, de tør op på 1 min' },
+  naan: { n: 'Naanbrød', sec: 'Brød', ssec: 'toer', u: 'pack', size: 1, label: '1 pakke, 260 g', unit: 'pakke', plural: 'pakker', price: 12, where: 'Rema', alt: 'tortillas fra Lidl/Netto', opt: true, life: '1-2 uger', open: 'Frys dem, 3 mdr.' },
+  // Basis: købes én gang, holder i ugevis
+  salt: { n: 'Salt', sec: 'Basis', ssec: 'basis', staple: true, u: 'pack', size: 1, label: '1 kg', unit: 'pakke', plural: 'pakker', price: 5, where: 'Alle', life: 'Evigt', open: 'Evigt, tørt' },
+  olie: { n: 'Rapsolie', sec: 'Basis', ssec: 'basis', staple: true, u: 'pack', size: 1, label: '1 L', unit: 'flaske', plural: 'flasker', price: 20, where: 'Alle', life: '1-2 år', open: '6 mdr., mørkt sted' },
+  peber: { n: 'Sort peber', sec: 'Basis', ssec: 'basis', staple: true, u: 'pack', size: 1, label: '1 bøtte', unit: 'bøtte', plural: 'bøtter', price: 12, where: 'Alle', life: '2-3 år', open: '1 år' },
+  hvidloegspulver: { n: 'Hvidløgspulver', sec: 'Basis', ssec: 'basis', staple: true, u: 'pack', size: 1, label: '1 bøtte', unit: 'bøtte', plural: 'bøtter', price: 12, where: 'Alle', life: '2-3 år', open: '1 år med fuld smag' },
+  paprika: { n: 'Paprika', sec: 'Basis', ssec: 'basis', staple: true, u: 'pack', size: 1, label: '1 bøtte', unit: 'bøtte', plural: 'bøtter', price: 10, where: 'Alle', life: '2-3 år', open: '1 år med fuld smag' },
+  oregano: { n: 'Oregano eller italienske krydderurter', sec: 'Basis', ssec: 'basis', staple: true, u: 'pack', size: 1, label: '1 bøtte', unit: 'bøtte', plural: 'bøtter', price: 10, where: 'Alle', life: '2 år', open: '1 år med fuld smag' },
+  hoensebouillon: { n: 'Hønsebouillon', sec: 'Basis', ssec: 'basis', staple: true, u: 'pack', size: 1, label: '1 pakke terninger', unit: 'pakke', plural: 'pakker', price: 10, where: 'Alle', life: '1-2 år', open: '1 år, tørt' },
+  oksebouillon: { n: 'Oksebouillon', sec: 'Basis', ssec: 'basis', staple: true, u: 'pack', size: 1, label: '1 pakke terninger', unit: 'pakke', plural: 'pakker', price: 10, where: 'Alle', life: '1-2 år', open: '1 år, tørt' },
+  majsstivelse: { n: 'Majsstivelse (Maizena)', sec: 'Basis', ssec: 'basis', staple: true, u: 'pack', size: 1, label: '400 g', unit: 'pakke', plural: 'pakker', price: 12, where: 'Alle', life: 'Årevis', open: 'Årevis, tørt og lukket' },
+  bagepulver: { n: 'Bagepulver', sec: 'Basis', ssec: 'basis', staple: true, u: 'pack', size: 1, label: '1 pakke', unit: 'pakke', plural: 'pakker', price: 8, where: 'Alle', life: '1-2 år', open: '6 mdr., tørt' },
+  soja: { n: 'Sojasauce', sec: 'Basis', ssec: 'saucer', staple: true, u: 'pack', size: 1, label: '1 flaske', unit: 'flaske', plural: 'flasker', price: 11, where: 'Alle / Asian Market', life: '2-3 år', open: '1 år' },
+  honning: { n: 'Honning', sec: 'Basis', ssec: 'saucer', staple: true, u: 'pack', size: 1, label: '1 glas', unit: 'glas', plural: 'glas', price: 19, where: 'Alle', life: 'Årevis', open: 'Årevis, ikke i køl' },
+  ketchup: { n: 'Ketchup', sec: 'Basis', ssec: 'saucer', staple: true, u: 'pack', size: 1, label: '1 flaske', unit: 'flaske', plural: 'flasker', price: 9, where: 'Alle', life: '1 år', open: '1-2 mdr. i køl' },
+  eddike: { n: 'Eddike (lagereddike)', sec: 'Basis', ssec: 'saucer', staple: true, u: 'pack', size: 1, label: '1 flaske', unit: 'flaske', plural: 'flasker', price: 8, where: 'Alle', life: 'Årevis', open: 'Årevis' },
+  sennep: { n: 'Sennep', sec: 'Basis', ssec: 'saucer', staple: true, u: 'pack', size: 1, label: '1 tube', unit: 'tube', plural: 'tuber', price: 10, where: 'Alle', life: '1 år', open: '3 mdr. i køl' },
+  smoer: { n: 'Smør', sec: 'Basis', ssec: 'koel', staple: true, u: 'g', size: 200, label: '200 g', unit: 'pakke', plural: 'pakker', price: 10, where: 'Alle', life: '2-3 mdr.', open: '1 md. i køl' },
+  chilisauce: { n: 'Sriracha / stærk chilisauce', sec: 'Basis', ssec: 'saucer', staple: true, u: 'pack', size: 1, label: '1 flaske', unit: 'flaske', plural: 'flasker', price: 10, where: 'Rema (Lidl på tilbud)', life: '1-2 år', open: '6+ mdr., helst i køl', tip: 'Dækker både buffalo og den koreanske sauce. Køb den, hvis du kun vil have én chilisauce.' },
+  gochujang: { n: 'Gochujang', sec: 'Basis', ssec: 'saucer', staple: true, opt: true, u: 'pack', size: 1, label: '1 bøtte', unit: 'bøtte', plural: 'bøtter', price: 35, where: 'Asian Market', alt: 'chilisauce + lidt honning', life: '1-2 år', open: '1 år i køl', tip: 'Findes ikke i Netto, Rema eller Lidl. Spring den over og brug chilisauce + lidt ekstra honning.' },
+  sesam: { n: 'Sesamfrø', sec: 'Basis', ssec: 'basis', staple: true, opt: true, u: 'pack', size: 1, label: '1 pose', unit: 'pose', plural: 'poser', price: 12, where: 'Alle / Asian Market', life: '1 år', open: '6 mdr.' },
+  // Udstyr
+  glasbokse: { n: 'Ovnfaste glasbokse med låg', sec: 'Udstyr', ssec: 'udstyr', gear: true, opt: true, u: 'stk', size: 2, label: '2 stk', unit: 'sæt', plural: 'sæt', price: 40, where: 'Lidl / Netto', life: 'Årevis', open: 'Glasset tåler airfryer, plastlåget kun mikro' },
+};
+
+// Starter list sections, in order. key = PRODUCTS[id].ssec.
+export const STARTER_SECS = [
+  { key: 'koel', sec: 'Kød, ost og mejeri (købes friskt hver uge)', note: 'Ikke noget at hamstre. Køb til den uge, du skal bruge det. Kan du ikke nå at lave mad inden datoen, så frys kødet samme dag.' },
+  { key: 'frost', sec: 'Frost', note: 'Fryseren er din bedste ven. Alt her holder i månedsvis.' },
+  { key: 'groent', sec: 'Grønt', note: 'Løg holder længe i et mørkt skab, ikke i køleskabet.' },
+  { key: 'toer', sec: 'Tørvarer og dåser', note: 'Holder i et år eller mere i skabet.' },
+  { key: 'saucer', sec: 'Saucer og glas', note: 'Uåbnet holder de i månedsvis. Efter åbning skal de i køleskabet.' },
+  { key: 'basis', sec: 'Krydderier og basis', note: 'Købes én gang, holder til mange uger.' },
+  { key: 'udstyr', sec: 'Udstyr', note: 'Har du det allerede, så spring over.' },
+];
+
+// ---------- recipes (CORE + POOL), new products and photos
+import { CORE } from './recipes/core.mjs';
+import { POOL, POOL_PRODUCTS } from './recipes/index.mjs';
+let IMAGES = {};
+try { ({ IMAGES } = await import('./images.mjs')); } catch (e) { IMAGES = {}; }
+export { IMAGES };
+
+export const PRODUCTS = { ...CORE_PRODUCTS, ...POOL_PRODUCTS };
+for (const p of Object.values(PRODUCTS)) if (!p.ssec) p.ssec = p.staple ? 'basis' : p.sec === 'Kød og køl' ? 'koel' : p.sec === 'Frost' ? 'frost' : p.sec === 'Frugt og grønt' ? 'groent' : 'toer';
+export const PANTRY_IDS = Object.keys(PRODUCTS).filter((id) => PRODUCTS[id].staple);
+// Pantry as the page renders it ("Basisvarer").
+export const PANTRY = PANTRY_IDS.map((id) => {
+  const p = PRODUCTS[id];
+  return { id, n: p.n, label: p.label, unit: p.unit, plural: p.plural, price: p.price, where: p.where, alt: p.alt, opt: p.opt };
+});
+export const RECIPES = [...CORE, ...POOL].map((r) => (IMAGES && IMAGES[r.id] ? { ...r, img: IMAGES[r.id] } : { ...r }));
+export { DEFAULT_MEALS, MINCE } from './engine.mjs';
