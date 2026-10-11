@@ -1,345 +1,353 @@
-# Recipes
+# Opskrifter
 
-Lazy comfort food. Every recipe makes **2 portions** (lunch + dinner, or two days) and takes **10 min hands-on or less**.
-Everything is built from 5 base components, so one prep session covers a bunch of dishes.
+Doven comfort food. Hver opskrift giver **2 portioner** og tager **højst 8 min med hænderne**.
+Alt bygger på 5 baser, så én prepdag dækker en hel masse retter.
 
-Gear: microwave/airfryer combo, 1 pan, 1 pot. No oven. Microwave times are for 800 W. Airfryer times are for a preheated combo on its crisper tray.
-Chicken amounts in the dishes are **cooked** weight: 1 kg raw breast gives about 700 g cooked, 6 portions of 115 g.
+Udstyr: kombi-mikro med airfry, 1 pande, 1 gryde. Ingen ovn. Mikrotider er til 800 W. Airfryertider er med forvarmet kombi på pladen, der fulgte med.
+Kylling i retterne er **færdig vægt**: 1 kg rå bryst giver ca. 700 g færdig kylling, 6 portioner a ca. 115 g (ca. 10 stykker).
+1 krus = ca. 2,4 dl.
 
-## Base components
+## Baser
 
-### Base A: Crispy airfryer chicken
+### Base A: Sprød airfryer-kylling
 
-Makes 6 portions, about 700 g cooked chicken (from 1 kg raw).
+Giver 6 portioner, ca. 700 g færdig kylling (af 1 kg rå).
 
-- 1 kg raw chicken breast (storpakning, fresh or thawed)
-- 1 cube chicken stock (hønsebouillon), crumbled
-- ½ tsp salt
-- ½ tsp black pepper
-- 1 tsp garlic powder
-- 1 tsp paprika
-- 3 tbsp cornstarch (majsstivelse)
-- 1 tsp baking powder (bagepulver)
-- 1 tbsp oil, goes in last
+- 1 kg rå kyllingebryst (storpakning, frisk eller optøet)
+- 1 terning hønsebouillon, smuldret
+- ½ tsk salt
+- ½ tsk sort peber
+- 1 tsk hvidløgspulver
+- 1 tsk paprika
+- 3 spsk majsstivelse (Maizena)
+- 1 tsk bagepulver
+- 1 spsk olie, kommer i til sidst
 
-1. Cut the chicken into 3 cm bites with kitchen scissors, straight into a big bowl. No cutting board.
-2. Crumble in the stock cube, add salt, pepper, garlic, paprika, cornstarch and baking powder. Toss until there is no dry powder left. Then the oil, toss again.
-3. Wash your hands, the scissors and anything the raw chicken touched.
-4. Airfry mode, 200°C, preheated if your combo asks. About 350 g per batch (3 batches per kg), single layer on the crisper tray with gaps. 15-18 min, turn halfway.
-5. Cut the biggest piece open at 15 min. White all the way through (75°C) = done. Pull it then, breast goes dry fast. Cooked chicken goes into a clean bowl, never the raw one.
+1. Klip kyllingen i 3 cm stykker med en køkkensaks direkte ned i en stor skål. Intet skærebræt.
+2. Smuldr bouillonen over. Salt, peber, hvidløg, paprika, majsstivelse og bagepulver i. Vend til der ikke er mere tørt pulver.
+3. Hæld olien i til sidst og vend igen.
+4. Vask hænder, saks og alt det rå kylling har rørt.
+5. Airfry 200°C, forvarmet hvis din model beder om det. Ca. 350 g pr. hold, ét lag på pladen med luft imellem. 15-18 min, vend halvvejs.
+6. Skær det største stykke over efter 15 min. Hvidt hele vejen igennem (75°C) = færdig. Tag den ud, bryst bliver hurtigt tørt.
+7. Færdig kylling i en ren skål, aldrig i den rå.
 
-- **Fridge:** 2-3 days
-- **Freezer:** 3 months. Freeze flat in a bag so the bites don't clump.
+- **Køleskab:** 2-3 dage
+- **Fryser:** 3 mdr. Frys den fladt i en pose, så stykkerne ikke klumper.
 
-> Cornstarch + baking powder is the crispy trick, don't skip it. If 500 g fits flat on your tray, do 2 batches instead of 3. Chicken thighs (kyllingeoverlår) work too, juicier and harder to dry out.
+> Majsstivelse + bagepulver er det sprøde trick, spring det ikke over. Kan der ligge 500 g fladt på din plade, så kør 2 hold i stedet for 3. Kyllingeoverlår virker også, de er saftigere og tørrer ikke så let ud.
 
-### Base B: Seasoned mince, 2 ways
+### Base B: Krydret oksekød, 2 slags
 
-Makes about 450 g taco mince + 600 g bolognese.
+Giver ca. 450 g tacokød + 600 g bolognese.
 
-- 400 g beef mince 8-12%
-- 1 onion, roughly chopped
-- 1 tsp salt
-- 1 jar pasta sauce (400 g), for the bolognese half
-- 1 cube beef stock (oksebouillon), for the bolognese half
-- 1 tsp garlic powder, for the bolognese half
-- 1 tsp dried oregano or Italian herbs, for the bolognese half
-- 1 bag taco spice mix, for the taco half
-- 1 can kidney beans, drained, for the taco half
-- 1 tbsp ketchup, for the taco half
-- 200 ml water (half for each half)
+- 400 g hakket oksekød 8-12%
+- 1 løg (groft hakket)
+- 1 tsk salt
+- 1 glas pastasauce (400 g), til bolognese
+- 1 terning oksebouillon, til bolognese
+- 1 tsk hvidløgspulver, til bolognese
+- 1 tsk tørret oregano eller italienske krydderurter, til bolognese
+- 1 brev tacokrydderi, til tacokødet
+- 1 dåse kidneybønner, drænet, til tacokødet
+- 1 spsk ketchup, til tacokødet
+- 1 krus vand (halvdelen til hver)
 
-1. Chop the onion roughly. No need to be neat, it melts into the mince.
-2. Pan, medium-high, splash of oil. Mince + onion + salt. Break it up with the spatula and brown for 8 min.
-3. Scoop half into a bowl. That is your taco half.
-4. Into the pan with the other half: pasta sauce, crumbled stock cube, garlic, oregano and 100 ml water. Simmer 5 min. That is bolognese. Tip it into a big bowl.
-5. Taco half back in the pan with taco mix, beans, ketchup and 100 ml water. Mash the beans a bit with the spatula, it makes it creamy. Bubble 4 min until thick.
+1. Skær løget groft på en tallerken. Pænt behøver det ikke være, det smelter ind i kødet.
+2. Pande på høj varme med lidt olie. Kød, løg og salt i. Mos det ud med paletten og brun i 8 min.
+3. Læg halvdelen over i en af glasboksene. Den bliver til bolognese.
+4. Resten i panden: tacokrydderi, bønner, ketchup og ½ krus vand. Mos bønnerne lidt, det gør det cremet. Boble 4 min.
+5. Tacokødet direkte i bokse. Så kommer det parkerede kød tilbage i panden.
+6. Pastasauce, smuldret bouillon, hvidløg, oregano og ½ krus vand i. Simr 5 min. Det er bolognese.
 
-- **Fridge:** 2-3 days
-- **Freezer:** 3 months
+- **Køleskab:** 2-3 dage
+- **Fryser:** 3 mdr.
 
-> Cheeseburger mince (recipe 10) is for another week: swap it in for the taco or the bolognese half. Brown as normal, then stir 1 tbsp ketchup + 1 tsp mustard (sennep) into that half. Makes about 200 g.
+> Cheeseburgerkød (ret 10) er til en anden uge: brug det i stedet for taco- eller bolognese-halvdelen. Brun som normalt, og rør så 1 spsk ketchup + 1 tsk sennep i den halvdel. Giver ca. 200 g.
 
-### Base C: Big pot of rice
+### Base C: En stor gryde ris
 
-Makes 5 portions, about 1 kg cooked rice.
+Giver 5 portioner, ca. 1 kg kogte ris.
 
-- 400 g jasmine rice
-- 650 ml water
-- ½ tsp salt
+- 2 krus jasminris (ca. 400 g)
+- 2¾ krus vand (ca. 6,5 dl)
+- ½ tsk salt
 
-1. Rinse the rice once in the pot, drain.
-2. Add water + salt, lid on, high heat until it boils.
-3. Lowest heat, 12 min. Don't lift the lid.
-4. Off the heat, lid on, 10 min more.
-5. Spread it on a big plate or tray to steam off and cool fast. Boxed and in the fridge or freezer within 1 hour.
+1. Skyl risen én gang i gryden og hæld vandet fra.
+2. Vand og salt i, låg på, fuld varme til det koger.
+3. Laveste varme, 12 min. Løft ikke låget.
+4. Fra varmen, låget bliver på, 8-10 min mere.
+5. Fordel risen direkte i boksene, bred den ud og lad låget være af. Så køler den hurtigt. I køl eller frys inden for 1 time.
 
-- **Fridge:** 2 days. Rice is the one to be strict about. Longer than that? Freeze it.
-- **Freezer:** 2 months
+- **Køleskab:** 2 dage. Ris er den, du skal være streng med. Længere tid? Frys den.
+- **Fryser:** 2 mdr.
 
-> Reheat rice only once, until steaming hot. Shortcut: microwave rice pouches, 2 min at 800 W. Pricier, zero work.
+> Varm kun ris op én gang, og til den damper. Genvej: mikroris i pose, 2 min ved 800 W. Dyrere, nul arbejde.
 
 ### Base D: Pasta
 
-Makes 2 portions.
+Giver 2 portioner.
 
-- 200 g penne (dry weight)
-- 1.5 L water
-- 1 tsp salt
+- 2 krus penne (ca. 200 g tør vægt)
+- 1 tsk salt
 
-1. Pot of salted water, lid on, boil.
-2. Cook 1 min LESS than the pack says. It softens more when you reheat it.
-3. Drain and mix with sauce straight away so it doesn't glue together.
+1. Fyld gryden halvt op med vand, salt i, låg på og bring i kog.
+2. Kog 1 min KORTERE end pakken siger. Den bliver blødere, når du varmer op.
+3. Hæld vandet fra og bland med sauce med det samme, så den ikke klistrer.
 
-- **Fridge:** 2-3 days (with sauce)
-- **Freezer:** 3 months (with sauce)
+- **Køleskab:** 2-3 dage (med sauce)
+- **Fryser:** 3 mdr. (med sauce)
 
-### Base E: Frozen potato wedges
+### Base E: Frosne kartoffelbåde
 
-Makes 2 portions.
+Giver 2 portioner.
 
-- 500 g frozen potato wedges (kartoffelbåde)
+- 500 g frosne kartoffelbåde
 
-1. Never prep these. Cook straight from frozen when you eat, it is zero effort anyway.
-2. Single layer on the crisper tray. Airfry 200°C, 20-25 min, turn twice.
+1. Prep dem aldrig. Lav dem direkte fra frost, når du skal spise. Det er nul arbejde alligevel.
+2. Ét lag på pladen. Airfry 200°C, 20-25 min, vend 2 gange.
 
-- **Fridge:** Don't. Always cook fresh.
-- **Freezer:** That's where they live.
+- **Køleskab:** Nej. Altid friske.
+- **Fryser:** Det er der, de bor.
 
-> Combo airfryers are weaker than basket ones. Crowded tray = soggy wedges. More than about 500 g? Two rounds.
+> Kombi-airfryere er svagere end kurv-modeller. Fyldt plade = bløde både. Mere end ca. 500 g? Så 2 omgange.
 
-## The dishes
+## Retterne
 
-| # | Dish | Style | Bases | Hands-on |
+| # | Ret | Stil | Baser | Med hænderne |
 |---|---|---|---|---|
-| 1 | Chicken burrito bowl | Mexican | A + C | 5 min |
-| 2 | Cheesy beef quesadillas | Mexican | B | 8 min |
-| 3 | Taco loaded fries | Mexican | B + E | 5 min |
-| 4 | Butter chicken | Indian | A + C | 3 min |
-| 5 | Korean sticky chicken bowl | Korean | A + C | 4 min |
-| 6 | Pasta al forno (cheesy bolognese bake) | Italian | B + D | 5 min |
-| 7 | Creamy garlic parmesan chicken pasta | Italian | A + D | 6 min |
-| 8 | Sweet chili & sour chicken | Asian takeaway | A + C | 6 min |
-| 9 | Buffalo chicken loaded fries | American diner | A + E | 5 min |
-| 10 | Cheeseburger fries bowl | American diner | B + E | 5 min |
+| 1 | Burrito bowl med kylling | Mexicansk | A + C | 5 min |
+| 2 | Ostede quesadillas med oksekød | Mexicansk | B | 8 min |
+| 3 | Taco loaded fries | Mexicansk | B + E | 5 min |
+| 4 | Butter chicken | Indisk | A + C | 3 min |
+| 5 | Koreansk sticky chicken | Koreansk | A + C | 4 min |
+| 6 | Pasta al forno | Italiensk | B + D | 5 min |
+| 7 | Cremet hvidløgspasta med kylling og parmesan | Italiensk | A + D | 6 min |
+| 8 | Sursød sweet chili-kylling | Asiatisk takeaway | A + C | 6 min |
+| 9 | Buffalo chicken fries | Amerikansk diner | A + E | 5 min |
+| 10 | Cheeseburger fries | Amerikansk diner | B + E | 5 min |
 
-### 1. Chicken burrito bowl
+### 1. Burrito bowl med kylling
 
-**Mexican** · Bases A + C · 5 min hands-on · 2 portions
+**Mexicansk** · Base A + C · 5 min med hænderne · 2 portioner
 
-- 230 g cooked chicken (Base A)
-- ½ bag taco spice mix
-- 3 tbsp water
-- 400 g cooked rice (Base C)
-- ½ can sweetcorn, drained
-- 60 g grated cheese
-- 4 tbsp salsa
-- 4 tbsp crème fraîche
-- lime, crushed tortilla chips or ristede løg (optional)
+- 230 g færdig kylling (Base A)
+- ½ brev tacokrydderi
+- 3 spsk vand
+- 400 g kogte ris (Base C)
+- ½ dåse majs, drænet
+- 60 g revet ost
+- 4 spsk salsa
+- 4 spsk cremefraiche
+- lime, knuste tortillachips eller ristede løg (valgfrit)
 
-1. Pan, medium heat: chicken + taco mix + water. Toss 1-2 min until sticky. On prep day use the unwashed pan right after the taco mince, free flavour.
-2. Box it: rice, taco chicken, corn, cheese on top.
-3. Salsa and crème fraîche stay in the fridge until you eat.
+1. Pande, middel varme: kylling, tacokrydderi og vand. Vend 1-2 min, til det klistrer.
+2. På prepdagen: brug den uvaskede pande lige efter tacokødet. Gratis smag.
+3. I boksen: ris, tacokylling, majs og ost ovenpå.
+4. Salsa og cremefraiche bliver i køleskabet, til du skal spise.
 
-- **Fridge:** 2 days (rice)
-- **Freezer:** 2 months, without salsa and crème fraîche
-- **Reheat:** Microwave 800 W, lid vented, 1 tbsp water on the rice, 3-4 min, stir halfway, until steaming. Then cold salsa + crème fraîche on top. Hot and cold together is the whole point.
+- **Køleskab:** 2 dage (ris)
+- **Fryser:** 2 mdr., uden salsa og cremefraiche
+- **Opvarmning:** Mikro 800 W: 1 spsk vand på risen, låg på skrå, 3-4 min, rør halvvejs, til det damper. Kold salsa og cremefraiche på bagefter. Varmt og koldt sammen er hele pointen.
 
-> Squeeze of lime and a handful of crushed tortilla chips on top = takeaway level. Fancy? Quick pickled red onion: thin slices, cover with eddike + a pinch of sugar and salt, 15 min. Keeps a week in the fridge.
+> Et pift lime og en håndfuld knuste tortillachips = takeaway-niveau. Lyst til mere? Hurtigt syltede rødløg: tynde skiver, eddike over og en knivspids sukker og salt, 15 min. Holder en uge i køleskabet.
 
-### 2. Cheesy beef quesadillas
+### 2. Ostede quesadillas med oksekød
 
-**Mexican** · Bases B · 8 min hands-on · 2 portions
+**Mexicansk** · Base B · 8 min med hænderne · 2 portioner
 
 - 6 tortillas (20 cm)
-- 450 g taco mince (Base B)
-- 120 g grated cheese
-- 1 tsp oil for the outside
-- 4 tbsp salsa, to dip
-- 4 tbsp crème fraîche, to dip
-- pickled jalapeños (optional)
+- 450 g tacokød (Base B)
+- 120 g revet ost
+- 1 tsk olie til ydersiden
+- 4 spsk salsa til dip
+- 4 spsk cremefraiche til dip
+- syltede jalapeños (valgfrit)
 
-1. Microwave the filling, covered, 2 min until steaming. Stir.
-2. Each tortilla: cheese on one half, filling, more cheese on top, fold. Cheese on both sides glues it shut.
-3. Rub the outside with a little oil (fingers are fine). That is the golden colour.
-4. Crisper tray, fold side down (or pin with a toothpick). Airfry 200°C, 6-8 min, flip halfway. About 3 fit per round.
-5. Cut into triangles and dip.
+1. Varm fyldet i mikroen under låg, 2 min, til det damper. Rør rundt.
+2. Hver tortilla: ost på den ene halvdel, fyld, mere ost ovenpå, fold. Ost på begge sider limer den sammen.
+3. Gnid ydersiden med lidt olie, fingrene er fine. Det giver den gyldne farve.
+4. På pladen med folden nedad (eller en tandstik i). Airfry 200°C, 6-8 min, vend halvvejs. Der er plads til ca. 3 ad gangen.
+5. Skær i trekanter og dip.
 
-- **Fridge:** Filling 2-3 days. Build them fresh, 10 min.
-- **Freezer:** Filling 3 months. Thaw it in the fridge overnight first.
-- **Reheat:** Never microwave a finished quesadilla, it goes floppy. Leftovers: airfryer 180°C, 3-4 min.
+- **Køleskab:** Fyld 2-3 dage. Byg dem friske, ca. 8 min.
+- **Fryser:** Fyld 3 mdr. Tø det op i køleskabet natten over først.
+- **Opvarmning:** Mikro aldrig en færdig quesadilla, den bliver slap. Rester: airfryer 180°C, 3-4 min.
 
 ### 3. Taco loaded fries
 
-**Mexican** · Bases B + E · 5 min hands-on · 2 portions
+**Mexicansk** · Base B + E · 5 min med hænderne · 2 portioner
 
-- 500 g frozen potato wedges (Base E)
-- 450 g taco mince (Base B)
-- 80 g grated cheese
-- 4 tbsp salsa
-- 4 tbsp crème fraîche
-- pickled jalapeños, lime, ristede løg (optional)
+- 500 g frosne kartoffelbåde (Base E)
+- 450 g tacokød (Base B)
+- 80 g revet ost
+- 4 spsk salsa
+- 4 spsk cremefraiche
+- syltede jalapeños, lime, ristede løg (valgfrit)
 
-1. Wedges single layer on the crisper tray, 200°C, 20-25 min, turn twice.
-2. Take the tray out (wedges stay on it). Microwave the mince, covered, 2-3 min until steaming, stir halfway.
-3. Mince + cheese on the wedges, tray back in, 200°C, 2 min until melty.
-4. Salsa, crème fraîche, jalapeños on top.
+1. Bådene i ét lag på pladen, 200°C, 20-25 min, vend 2 gange.
+2. Tag pladen ud (bådene bliver på den). Kødet i mikroen under låg, 2-3 min til det damper, rør halvvejs.
+3. Kød og ost på bådene, pladen ind igen, 200°C, 2 min til osten smelter.
+4. Salsa, cremefraiche og jalapeños ovenpå.
 
-- **Fridge:** Mince 2-3 days. Fries are always cooked fresh.
-- **Freezer:** Mince 3 months.
-- **Reheat:** Not a reheat dish. Fresh fries are what keeps it crispy, and they are zero effort.
+- **Køleskab:** Kød 2-3 dage. Bådene laves altid friske.
+- **Fryser:** Kød 3 mdr.
+- **Opvarmning:** Ikke en opvarmningsret. Friske både er det, der holder det sprødt, og de er nul arbejde.
 
 ### 4. Butter chicken
 
-**Indian** · Bases A + C · 3 min hands-on · 2 portions
+**Indisk** · Base A + C · 3 min med hænderne · 2 portioner
 
-- 230 g cooked chicken (Base A)
-- 1 jar tikka masala or butter chicken sauce (350 g)
-- 400 g cooked rice (Base C)
-- 150 g frozen peas
-- knob of butter or 1 tbsp crème fraîche per box when you eat (optional)
-- naan (optional)
+- 230 g færdig kylling (Base A)
+- 1 glas tikka masala- eller butter chicken-sauce (350 g)
+- 400 g kogte ris (Base C)
+- 150 g frosne ærter
+- en klat smør eller 1 spsk cremefraiche pr. boks, når du spiser (valgfrit)
+- naan (valgfrit)
 
-1. Chicken in a bowl, pour the sauce over, stir.
-2. Box: rice on one side, saucy chicken on the other. Frozen peas straight on top, they cook when you reheat.
+1. Kylling direkte i boksene ved siden af risen. Saucen over, rør rundt.
+2. Frosne ærter ovenpå. De bliver kogt, når du varmer op.
 
-- **Fridge:** 2 days (rice)
-- **Freezer:** 3 months. One of the best freezers on this list.
-- **Reheat:** Microwave 800 W, lid vented, 4-5 min, stir halfway, until steaming. Stir in a knob of butter or a spoon of crème fraîche. Naan after: airfryer 180°C, 2-3 min.
+- **Køleskab:** 2 dage (ris)
+- **Fryser:** 3 mdr. En af de bedste frysere på listen.
+- **Opvarmning:** Mikro 800 W: låg på skrå, 4-5 min, rør halvvejs, til det damper. Rør en klat smør eller cremefraiche i. Naan bagefter: airfryer 180°C, 2-3 min.
 
-> A tikka masala jar + a knob of butter is basically butter chicken. Rema has the tikka jar cheapest.
+> Et glas tikka masala + en klat smør er stort set butter chicken. Rema har tikka-glasset billigst.
 
-### 5. Korean sticky chicken bowl
+### 5. Koreansk sticky chicken
 
-**Korean** · Bases A + C · 4 min hands-on · 2 portions
+**Koreansk** · Base A + C · 4 min med hænderne · 2 portioner
 
-- 230 g cooked chicken (Base A), kept plain
-- 2 tbsp gochujang (or sriracha / stærk chilisauce)
-- 1 tbsp soy sauce
-- 1 tbsp honey
-- 1 tsp garlic powder
-- 1 tbsp water
-- 400 g cooked rice (Base C)
-- 150 g frozen broccoli
-- spicy mayo (mayo + chilisauce 3:1), spring onion, sesame (optional)
+- 230 g færdig kylling (Base A), uden sauce
+- 2 spsk stærk chilisauce eller gochujang
+- 1 spsk sojasauce
+- 1 spsk honning
+- 1 tsk hvidløgspulver
+- 1 spsk vand
+- 400 g kogte ris (Base C)
+- 150 g frossen broccoli
+- spicy mayo (mayo + chilisauce 3:1), forårsløg, sesam (valgfrit)
 
-1. Stir gochujang, soy, honey, garlic and water. Split it into small cups or bags, one per box. No gochujang? Same amount of sriracha or stærk chilisauce + an extra ½ tbsp honey.
-2. Box: rice, plain chicken on top, frozen broccoli. Sauce cup in the box. Keeping the sauce apart keeps the chicken crispy.
+1. Rør chilisauce, soja, honning, hvidløg og vand sammen i et krus. Med chilisauce: ½ spsk ekstra honning i.
+2. Fordel saucen i små bægre, ét pr. boks.
+3. I boksen: ris, kylling uden sauce ovenpå, frossen broccoli. Saucebægeret ned i boksen.
 
-- **Fridge:** 2 days (rice)
-- **Freezer:** 2 months, sauce cup and all
-- **Reheat:** Sauce cup out. Microwave the box, lid vented, 1 tbsp water on the rice, 4-5 min, stir halfway. Chicken onto the crisper tray, airfry 200°C 3-4 min. Toss in the sauce, the hot chicken warms it. Lazy: sauce over everything, microwave only.
+- **Køleskab:** 2 dage (ris)
+- **Fryser:** 2 mdr., med saucebæger og det hele
+- **Opvarmning:** Sprød (hjemme): saucebæger og kylling op. Boksen i mikro med 1 spsk vand på risen, 4-5 min, rør halvvejs. Kyllingen 1 min i mikro, så pladen 200°C 3-4 min. Vend i saucen. Kun mikro: saucen over det hele, 1 spsk vand på risen, 4-5 min, rør halvvejs.
 
-### 6. Pasta al forno (cheesy bolognese bake)
+> Gochujang er den ægte vare, men findes kun i Asian Market. Stærk chilisauce + lidt ekstra honning smager 90% det samme.
 
-**Italian** · Bases B + D · 5 min hands-on · 2 portions
+### 6. Pasta al forno
 
-- 200 g penne, dry weight, cooked (Base D)
+**Italiensk** · Base B + D · 5 min med hænderne · 2 portioner
+
+- 200 g penne, tør vægt, kogt (Base D)
 - 600 g bolognese (Base B)
-- 100 g grated cheese
+- 100 g revet ost
 
-1. Mix the drained pasta with the hot bolognese.
-2. Split into oven-safe glass boxes. Cheese on top.
+1. Bland den afdryppede pasta med den varme bolognese.
+2. Fordel i ovnfaste glasbokse. Ost ovenpå, ca. 2 håndfulde pr. boks.
 
-- **Fridge:** 2-3 days
-- **Freezer:** 3 months. Thaw in the fridge overnight.
-- **Reheat:** Microwave 800 W, lid vented, 3½-4 min until steaming. Then plastic lid OFF, glass box into the airfryer, 200°C, 4-5 min until the cheese bubbles. That's the "baked" part, no oven needed. No time? Microwave only, still good.
+- **Køleskab:** 2-3 dage
+- **Fryser:** 3 mdr. Tø op i køleskabet natten over.
+- **Opvarmning:** Mikro 800 W, låg på skrå, 3½-4 min til det damper. Plastlåget AF, glasboksen i airfryeren, 200°C, 4-5 min til osten bobler. Det er "ovn"-delen. Ingen tid? Kun mikro, stadig godt.
 
-### 7. Creamy garlic parmesan chicken pasta
+### 7. Cremet hvidløgspasta med kylling og parmesan
 
-**Italian** · Bases A + D · 6 min hands-on · 2 portions
+**Italiensk** · Base A + D · 6 min med hænderne · 2 portioner
 
-- 200 g penne, dry weight, cooked (Base D)
-- 230 g cooked chicken (Base A)
-- 150 g cream cheese (flødeost naturel)
-- 150 ml milk
-- 40 g grated parmesan (Grana Padano)
-- 1 tsp garlic powder
-- 100 g frozen chopped spinach
-- black pepper
+- 200 g penne, tør vægt, kogt (Base D)
+- 230 g færdig kylling (Base A)
+- 150 g flødeost naturel
+- 1,5 dl mælk
+- 40 g revet parmesan (Grana Padano)
+- 1 tsk hvidløgspulver
+- 100 g frossen hakket spinat
+- sort peber
 
-1. Big microwave bowl: spinach, covered, 2 min.
-2. Add cream cheese, milk, garlic and parmesan. 1½ min, stir until smooth.
-3. Toss in the hot pasta and chicken. Lots of black pepper. Box it.
+1. Stor mikroskål: spinat under låg, 2 min.
+2. Flødeost, mælk, hvidløg og parmesan i. 1½ min, rør til det er glat.
+3. Den varme pasta og kyllingen i. Masser af sort peber. I bokse.
 
-- **Fridge:** 2-3 days
-- **Freezer:** 1 month. The sauce may split a bit, stir in milk and it comes back.
-- **Reheat:** Splash of milk (2 tbsp) first, cream sauces thicken in the fridge. Microwave lid vented 3 min, stir, 1 min more until steaming.
+- **Køleskab:** 2-3 dage
+- **Fryser:** 1 md. Saucen kan skille lidt, rør lidt mælk i, så kommer den tilbage.
+- **Opvarmning:** Et skvæt mælk (2 spsk) i først, flødesaucer bliver tykke i køleskabet. Mikro med låg på skrå 3 min, rør, 1 min mere til det damper.
 
-### 8. Sweet chili & sour chicken
+### 8. Sursød sweet chili-kylling
 
-**Asian takeaway** · Bases A + C · 6 min hands-on · 2 portions
+**Asiatisk takeaway** · Base A + C · 6 min med hænderne · 2 portioner
 
-- 230 g cooked chicken (Base A), kept plain
-- 90 ml sweet chili sauce (sød chili sauce)
-- 2 tbsp ketchup
-- 1 tbsp soy sauce
-- 1 tbsp vinegar (eddike)
-- 250 g frozen wok vegetables
-- 400 g cooked rice (Base C)
-- small can of pineapple chunks, drained (optional)
+- 230 g færdig kylling (Base A), uden sauce
+- 90 ml sød chilisauce
+- 2 spsk ketchup
+- 1 spsk sojasauce
+- 1 spsk eddike
+- 250 g frosne wokgrøntsager
+- 400 g kogte ris (Base C)
+- lille dåse ananas i stykker, drænet (valgfrit)
 
-1. Wok veg in a covered microwave bowl, 4-5 min. Pour off the water.
-2. Stir in sweet chili, ketchup, soy and vinegar (+ pineapple). That is the sauce.
-3. Box: rice + saucy veg. Chicken goes in plain on top, so it can crisp up later.
+1. Wokgrønt i en mikroskål under låg, 4-5 min. Hæld vandet fra.
+2. Rør sød chili, ketchup, soja og eddike i (+ ananas). Det er saucen.
+3. I boksen: ris og grønt i sauce. Kyllingen ovenpå uden sauce, så den kan blive sprød igen.
 
-- **Fridge:** 2 days (rice)
-- **Freezer:** 2 months
-- **Reheat:** Lift the chicken out. Microwave the box, lid vented, 1 tbsp water on the rice, 4-5 min, stir halfway. Chicken: microwave 1 min, then crisper tray 200°C 3-4 min. Toss it through the hot sauce.
+- **Køleskab:** 2 dage (ris)
+- **Fryser:** 2 mdr.
+- **Opvarmning:** Kyllingen op. Boksen i mikro med 1 spsk vand på risen, låg på skrå, 4-5 min, rør halvvejs. Kyllingen 1 min i mikro, så pladen 200°C 3-4 min. Vend den i den varme sauce.
 
-> No sweet & sour jar needed: sweet chili + ketchup + vinegar is the classic takeaway sauce, and cheaper.
+> Intet sursødt glas nødvendigt: sød chili + ketchup + eddike er den klassiske takeaway-sauce, og billigere.
 
-### 9. Buffalo chicken loaded fries
+### 9. Buffalo chicken fries
 
-**American diner** · Bases A + E · 5 min hands-on · 2 portions
+**Amerikansk diner** · Base A + E · 5 min med hænderne · 2 portioner
 
-- 500 g frozen potato wedges (Base E)
-- 230 g cooked chicken (Base A), kept plain
-- 3 tbsp sriracha or stærk chilisauce
-- 25 g butter
-- 1 tbsp vinegar (eddike)
-- 60 g grated cheese
-- 3 tbsp garlic dressing (hvidløgsdressing)
-- spring onion or ristede løg (optional)
+- 500 g frosne kartoffelbåde (Base E)
+- 230 g færdig kylling (Base A), uden sauce
+- 3 spsk sriracha eller stærk chilisauce
+- 2 spsk smør
+- 1 spsk eddike
+- 60 g revet ost
+- 3 spsk hvidløgsdressing
+- forårsløg eller ristede løg (valgfrit)
 
-1. Mug: butter + chilisauce + vinegar. Microwave 30-40 s, stir. That is buffalo sauce.
-2. Wedges single layer on the crisper tray, 200°C, 20-25 min, turn twice. Chicken on the tray for the last 6 min.
-3. Toss the chicken in the sauce, back on the fries, cheese over, 1-2 min more.
-4. Garlic dressing on top.
+1. Smør, chilisauce og eddike i et krus. Mikro 30-40 sek, rør. Det er buffalosauce.
+2. Bådene i ét lag på pladen, 200°C, 20-25 min, vend 2 gange. Kyllingen på pladen de sidste 6 min.
+3. Vend kyllingen i saucen, tilbage på bådene, ost over, 1-2 min mere.
+4. Hvidløgsdressing ovenpå.
 
-- **Fridge:** Chicken 2-3 days. Fries always fresh.
-- **Freezer:** Plain chicken 3 months, flat in a bag. Thaw in the fridge overnight.
-- **Reheat:** Nothing to reheat, it is all cooked fresh in about 30 min, 5 of them hands-on. Chicken should be steaming hot inside. Not yet? 2 more min.
+- **Køleskab:** Kylling 2-3 dage. Bådene altid friske.
+- **Fryser:** Kylling uden sauce 3 mdr., fladt i en pose. Tø op i køleskabet natten over.
+- **Opvarmning:** Intet at varme op, alt laves frisk på ca. 30 min, 5 af dem med hænderne. Kyllingen skal dampe indeni. Ikke endnu? 2 min mere.
 
-> Frank's RedHot is the US original but hard to find in Denmark. Chilisauce + butter + vinegar gets you 90% of the way.
+> Frank's RedHot er den amerikanske original, men svær at finde i Danmark. Chilisauce + smør + eddike er 90% af vejen.
 
-### 10. Cheeseburger fries bowl
+### 10. Cheeseburger fries
 
-**American diner** · Bases B + E · 5 min hands-on · 2 portions
+**Amerikansk diner** · Base B + E · 5 min med hænderne · 2 portioner
 
-- 500 g frozen potato wedges (Base E)
-- 200 g cheeseburger mince (Base B, see note)
-- 60 g grated cheese
-- 3 tbsp burger dressing
-- 6 pickle slices, chopped
-- ristede løg (optional, very burger)
+- 500 g frosne kartoffelbåde (Base E)
+- 200 g cheeseburgerkød (Base B, se note)
+- 60 g revet ost
+- 3 spsk burgerdressing
+- 6 agurkeskiver, hakket
+- ristede løg (valgfrit, meget burger)
 
-1. Wedges single layer on the crisper tray, 200°C, 20-25 min, turn twice.
-2. Take the tray out. Microwave the mince, covered, 2-3 min until steaming.
-3. Mince + cheese over the wedges, tray back in, 200°C, 2 min until melted.
-4. Dressing, pickles and ristede løg on top. Drive-thru burger, in a bowl.
+1. Bådene i ét lag på pladen, 200°C, 20-25 min, vend 2 gange.
+2. Tag pladen ud. Kødet i mikroen under låg, 2-3 min til det damper.
+3. Kød og ost over bådene, pladen ind igen, 200°C, 2 min til osten smelter.
+4. Dressing, agurker og ristede løg ovenpå. Drive-in-burger i en skål.
 
-- **Fridge:** Mince 2-3 days. Fries always fresh.
-- **Freezer:** Mince 3 months.
-- **Reheat:** Cook the fries fresh. Only the mince gets reheated.
+- **Køleskab:** Kød 2-3 dage. Bådene altid friske.
+- **Fryser:** Kød 3 mdr.
+- **Opvarmning:** Bådene laves friske. Kun kødet varmes op.
 
-## Reheat rules
+## Opvarmningsregler
 
-- Microwave times are for 800 W. At 1000 W take off about 20%.
-- Reheat until steaming hot all the way through (75°C). In doubt, 1 more minute. Stir halfway, microwaves heat the edges first.
-- Rice: 1 tbsp water (or an ice cube) on top before microwaving, lid vented. Reheat rice only once.
-- Microwave mode: microwave-safe boxes, lid vented, no foil or metal, take the metal crisper tray out. Airfry mode: only oven-safe glass or ceramic, never plastic boxes or lids. Metal is fine.
-- Never put a frozen glass box straight into 200°C. Thaw or microwave it first.
-- Crispy stuff: microwave 1 min to warm through, then crisper tray 200°C 3-4 min. Never just microwave it.
-- Airfryer times are for a preheated combo. Preheat if your model asks. It can't microwave at the same time.
-- Thaw frozen boxes in the fridge overnight. Thawed boxes: eat within 24 h, never refreeze. Forgot? Microwave defrost 4-5 min, then reheat as normal.
+- Mikrotider er til 800 W. Ved 1000 W: træk ca. 20% fra.
+- Varm op til det damper hele vejen igennem (75°C). I tvivl? 1 min mere. Rør halvvejs, mikroen varmer kanterne først.
+- Ris: 1 spsk vand (eller en isterning) på inden mikro, låg på skrå. Varm kun ris op én gang.
+- Mikro-funktion: mikrosikre bokse, låg på skrå, ingen folie eller metal, og tag metalpladen ud.
+- Airfry-funktion: kun ovnfast glas eller keramik, aldrig plastbokse eller plastlåg. Metal er fint.
+- Sæt aldrig en frossen glasboks direkte ind på 200°C. Tø den op eller mikro den først.
+- Sprødt: 1 min i mikro, så pladen 200°C 3-4 min. Kun mikro gør det slapt.
+- Airfryertider er med forvarmet kombi. Forvarm, hvis din model beder om det. Den kan ikke mikro samtidig.
+- Tø frosne bokse op i køleskabet natten over. Optøet: spis inden for 24 timer, frys aldrig igen. Glemt det? Optøning 4-5 min, så normal opvarmning.

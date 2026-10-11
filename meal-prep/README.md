@@ -1,9 +1,12 @@
 # Lazy Prep
 
-Low-effort comfort food meal prep. Airfryer/microwave combo, 1 pan, 1 pot, no oven.
+Doven comfort food med meal prep. Kombi-mikro med airfry, 1 pande, 1 gryde, ingen ovn.
 
-- `index.html` - open on your phone. Today's meals, plan, recipes, shopping and starter list in one page. Ticks are saved on the device, the portion slider scales everything, and each recipe has its own portion stepper.
-- `weekly-plan.md` - one ~75 min prep session, 10 meals, 5 flavor styles, step-by-step timeline.
-- `recipes.md` - 5 base components + 10 dishes, with fridge, freezer and reheat notes.
-- `shopping-list.md` - ugens indkøbsliste på dansk med priser (Netto, Rema 1000, Lidl).
-- `starter-list.md` - alt til alle 10 opskrifter, holdbarhed og hvor i Svendborg.
+- `index.html`: åbn den på mobilen. Plan, opskrifter og indkøbslister på én side. Afkrydsninger gemmes på telefonen, og der er en portions-slider.
+- `weekly-plan.md`: 10 måltider, 5 stilarter, prepdag på ca. 85 min (110 min første gang) trin for trin.
+- `recipes.md`: 5 baser + 10 retter.
+- `shopping-list.md`: ugens indkøbsliste med priser fra Netto, Rema 1000 og Lidl, ca. 324 kr.
+- `starter-list.md`: alt til alle 10 opskrifter, holdbarhed og hvor i Svendborg.
+
+Kilden ligger i `src/`: `data.mjs` (alt indhold), `fmt.mjs` (mængder), `template.html` (siden) og `build.mjs`.
+Byg med `node src/build.mjs .` fra denne mappe.
