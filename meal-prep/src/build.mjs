@@ -13,7 +13,7 @@ const kr = (n) => Math.round(n) + ' kr';
 const meals = D.WEEK.length * 2;
 const dayName = Object.fromEntries(D.WEEK.map((d) => [d.day, d.name]));
 const styles = new Set(D.WEEK.flatMap((d) => [R[d.lunch.r].style, R[d.dinner.r].style]));
-const styleList = [...styles].map((s) => D.STYLES[s]).join(', ');
+const styleList = [...styles].map((s) => D.STYLES[s].toLowerCase()).join(', ');
 const kitCount = (n) => (D.KIT.find((k) => k.n === n) || {}).count || 0;
 const boxes = kitCount('Madbokse med låg');
 const T = D.PREP_TIME;
@@ -34,16 +34,17 @@ const usedText = (it) => {
   if (it.u === 'stk') return `bruger ${Math.ceil(it.need)} stk`;
   return `bruger ca. ${fmtQty(it.need, it.u)}`;
 };
+const lc = (t) => t.charAt(0).toLowerCase() + t.slice(1);
 const ing = (x) => '- ' + (x.q == null ? x.n : fmtQty(x.q, x.u) + ' ' + x.n);
 
 // ---------- recipes.md
 let md = `# Opskrifter
 
-Doven comfort food. Hver opskrift giver **2 portioner** og tager **højst ${Math.max(...D.RECIPES.map((r) => r.hands))} min med hænderne**.
+Doven comfort food. Hver opskrift giver **2 portioner** og tager **højst ${Math.max(...D.RECIPES.map((r) => r.hands))} min arbejdstid**.
 Alt bygger på ${D.BASES.length} baser, så én prepdag dækker en hel masse retter.
 
-Udstyr: kombi-mikro med airfry, 1 pande, 1 gryde. Ingen ovn. Mikrotider er til 800 W. Airfryertider er med forvarmet kombi på pladen, der fulgte med.
-Kylling i retterne er **færdig vægt**: 1 kg rå bryst giver ca. 700 g færdig kylling, 6 portioner a ca. 115 g (ca. 10 stykker).
+Udstyr: kombi-mikro med airfry, 1 pande, 1 gryde. Ingen ovn. Mikrotider er til 800 W. Airfryertider er med forvarmet kombi på airfryer-pladen (crisp-pladen), der fulgte med. Den hedder bare "pladen" herfra.
+Kylling i retterne er **færdig vægt**: 1 kg rå kyllingebrystfilet giver ca. 700 g færdig kylling, 6 portioner à ca. 115 g (ca. 10 stykker).
 1 krus = ca. 2,4 dl.
 
 ## Baser
@@ -56,11 +57,11 @@ for (const b of D.BASES) {
   if (b.note) md += `\n> ${fmtText(b.note)}\n`;
   md += '\n';
 }
-md += '## Retterne\n\n| # | Ret | Stil | Baser | Med hænderne |\n|---|---|---|---|---|\n';
+md += '## Retterne\n\n| # | Ret | Stil | Baser | Arbejdstid |\n|---|---|---|---|---|\n';
 for (const r of Object.values(R)) md += `| ${r.num} | ${r.name} | ${D.STYLES[r.style]} | ${r.bases.join(' + ')} | ${r.hands} min |\n`;
 md += '\n';
 for (const r of Object.values(R)) {
-  md += `### ${r.num}. ${r.name}\n\n**${D.STYLES[r.style]}** · Base ${r.bases.join(' + ')} · ${r.hands} min med hænderne · 2 portioner\n\n`;
+  md += `### ${r.num}. ${r.name}\n\n**${D.STYLES[r.style]}** · Base ${r.bases.join(' + ')} · ${r.hands} min arbejdstid · 2 portioner\n\n`;
   md += r.ingredients.map(ing).join('\n') + '\n\n';
   md += r.steps.map((s, i) => `${i + 1}. ${fmtText(s)}`).join('\n') + '\n\n';
   md += `- **Køleskab:** ${r.fridge}\n- **Fryser:** ${r.freezer}\n- **Opvarmning:** ${fmtText(r.reheat)}\n`;
@@ -74,10 +75,10 @@ writeFileSync(OUT + '/recipes.md', md);
 const cell = (m) => `${R[m.r].name} (${D.STYLES[R[m.r].style]})${m.s === 'freezer' ? ` ❄ tø op ${dayName[m.thaw].toLowerCase()} aften` : ''}`;
 md = `# Ugeplan
 
-Én prepdag: ca. **${T.rutine} min** når du har prøvet det, ca. **${T.foersteGang} min** første gang. Ca. ${T.aktiv} min af tiden har du noget i hænderne, resten venter du på airfryeren.
+Én prepdag: ca. **${T.rutine} min**, når du har prøvet det, ca. **${T.foersteGang} min** første gang. Ca. ${T.aktiv} min er arbejdstid, resten venter du på airfryeren.
 Det giver **${meals} måltider** (${D.WEEK.length} dage, frokost + aftensmad) i ${styles.size} stilarter: ${styleList}.
 
-Prep søndag. ${fridgeDays.map((d) => d.toLowerCase()).join(' og ')} kommer i køleskabet, ${span(freezerDays)} i fryseren. Fødevarestyrelsen siger rester inden for 2-3 dage, så intet står i køleskabet mere end 2 dage.
+Prep søndag. Boksene til ${fridgeDays.map((d) => d.toLowerCase()).join(' og ')} kommer i køleskabet, ${span(freezerDays)} i fryseren. Fødevarestyrelsen siger, at rester skal spises inden for 2-3 dage, så intet står i køleskabet mere end 2 dage.
 **Frokost kan altid laves med kun en mikro** (til uni). Retter, der skal i airfryeren, er aftensmad.
 
 ## Ugen
@@ -92,20 +93,20 @@ for (const id of used) md += `- **${R[id].name}:** ${D.EAT[id]}\n`;
 md += `
 ## Udstyr
 
-${D.KIT.map((k) => `- **${k.count ? k.count + ' ' + k.n.toLowerCase() : k.n}**${k.note ? ': ' + k.note : ''}`).join('\n')}
+${D.KIT.map((k) => `- **${k.count ? k.count + ' ' + (k.count > 1 && k.pl ? k.pl : k.n.toLowerCase()) : k.n}**${k.note ? ': ' + lc(fmtText(k.note)) : ''}`).join('\n')}
 
 ## Prepdag, trin for trin
 
 Fire spor kører samtidig: **GRYDE** (ris, så pasta), **PANDE** (oksekød), **AIRFRYER** (kylling) og **DIG** (klippe, røre, fylde bokse).
-Dine hænder laver kun én ting ad gangen. Kombien kan ikke mikro og airfry samtidig, så prepdagen bruger ikke mikroen, kun hvis kyllingen skal optøs i en fart.
-Kyllingen kører i ${chickenBatches} hold a ca. 350 g, og det er dem, der sætter tempoet.
+Dine hænder laver kun én ting ad gangen. Kombien kan ikke mikro og airfry samtidig, så mikroen bruges ikke på prepdagen, medmindre kyllingen skal tøs op i en fart.
+Kyllingen kører i ${chickenBatches} hold à ca. 350 g, og det er dem, der sætter tempoet.
 
 | Tid | Spor | Gør | Sådan |
 |---|---|---|---|
 `;
-for (const s of D.PREP) md += `| ${s.t} | ${TRACK[s.k]} | **${s.a}** | ${fmtText(s.x)} |\n`;
+for (const s of D.PREP) md += `| ${s.t} | ${TRACK[s.k]} | **${s.a}** | ${s.opt ? '(Kun hvis det er nødvendigt) ' : ''}${fmtText(s.x)} |\n`;
 md += `
-### Laver du mere?
+### Laver du mad til flere?
 
 ${D.SCALE_NOTES.map((x) => `- Fra x${String(x.min).replace('.', ',')}: ${x.text}`).join('\n')}
 
@@ -147,12 +148,12 @@ ${body}Der bliver noget tilovers (ris, pasta, løg, frost, tortillas), så næst
 |---|---|---|---|
 ${D.PANTRY.map((x) => `| ☐ | ${x.n}${x.opt ? ' (valgfri)' : ''}${x.where ? ', ' + x.where : ''} | ${x.label} | ${kr(x.price)} |`).join('\n')}
 
-**Basisvarer i alt: ca. ${kr(pantryNeed)}** uden de valgfrie (${kr(pantryAll)} med). Salt går vi ud fra, at du har.
+**Basisvarer i alt: ca. ${kr(pantryNeed)}** uden de valgfrie (${kr(pantryAll)} med).
 
 ## Tips
 
 - Lidl: kylling i storpakning, kartoffelbåde, broccoli og ost. Rema: tikka masala-glasset og naan. Netto på Mølmarksvej ligger lige ved Lidl og har tortillas.
-- Tikka-glasset findes sikkert i Rema. Det holder et år, så køb et par stykker, når du er forbi.
+- Rema har altid tikka-glasset. Det holder et år, så køb et par stykker, når du er forbi.
 - Kyllingen er den dyreste vare. Laver du ikke mad samme dag eller dagen efter, så frys den med det samme.
 - Gochujang findes kun i Asian Market. Stærk chilisauce + lidt ekstra honning virker fint.
 - Du skal bruge ${glass} madbokse. Køb glasbokse med låg: glasset tåler både mikro og airfryer, plastlåget kun mikro. Mindst 2 skal være ovnfaste.
@@ -160,7 +161,7 @@ ${D.PANTRY.map((x) => `| ☐ | ${x.n}${x.opt ? ' (valgfri)' : ''}${x.where ? ', 
 writeFileSync(OUT + '/shopping-list.md', md);
 
 // ---------- starter-list.md
-const num = (ids) => ids.map((id) => '#' + R[id].num).join(' ') || 'alt';
+const num = (ids) => ids.map((id) => '#' + R[id].num).join(' ') || 'alle';
 const all = D.STARTER.flatMap((g) => g.items);
 const need = all.filter((x) => !x.opt).reduce((a, x) => a + packs(x) * x.price, 0);
 const allPrice = all.reduce((a, x) => a + packs(x) * x.price, 0);
@@ -175,7 +176,7 @@ Alt du skal bruge til **alle ${D.RECIPES.length} opskrifter**: baser, saucer, kr
 <sub>Med alt: ca. ${kr(allPrice)}</sub>
 
 - Mængderne er til ${D.RECIPES.length} måltider, én af hver ret. Laver du mere, så brug slideren i \`index.html\`. Den regner pakker og pris ud, fx ${packs(wedges, 4)} poser kartoffelbåde til ${D.RECIPES.length * 4} måltider.
-- Holdbarhed er tommelfingerregler. Står der noget andet på pakken, så følg pakken.
+- Holdbarhederne er tommelfingerregler. Står der noget andet på pakken, så følg pakken.
 - "Bruges i" peger på opskrifterne i \`recipes.md\`.
 
 ## Hvor i Svendborg
@@ -184,7 +185,7 @@ Alt du skal bruge til **alle ${D.RECIPES.length} opskrifter**: baser, saucer, kr
 |---|---|---|
 ${D.STORES.map((s) => `| ${s.chain} | ${s.where} | ${s.why} |`).join('\n')}
 
-**Nemmeste tur:** Lidl (${lidl.where}) + Netto (${netto.where.split(',')[0]}) ligger på samme vej og dækker det meste. Tikka masala-glasset og sød chilisauce er sikrest i Rema, og de holder et år, så tag dem næste gang du er forbi. Gochujang findes kun i Asian Market, ellers brug stærk chilisauce.
+**Nemmeste tur:** Lidl og Netto på Mølmarksvej (${lidl.where.replace('Mølmarksvej ', 'nr. ')} og ${netto.where.split(',')[0].replace('Mølmarksvej ', '')}), plus et smut i Rema efter tikka masala-saucen (eller Patak's i Føtex). Sød chilisauce er også sikrest i Rema. Begge holder et år, så tag dem, næste gang du er forbi. Gochujang findes kun i Asian Market, ellers brug stærk chilisauce.
 
 `;
 for (const g of D.STARTER) {
@@ -202,7 +203,7 @@ Kun det friske: kød, ost, cremefraiche og de saucer, du har brugt op. Se \`shop
 
 ## Smarte holdbarhedstricks
 
-- Køb hakket oksekød på tilbud og frys det samme dag, fladt i en pose. Det tør på ca. 1 time i koldt vand (i lukket pose).
+- Køb hakket oksekød på tilbud og frys det samme dag, fladt i en pose. Det tør op på ca. 1 time i koldt vand (i lukket pose).
 - Revet ost kan fryses direkte i posen. Brug den frossen, den smelter fint.
 - Tortillas og naan: frys dem. Tortillas 20-30 sek. i mikroen, naan 2-3 min i airfryeren, så er de som nye.
 - Halve dåser majs og bønner: i en boks i fryseren, ellers skal de bruges inden for 3 dage.
@@ -217,10 +218,10 @@ md = `# Lazy Prep
 Doven comfort food med meal prep. Kombi-mikro med airfry, 1 pande, 1 gryde, ingen ovn.
 
 - \`index.html\`: åbn den på mobilen. Plan, opskrifter og indkøbslister på én side. Afkrydsninger gemmes på telefonen, og der er en portions-slider.
-- \`weekly-plan.md\`: ${meals} måltider, ${styles.size} stilarter, prepdag på ca. ${T.rutine} min (${T.foersteGang} min første gang) trin for trin.
+- \`weekly-plan.md\`: ${meals} måltider i ${styles.size} stilarter og prepdagen trin for trin, ca. ${T.rutine} min (${T.foersteGang} min første gang).
 - \`recipes.md\`: ${D.BASES.length} baser + ${D.RECIPES.length} retter.
 - \`shopping-list.md\`: ugens indkøbsliste med priser fra Netto, Rema 1000 og Lidl, ca. ${kr(total - optTotal)}.
-- \`starter-list.md\`: alt til alle ${D.RECIPES.length} opskrifter, holdbarhed og hvor i Svendborg.
+- \`starter-list.md\`: alt til alle ${D.RECIPES.length} opskrifter, holdbarhed og hvor du finder det i Svendborg.
 
 Kilden ligger i \`src/\`: \`data.mjs\` (alt indhold), \`fmt.mjs\` (mængder), \`template.html\` (siden) og \`build.mjs\`.
 Byg med \`node src/build.mjs .\` fra denne mappe.

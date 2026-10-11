@@ -42,7 +42,7 @@ Til ugeplanen: 10 måltider, 1 person. Priserne er fra Rema 1000 og Lidl i Svend
 | ☐ | Kidneybønner | 1 dåse | Alle | 7 kr |
 | ☐ | Majs | 1 dåse | Alle | 8 kr |
 | ☐ | Salsa / tacosauce | 1 glas (bruger ca. 90 g) | Alle | 11 kr |
-| ☐ | Hvidløgsdressing | 1 flaske (bruger ca. 25 ml) | Alle | 15 kr |
+| ☐ | Hvidløgsdressing | 1 flaske (bruger ca. 20 ml) | Alle | 15 kr |
 | ☐ | Syltede jalapeños (valgfri) | 1 glas | Rema / Netto | 9 kr |
 | ☐ | Tortillachips (valgfri) | 1 pose | Alle | 12 kr |
 | ☐ | Ristede løg (valgfri) | 1 bæger | Alle | 10 kr |
@@ -52,7 +52,7 @@ Til ugeplanen: 10 måltider, 1 person. Priserne er fra Rema 1000 og Lidl i Svend
 
 | | Vare | Mængde | Butik | Pris |
 |---|---|---|---|---|
-| ☐ | Tortillas, hvede | 8 stk (20 cm) (bruger 3 stk) | Rema / Netto | 11 kr |
+| ☐ | Hvedetortillas | 8 stk (20 cm) (bruger 3 stk) | Rema / Netto | 11 kr |
 | ☐ | Naanbrød (valgfri) | 1 pakke, 260 g | Rema | 12 kr |
 
 Der bliver noget tilovers (ris, pasta, løg, frost, tortillas), så næste uge bliver billigere.
@@ -61,6 +61,7 @@ Der bliver noget tilovers (ris, pasta, løg, frost, tortillas), så næste uge b
 
 | | Vare | Mængde | Pris |
 |---|---|---|---|
+| ☐ | Salt | 1 kg | 5 kr |
 | ☐ | Rapsolie | 1 L | 20 kr |
 | ☐ | Sort peber | 1 bøtte | 12 kr |
 | ☐ | Hvidløgspulver | 1 bøtte | 12 kr |
@@ -79,12 +80,12 @@ Der bliver noget tilovers (ris, pasta, løg, frost, tortillas), så næste uge b
 | ☐ | Gochujang (valgfri), Asian Market | 1 bøtte | 35 kr |
 | ☐ | Sesamfrø (valgfri) | 1 pose | 12 kr |
 
-**Basisvarer i alt: ca. 171 kr** uden de valgfrie (218 kr med). Salt går vi ud fra, at du har.
+**Basisvarer i alt: ca. 176 kr** uden de valgfrie (223 kr med).
 
 ## Tips
 
 - Lidl: kylling i storpakning, kartoffelbåde, broccoli og ost. Rema: tikka masala-glasset og naan. Netto på Mølmarksvej ligger lige ved Lidl og har tortillas.
-- Tikka-glasset findes sikkert i Rema. Det holder et år, så køb et par stykker, når du er forbi.
+- Rema har altid tikka-glasset. Det holder et år, så køb et par stykker, når du er forbi.
 - Kyllingen er den dyreste vare. Laver du ikke mad samme dag eller dagen efter, så frys den med det samme.
 - Gochujang findes kun i Asian Market. Stærk chilisauce + lidt ekstra honning virker fint.
 - Du skal bruge 9 madbokse. Køb glasbokse med låg: glasset tåler både mikro og airfryer, plastlåget kun mikro. Mindst 2 skal være ovnfaste.

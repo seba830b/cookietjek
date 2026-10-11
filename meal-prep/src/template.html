@@ -170,9 +170,9 @@ h3 { font-size: 1rem; margin: 0 0 6px; font-weight: 800; }
 .day.is-today { border: 2px solid var(--accent); }
 .meal { display: flex; align-items: flex-start; gap: 8px; padding: 8px 0; min-width: 0; }
 .meal + .meal { border-top: 1px dashed var(--border); }
-.meal .when { font-size: .66rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); width: 58px; flex: none; padding-top: 4px; font-weight: 700; }
+.meal .when { font-size: .66rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); width: 64px; flex: none; padding-top: 4px; font-weight: 700; }
 .meal .what { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: center; }
-@media (max-width: 380px) { .meal { flex-direction: column; gap: 2px; } .meal .when { width: auto; padding-top: 0; } }
+@media (max-width: 420px) { .meal { flex-direction: column; gap: 2px; } .meal .when { width: auto; padding-top: 0; } }
 .callout { background: var(--accent-soft); border-radius: 14px; padding: 10px 14px; margin-top: 10px; font-size: .9rem; }
 .callout ul { margin: 0; padding-left: 18px; }
 
@@ -213,6 +213,8 @@ h3 { font-size: 1rem; margin: 0 0 6px; font-weight: 800; }
 .prep .row.done { min-height: 0; padding-top: 8px; padding-bottom: 8px; align-items: center; }
 .prep .row.done .body { display: flex; align-items: baseline; gap: 8px; }
 .prep .row.done .chip, .prep .row.done .badge { display: none !important; }
+.prep .row.optstep:not(.done) { background: repeating-linear-gradient(-45deg, transparent 0 8px, color-mix(in srgb, var(--surface-2) 70%, transparent) 8px 16px); }
+.prep .row.optstep .step-text { font-size: .88rem; color: var(--muted); }
 .prep .row.done .step-text { margin: 0; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: .88rem; }
 .prep .row.done .nm { text-decoration: none; }
 .done-msg { display: none; padding: 12px 14px; text-align: center; font-weight: 800; color: var(--ok); background: var(--ok-soft); border-radius: 14px; margin-top: 10px; }
@@ -220,7 +222,12 @@ h3 { font-size: 1rem; margin: 0 0 6px; font-weight: 800; }
 .clock { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 12px; margin-bottom: 10px; }
 .clock .t { font-variant-numeric: tabular-nums; font-weight: 800; font-size: 1.1rem; }
 .clock .grow { flex: 1; min-width: 120px; font-size: .86rem; color: var(--muted); }
-.kit { padding: 12px 16px; margin-bottom: 12px; }
+.kit { margin-bottom: 12px; }
+.kit > summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 16px; min-height: 48px; cursor: pointer; }
+.kit > summary::-webkit-details-marker { display: none; }
+.kit > summary h3 { margin: 0; }
+.kit[open] > summary .chev { transform: rotate(180deg); }
+.kit ul { padding: 0 16px 12px !important; }
 .kit ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px 16px; grid-template-columns: 1fr 1fr; }
 @media (max-width: 520px) { .kit ul { grid-template-columns: 1fr; } }
 .kit li { display: flex; gap: 8px; align-items: baseline; font-size: .92rem; }
@@ -337,6 +344,7 @@ ol.steps li::before { content: counter(s); position: absolute; left: 0; top: 3px
 .tipline { display: block; font-size: .84rem; margin-top: 6px; padding-left: 8px; border-left: 3px solid var(--mustard); }
 .allbought { display: none; margin: 14px 0; padding: 18px 14px; text-align: center; font-weight: 800; color: var(--ok); background: var(--ok-soft); border-radius: 16px; }
 .allbought.show { display: block; }
+.allbought.partial { text-align: left; font-weight: 600; color: var(--text); background: var(--mustard-soft); border: 1px solid color-mix(in srgb, var(--mustard) 60%, var(--border)); }
 .notin { margin: 14px 0 0; padding: 10px 14px; font-size: .86rem; border-radius: 14px; background: var(--surface-2); }
 .notin[hidden] { display: none; }
 .stores { display: grid; gap: 8px; grid-template-columns: 1fr 1fr; }
@@ -364,6 +372,14 @@ dialog.sheet::backdrop { background: rgb(20 10 5 / .55); }
 .toast button { min-height: 40px; padding: 0 14px; border-radius: 10px; border: 0; background: var(--mustard); color: var(--mustard-ink); font-weight: 800; }
 .toast button[hidden] { display: none; }
 
+.miniclock { position: fixed; z-index: 29; left: 50%; transform: translateX(-50%); bottom: calc(var(--navh) + 18px); width: min(calc(100% - 20px), 520px);
+  display: flex; align-items: center; gap: 10px; padding: 8px 14px; min-height: 48px; border-radius: 16px; border: 0; text-align: left;
+  background: var(--text); color: var(--bg); box-shadow: 0 10px 30px -12px rgb(0 0 0 / .5); }
+.miniclock[hidden] { display: none; }
+.miniclock .t { font-weight: 800; font-variant-numeric: tabular-nums; flex: none; color: var(--mustard); }
+.miniclock .mc-body { flex: 1; min-width: 0; display: grid; font-size: .82rem; line-height: 1.3; }
+.miniclock #mcNext { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 700; }
+.miniclock #mcBehind { color: var(--mustard); font-size: .76rem; }
 footer { color: var(--muted); font-size: .78rem; text-align: center; padding: 0 16px calc(var(--navh) + 30px); }
 
 @media (min-width: 760px) {
@@ -386,12 +402,12 @@ footer { color: var(--muted); font-size: .78rem; text-align: center; padding: 0 
       </svg>
       <div class="grow">
         <h1 class="display">Lazy <span>Prep</span></h1>
-        <p id="tagline">Comfortfood i bokse, ingen ovn</p>
+        <p id="tagline">Comfort food i bokse, ingen ovn</p>
       </div>
       <button class="icon-btn" id="theme" type="button" aria-label="Farvetema"></button>
     </div>
     <div class="scale">
-      <label for="scale"><small>Laver mad til</small><output id="scaleOut" for="scale"></output></label>
+      <label for="scale"><small>Du laver</small><output id="scaleOut" for="scale"></output></label>
       <input id="scale" type="range" min="0.5" max="4" step="0.5" value="1" aria-describedby="scaleHint">
       <span id="scaleHint" class="sr">Ændrer alle mængder og priser på alle faner</span>
     </div>
@@ -418,6 +434,7 @@ footer { color: var(--muted); font-size: .78rem; text-align: center; padding: 0 
 <footer>Priserne er cirka. Flueben gemmes kun på denne enhed.</footer>
 
 <dialog class="sheet" id="sheet" aria-labelledby="sheetTitle"><div class="sheet-in" id="sheetBody"></div></dialog>
+<button type="button" class="miniclock" id="miniClock" hidden aria-label="Gå til næste trin"><span class="t" id="mcT"></span><span class="mc-body"><span id="mcNext"></span><span id="mcBehind" hidden></span></span></button>
 <div class="toast" id="toast" role="status" aria-live="polite"><span id="toastTxt"></span><button type="button" id="toastBtn" hidden>Fortryd</button></div>
 
 <script>
@@ -445,6 +462,7 @@ const PREP_MIN = (() => {
   return ts.length ? Math.round(Math.max(...ts) / 5) * 5 : 75;
 })();
 const FIRST_MIN = Number.isFinite(PT.foersteGang) ? PT.foersteGang : null;
+const isOptStep = (s) => !!(s && (s.opt || /^nødplan/i.test(String(s.t || ''))));
 const BOX_KIT = DATA.KIT.find((k) => /boks/i.test(k.n || '') && Number.isFinite(k.count));
 const BOXES = BOX_KIT ? BOX_KIT.count : MEALS;
 const STEP_MIN = DATA.PREP.map((s) => tmin(s.t));
@@ -496,9 +514,14 @@ const migrate = (items, legacy) => items.forEach((it, i) => {
 DATA.SHOP.forEach((g, gi) => migrate(A(g.items), (i) => `s:${gi}:${i}`));
 DATA.STARTER.forEach((g, gi) => migrate(A(g.items), (i) => `k:${gi}:${i}`));
 migrate(DATA.PANTRY, (i) => `b:${i}`);
+/* "Har jeg" only for staples: pantry + starter sections that are not fresh/frozen food. item.staple overrides. */
+const FRESH = /kød|ost|mejeri|grønt|frugt|frost|køl/i;
 const HAVE_OK = new Set();
-DATA.STARTER.forEach((g, gi) => A(g.items).forEach((it, i) => HAVE_OK.add(ikey(it, `k:${gi}:${i}`))));
-DATA.PANTRY.forEach((it, i) => HAVE_OK.add(ikey(it, `b:${i}`)));
+DATA.STARTER.forEach((g, gi) => A(g.items).forEach((it, i) => {
+  const staple = it.staple != null ? !!it.staple : !FRESH.test(g.sec || '');
+  if (staple) HAVE_OK.add(ikey(it, `k:${gi}:${i}`));
+}));
+DATA.PANTRY.forEach((it, i) => { if (it.staple !== false) HAVE_OK.add(ikey(it, `b:${i}`)); });
 
 /* ---------- Helpers */
 const $ = (s, el = document) => el.querySelector(s);
@@ -521,7 +544,15 @@ const raw = (s) => `<span data-raw="${esc(s)}"></span>`;
 const short = (r) => (r ? String(r.short || r.name).replace(/\s*\(.*?\)\s*/g, ' ').trim() : '');
 const styleChip = (s) => `<span class="chip" style="--c:var(--${esc(s)})">${esc(DATA.STYLES[s] || s)}</span>`;
 const storeChips = (w) => String(w || '').split('/').map((x) => x.trim()).filter(Boolean).map((x) => `<span class="st">${esc(x)}</span>`).join('');
-const people = (f) => (f < 1 ? '½ uge' : f === 1 ? '1 person' : `${fracTxt(f)} personer`);
+const people = (f) => {
+  if (f < 1) return 'halv uge, 1 person';
+  const n = Math.floor(f), who = n === 1 ? '1 person' : `${n} personer`;
+  return Number.isInteger(f) ? `${who}, 1 uge` : `${who} + rester`;
+};
+const timeMin = (f) => {
+  const timed = DATA.SCALE_NOTES.filter((n) => f >= n.min && Number.isFinite(n.minutes)).map((n) => n.minutes);
+  return timed.length ? Math.max(PREP_MIN, ...timed) : PREP_MIN;
+};
 const timeTxt = (f) => {
   const timed = DATA.SCALE_NOTES.filter((n) => f >= n.min && Number.isFinite(n.minutes)).map((n) => n.minutes);
   if (timed.length) return `ca. ${Math.max(...timed)} min`;
@@ -573,13 +604,19 @@ const weekIdx = (c) => ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].indexOf(c);
 const dayName = (d) => (d && d.name ? String(d.name) : DA_DAY[d && d.day ? d.day : d] || String(d && d.day || d));
 const lc = (s) => String(s).toLowerCase();
 /* fridge | freezer | thawed */
+/* Box state for TODAY. later = Saturday, nothing cooked yet. A box with thaw 'Tue' moves Tuesday evening:
+   Tuesday daytime it is still frozen (tonight), from Wednesday it is thawed. Sunday counts as the evening before Monday. */
+const THAW_ORDER = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
 function boxState(m) {
-  if (m.s !== 'freezer') return 'fridge';
-  const t = weekIdx(TODAY);
-  if (m.thaw && t >= 0 && t >= weekIdx(m.thaw)) return 'thawed';
+  if (TODAY === 'Sat') return 'later';
+  if (!m || m.s !== 'freezer') return 'fridge';
+  const ti = THAW_ORDER.indexOf(TODAY), th = THAW_ORDER.indexOf(m.thaw);
+  if (th >= 0) { if (ti > th) return 'thawed'; if (ti === th) return 'tonight'; }
   return 'freezer';
 }
-const stateChip = (m) => ({ fridge: '<span class="chip fridge">Køl</span>', freezer: '<span class="chip frozen">Fryser</span>', thawed: '<span class="chip thawed">Optøet, i køl</span>' }[boxState(m)]);
+const CHIP = { fridge: '<span class="chip fridge">Køl</span>', freezer: '<span class="chip frozen">Fryser</span>', tonight: '<span class="chip frozen">Fryser, flyt i aften</span>',
+  thawed: '<span class="chip thawed">Optøet, i køl</span>', later: '<span class="chip">Laves søndag</span>' };
+const stateChip = (m) => CHIP[boxState(m)];
 const eatOf = (id) => DATA.EAT[id] || (R[id] && R[id].reheat) || '';
 
 /* ---------- Plan */
@@ -602,9 +639,16 @@ function renderPlan() {
     </div>`;
   /* Thaw reminders for tonight, from WEEK.thaw; falls back to REMINDERS that start with today's name. */
   const thawing = DATA.WEEK.filter((d) => [d.lunch, d.dinner].some((m) => m && m.thaw === TODAY));
+  const BOX_PL = { boks: 'bokse', frysepose: 'fryseposer', glasboks: 'glasbokse', bæger: 'bægre', pose: 'poser' };
   let rem = thawing.map((d) => {
-    const n = [d.lunch, d.dinner].filter((m) => m && m.thaw === TODAY).length;
-    return `I aften: flyt ${dayName(d).toLowerCase()}s ${n === 1 ? 'boks' : n + ' bokse'} fra fryseren til køleskabet.`;
+    const ms = [d.lunch, d.dinner].filter((m) => m && m.thaw === TODAY);
+    let what = 'mad';
+    if (ms.every((m) => m.box)) {
+      const c = {};
+      ms.forEach((m) => { c[m.box] = (c[m.box] || 0) + 1; });
+      what = Object.keys(c).map((b) => `${c[b]} ${c[b] > 1 ? BOX_PL[b] || b : b}`).join(' og ');
+    }
+    return `I aften: flyt ${dayName(d).toLowerCase()}ens ${what} fra fryseren til køleskabet.`;
   });
   if (!DATA.WEEK.some((d) => [d.lunch, d.dinner].some((m) => m && m.thaw))) {
     rem = DATA.REMINDERS.filter((x) => { const s = lc(x); return s.startsWith(lc(TODAY)) || s.startsWith(DA_DAY[TODAY]); });
@@ -630,7 +674,7 @@ function renderPlan() {
       <div class="kicker">I dag, lørdag</div>
       <h2 class="display">Handledag</h2>
       <p class="muted" style="margin:-4px 0 0">Køb ind i dag, prep i morgen. ${esc(stores)} på Mølmarksvej dækker næsten det hele.</p>
-      <div class="reminder">${ICON.bell}<span>Har du frossen kylling? Læg den i køleskabet nu, så er den optøet i morgen. Og tjek at du har <span data-boxes></span> rene bokse.</span></div>
+      <div class="reminder">${ICON.bell}<span>Har du frossen kylling? Læg den i køleskabet nu, så er den optøet i morgen. Og tjek, at du har <span data-boxes></span> rene bokse.</span></div>
       <div class="btnrow"><button class="btn" type="button" data-tab-go="shop">${ICON.bag}Handl ind</button>
         <a class="btn ghost" href="#prepH">Se prep-planen</a></div>
     </div>`;
@@ -642,40 +686,46 @@ function renderPlan() {
       <h2 class="display">Prepdag</h2>
       <p class="muted" style="margin:-4px 0 12px" id="weekendLine"></p>
       ${first ? `<div class="meals2">${tile(dayName(first) + ' frokost', first.lunch)}${tile(dayName(first) + ' aften', first.dinner)}</div>` : ''}
-      <div class="btnrow"><a class="btn" href="#prepH" data-start-prep>${ICON.play}Start prep</a>
+      <div class="btnrow"><a class="btn" href="#clockCard" data-start-prep>${ICON.play}Start prep</a>
         <button class="btn ghost" type="button" data-tab-go="shop">Indkøbsliste</button></div>
     </div>`;
   }
-  const kit = DATA.KIT.length ? `<div class="card kit"><h3>Det skal du bruge</h3><ul>${DATA.KIT.map((k) => `<li><span>${Number.isFinite(k.count) ? (/boks|pose/i.test(k.n || '') ? `<b class="tnum" data-kc="${k.count}"></b> ` : `<b class="tnum">${k.count}</b> `) : ''}${esc(k.n)}${k.note ? ` <small>${esc(k.note)}</small>` : ''}</span></li>`).join('')}</ul></div>` : '';
+  const kitName = (k, c) => { const nm = String(c > 1 && k.pl ? k.pl : k.n || ''); return c != null ? nm.charAt(0).toLowerCase() + nm.slice(1) : nm; };
+  const kitLi = (k) => {
+    if (!Number.isFinite(k.count)) return `<li><span>${esc(k.n)}${k.note ? ` <small>${esc(k.note)}</small>` : ''}</span></li>`;
+    const scal = /boks|pose/i.test(k.n || '') && (k.pl || k.count > 1);
+    return `<li><span>${scal ? `<b class="tnum" data-kc="${k.count}"></b> <span data-kn="${esc(k.n)}" data-kpl="${esc(k.pl || k.n)}"></span>` : `<b class="tnum">${k.count}</b> ${esc(kitName(k, k.count))}`}${k.note ? ` <small>${esc(k.note)}</small>` : ''}</span></li>`;
+  };
+  const kit = DATA.KIT.length ? `<details class="card kit" id="kitBox"${state.prepStart == null ? ' open' : ''}><summary><h3>Det skal du bruge</h3>${ICON.chev}</summary><ul>${DATA.KIT.map(kitLi).join('')}</ul></details>` : '';
   $('#plan').innerHTML = `
     ${hero}
-    <div class="reminder" id="halfNote" hidden>${ICON.scale}<span>½ uge: alle mængder er halveret, så du får ca. <span data-meals></span> bokse i stedet for ${MEALS}. Ugeplanen viser en hel uge, så stop når boksene er tomme.</span></div>
-    <div class="stats">
+    <div class="reminder" id="halfNote" hidden>${ICON.scale}<span>½ uge: alle mængder er halveret, så du får ca. <span data-meals></span> bokse i stedet for ${MEALS}. Ugeplanen viser en hel uge, så stop, når boksene er tomme.</span></div>
+    ${today && !firstVisit ? '' : `<div class="stats">
       <div class="card stat"><b id="statTime"></b><span>prep, én gang om ugen</span></div>
       <div class="card stat"><b id="statMeals"></b><span>måltider</span></div>
-      <div class="card stat"><b>${styles.size}</b><span>køkkener</span></div>
+      <div class="card stat"><b>${styles.size}</b><span>stilarter</span></div>
       <div class="card stat"><b id="statPer">-</b><span>pr. måltid</span></div>
-    </div>
+    </div>`}
 
     <h2 class="display">Ugen</h2>
     <div class="week">
       ${DATA.WEEK.map((d) => `<div class="card day${d.day === TODAY ? ' is-today' : ''}"${d.day === TODAY ? ' aria-current="date"' : ''}>
-        <span class="dname">${esc(dayName(d).slice(0, 3).replace(/^./, (c) => c.toUpperCase()))}${d.day === TODAY ? '<small>I dag</small>' : ''}</span>${meal('Frokost', d.lunch)}${meal('Aftensmad', d.dinner)}</div>`).join('')}
+        <span class="dname">${esc(dayName(d).slice(0, 3).replace(/^./, (c) => c.toUpperCase()))}${d.day === TODAY ? '<small>I dag</small>' : ''}</span>${meal('Frokost', d.lunch)}${meal('Aften', d.dinner)}</div>`).join('')}
     </div>
     ${DATA.REMINDERS.length ? `<div class="callout"><ul>${DATA.REMINDERS.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}
 
     <h2 class="display" id="prepH">Prepdag, trin for trin</h2>
     <p class="lede"><span id="prepTimeTxt"></span>. Fire ting kører på samme tid. Sæt flueben undervejs, så lyser næste trin op.</p>
     ${kit}
-    <div class="warnbox" id="scaleNotes" hidden><b>Laver du til flere?</b><ul>${DATA.SCALE_NOTES.map((n) => `<li data-min="${Number(n.min) || 0}" hidden><b>Fra x${fmtF(n.min)}:</b> ${esc(n.text)}</li>`).join('')}</ul></div>
-    <div class="card clock"><button class="btn" type="button" id="clockBtn"></button><span class="t" id="clockT" aria-live="off"></span><span class="grow" id="clockNote"></span></div>
+    <div class="warnbox" id="scaleNotes" hidden><b>Laver du mad til flere?</b><ul>${DATA.SCALE_NOTES.map((n) => `<li data-min="${Number(n.min) || 0}" hidden><b>Fra x${fmtF(n.min)}:</b> ${esc(n.text)}</li>`).join('')}</ul></div>
+    <div class="card clock" id="clockCard"><button class="btn" type="button" id="clockBtn"></button><span class="t" id="clockT" aria-live="off"></span><span class="grow" id="clockNote"></span></div>
     <div class="legend">${Object.keys(TRACK).map((k) => `<span class="chip track-${k}">${TRACK[k]}</span>`).join('')}</div>
     <div class="progress"><span class="count" id="prepCount"></span><div class="bar" role="presentation"><i id="prepBar"></i></div><button class="reset" type="button" data-reset="prep">Nulstil</button></div>
     <div class="card list prep" id="prepList">
       ${DATA.PREP.map((s, i) => `
-        <label class="row track-${esc(s.k)}" data-i="${i}">
-          <input type="checkbox" data-key="p:${i}"${state.checks['p:' + i] ? ' checked' : ''}>
-          <span class="body"><span class="rowhead"><span class="time">${esc(s.t)}</span><span class="chip track-${esc(s.k)}">${TRACK[s.k] || esc(s.k)}</span><span class="badge nowb">Nu</span><span class="badge upnext">Næste</span></span>
+        <label class="row track-${esc(s.k)}${isOptStep(s) ? ' optstep' : ''}" data-i="${i}">
+          <input type="checkbox" data-key="p:${i}"${isOptStep(s) ? ' data-opt' : ''}${state.checks['p:' + i] ? ' checked' : ''}>
+          <span class="body"><span class="rowhead"><span class="time">${esc(s.t)}</span><span class="chip track-${esc(s.k)}">${TRACK[s.k] || esc(s.k)}</span>${isOptStep(s) ? '<span class="opt">valgfri</span>' : ''}<span class="badge nowb">Nu</span><span class="badge upnext">Næste</span></span>
           <span class="step-text">${s.a ? `<b class="act">${esc(s.a)}</b> ` : ''}${raw(s.x)}</span></span>
         </label>`).join('')}
     </div>
@@ -716,7 +766,7 @@ function renderRecipes() {
   const dishes = Object.values(R).map((r) => `
     <details class="card" id="r-${esc(r.id)}" data-style="${esc(r.style)}" data-card="r:${esc(r.id)}" data-kind="dish" style="--c:var(--${esc(r.style)})">
       <summary><span class="num">${r.num}</span><span class="title"><b>${esc(r.name)}</b>
-        <span class="meta">${styleChip(r.style)}<span class="pp"></span>${r.hands ? `${esc(r.hands)} min aktiv tid` : ''}${A(r.bases).length ? `, base ${esc(r.bases.join(' + '))}` : ''}</span></span>${ICON.chev}</summary>
+        <span class="meta">${styleChip(r.style)}<span class="pp"></span>${r.hands ? `${esc(r.hands)} min arbejdstid` : ''}${A(r.bases).length ? `, base ${esc(r.bases.join(' + '))}` : ''}</span></span>${ICON.chev}</summary>
       <div class="rbody">
         ${portionBar(r.name, false)}
         <h4>Det skal du bruge <span class="scaled-for"></span></h4>${ingList(r.ingredients)}
@@ -725,7 +775,7 @@ function renderRecipes() {
       </div>
     </details>`).join('');
   $('#recipes').innerHTML = `
-    <div class="card intro">${ICON.scale}<p><b>Mængderne skalerer.</b> Tryk <b>-</b> / <b>+</b> inde i en ret, eller træk i slideren foroven for det hele. Tal der ændrer sig blinker gult.</p></div>
+    <div class="card intro">${ICON.scale}<p><b>Mængderne regner selv om.</b> Tryk <b>-</b> / <b>+</b> inde i en ret, eller træk i slideren foroven for det hele. Tal, der ændrer sig, blinker gult.</p></div>
     <div class="strip" role="group" aria-label="Filtrér opskrifter">
       <button type="button" aria-pressed="true" data-filter="all">Alle</button>
       ${used.map((s) => `<button type="button" aria-pressed="false" data-filter="${esc(s)}">${esc(DATA.STYLES[s] || s)}</button>`).join('')}
@@ -791,12 +841,12 @@ function renderShop() {
       </div>`).join('')}
     ${DATA.PANTRY.length ? `<div class="grp" data-pantry>
         <div class="sec-title">Basisvarer, første gang</div>
-        <p class="sec-note">Holder i ugevis. Har du det allerede, så tryk "Har jeg", så bliver det husket.</p>
+        <p class="sec-note">Holder i ugevis. Har du det allerede, så tryk "Har jeg", og det bliver husket.</p>
         <div class="card list">${DATA.PANTRY.map((it, i) => { const k = ikey(it, `b:${i}`); return rowHTML('shop', k, it, {
           pantry: true, body: `<span class="where"><span>${esc(it.label || '')}</span>${storeChips(it.where)}</span>` }); }).join('')}</div>
       </div>` : ''}
     </div>
-    <div class="allbought" data-allbought="shop">Alt er købt. Godt gået, nu kan du tage hjem.</div>
+    <div class="allbought" data-allbought="shop" data-done="Alt er købt. Godt gået, nu kan du tage hjem." role="status"></div>
     <div class="notin" data-notin="shop" hidden></div>
     <p class="muted small" style="margin-top:14px">Første gang? Tjek også <button class="link" type="button" data-tab-go="starter">Starter-listen</button> med alt til alle ${DATA.RECIPES.length} retter.</p>`;
 }
@@ -810,9 +860,9 @@ function renderStarter() {
   };
   $('#starter').innerHTML = `
     <h2 class="display">Starter-indkøbsliste</h2>
-    <p class="lede">Alt til alle ${DATA.RECIPES.length} retter. Køb det én gang, så skal du kun købe kød, ost og mejeri hver uge. Holdbarhed er tommelfingerregler, pakken har altid ret.</p>
+    <p class="lede">Alt til alle ${DATA.RECIPES.length} retter. Køb det én gang, så skal du kun købe kød, ost og mejeri hver uge. Holdbarhederne er tommelfingerregler. Pakken har altid ret.</p>
     ${sumCard('starter', 'Starter i alt')}
-    <p class="muted small">Totalen er uden de valgfrie ting og uden det du har trykket "Har jeg" på. Køl-varerne skal du stadig købe løbende.</p>
+    <p class="muted small">Prisen er uden de valgfrie ting og uden det, du har trykket "Har jeg" på. Kølevarerne skal du stadig købe løbende.</p>
     <h2 class="display">Hvor i Svendborg</h2>
     <div class="stores">${DATA.STORES.map((s) => `<div class="card store"><b>${esc(s.chain)}</b><span class="addr">${ICON.pin}<span>${esc(s.where)}</span></span><div class="muted small">${esc(s.why)}</div></div>`).join('')}</div>
     <h2 class="display">Listen</h2>
@@ -824,12 +874,12 @@ function renderStarter() {
         ${g.note ? `<p class="sec-note">${esc(g.note)}</p>` : ''}
         <div class="card list">${A(g.items).map((x, i) => { const k = ikey(x, `k:${gi}:${i}`); return rowHTML('starter', k, x, { body: `
             <span class="where">{{PACK}}${storeChips(x.where)}</span>
-            ${x.life || x.open ? `<span class="life">${x.life ? `<span>Uåbnet <b>${esc(x.life)}</b></span>` : ''}${x.open ? `<span>Åbnet <b>${esc(x.open)}</b></span>` : ''}</span>` : ''}
+            ${x.life || x.open ? `<span class="life">${x.life ? `<span>Uåbnet <b>${esc(x.life)}</b></span>` : ''}${x.open ? `<span>Efter åbning <b>${esc(x.open)}</b></span>` : ''}</span>` : ''}
             <span class="uses">Bruges i ${uses(x.use)}</span>
             ${x.tip ? `<span class="tipline">${esc(x.tip)}</span>` : ''}` }); }).join('')}</div>
       </div>`).join('')}
     </div>
-    <div class="allbought" data-allbought="starter">Alt er købt eller allerede hjemme. Klar til prep.</div>
+    <div class="allbought" data-allbought="starter" data-done="Alt er købt eller allerede hjemme. Klar til prep." role="status"></div>
     <div class="notin" data-notin="starter" hidden></div>`;
 }
 
@@ -855,7 +905,7 @@ function updateCard(card) {
   const custom = state.rf[key] != null;
   const p = 2 * f;
   const label = base ? `x${fmtF(f)}` : `${fracTxt(p)} portion${p === 1 ? '' : 'er'}`;
-  setText($('.pout', card), base ? `${label} mængde` : label);
+  setText($('.pout', card), label);
   const pp = $('.pp', card);
   setText(pp, label);
   pp.classList.toggle('scaled', f !== 1);
@@ -883,13 +933,18 @@ function update() {
   sl.setAttribute('aria-valuetext', `${people(f)}, ${comma(MEALS * f)} måltider`);
   const out = $('#scaleOut');
   if (!out.firstChild) out.innerHTML = '<b></b><em></em>';
-  setText($('b', out), people(f));
-  setText($('em', out), `${comma(MEALS * f)} måltider`);
+  setText($('b', out), `${comma(MEALS * f)} måltider`);
+  setText($('em', out), people(f));
   setText($('#tagline'), `${comma(MEALS * f)} måltider · ${timeTxt(f)} · ingen ovn`);
   $$('[data-raw]').forEach((el) => { if (!el.closest('[data-card]')) setText(el, fmtT(el.dataset.raw, f)); });
   $$('[data-meals]').forEach((el) => setText(el, comma(MEALS * f)));
   $$('[data-boxes]').forEach((el) => setText(el, Math.ceil(BOXES * f)));
-  $$('[data-kc]').forEach((el) => setText(el, Math.ceil(parseFloat(el.dataset.kc) * f)));
+  $$('[data-kc]').forEach((el) => {
+    const c = Math.max(1, Math.ceil(parseFloat(el.dataset.kc) * f));
+    setText(el, c);
+    const nm = el.nextElementSibling, w = String(c > 1 ? nm.dataset.kpl : nm.dataset.kn);
+    nm.textContent = w.charAt(0).toLowerCase() + w.slice(1);
+  });
   $$('[data-card]').forEach(updateCard);
   setText($('#statMeals'), comma(MEALS * f));
   setText($('#statTime'), timeTxt(f));
@@ -993,17 +1048,29 @@ function applyListTools() {
       g.classList.toggle('empty', v === 0);
       if (!g.classList.contains('off')) visible += v;
     });
-    const rowsInScope = $$('.grp:not(.off) .row', cl).filter((r) => !r.classList.contains('filtered-out')).length;
-    $(`[data-allbought="${list}"]`).classList.toggle('show', cfg.hide && visible === 0 && rowsInScope > 0);
+    /* Required = not optional, not bought, not "Har jeg", inside the current scope (basics only when folded in). */
+    const scope = $$('.grp:not(.off) .row[data-key-row]', cl);
+    const rowOf = (r) => LIST_ROWS[list].find((x) => x.key === r.dataset.keyRow);
+    const req = scope.filter((r) => { const x = rowOf(r); return x && !x.it.opt && !r.classList.contains('gone'); });
+    const reqHere = req.filter((r) => !r.classList.contains('filtered-out'));
+    const reqElse = req.filter((r) => r.classList.contains('filtered-out'));
+    const inStore = scope.filter((r) => !r.classList.contains('filtered-out')).length;
+    const ab = $(`[data-allbought="${list}"]`);
+    const storeName = s === 'all' ? '' : (($(`[data-store="${CSS.escape(cfg.store)}"]`, sec) || {}).textContent || cfg.store);
+    const missing = [...new Set(reqElse.map((r) => { const x = rowOf(r).it; return `${x.n} (${x.where || 'andet sted'}${x.alt ? ', ellers ' + x.alt : ''})`; }))];
+    const showAb = inStore > 0 && reqHere.length === 0;
+    ab.classList.toggle('show', showAb);
+    ab.classList.toggle('partial', showAb && missing.length > 0);
+    if (showAb) ab.innerHTML = missing.length ? `<b>Alt fra ${esc(storeName)} er købt.</b> Mangler stadig: ${missing.map(esc).join(', ')}` : esc(ab.dataset.done);
     const ni = $(`[data-notin="${list}"]`);
-    ni.hidden = !notIn.length;
+    ni.hidden = !notIn.length || showAb;
     ni.innerHTML = notIn.length ? `<b>Ikke i denne butik:</b> ${notIn.map(esc).join(', ')}` : '';
   });
 }
 
 /* ---------- Prep progress + clock */
 function prepCounters() {
-  const boxes = $$('#prepList input[data-key]');
+  const boxes = $$('#prepList input[data-key]:not([data-opt])');
   const done = boxes.filter((b) => b.checked).length;
   $('#prepCount').textContent = `${done}/${boxes.length}`;
   $('#prepBar').style.width = (boxes.length ? 100 * done / boxes.length : 0) + '%';
@@ -1013,29 +1080,55 @@ function prepCounters() {
   $('#prepDone').classList.toggle('show', boxes.length > 0 && done === boxes.length);
   tickClock();
 }
+const hm = (d) => `${d.getHours()}:${String(d.getMinutes()).padStart(2, '0')}`;
 function tickClock() {
   const btn = $('#clockBtn');
   if (!btn) return;
   const run = state.prepStart != null;
   btn.innerHTML = run ? 'Stop' : ICON.play + 'Start prep';
   btn.classList.toggle('ghost', run);
-  let nowI = -1;
+  let nowI = -1, behind = 0, nextTxt = '';
+  const mc = $('#miniClock');
   if (run) {
+    const ratio = timeMin(state.scale) / PREP_MIN;
     const sec = Math.max(0, Math.floor((Date.now() - state.prepStart) / 1000));
     const m = Math.floor(sec / 60);
-    $('#clockT').textContent = `${Math.floor(m / 60)}:${String(m % 60).padStart(2, '0')}:${String(sec % 60).padStart(2, '0')}`;
-    STEP_MIN.forEach((t, i) => { if (t != null && t <= m) nowI = i; });
-    $('#clockNote').textContent = nowI >= 0 ? `Nu: trin ${nowI + 1}, kl. ${DATA.PREP[nowI].t}` : 'Lige startet';
+    const tt = `${Math.floor(m / 60)}:${String(m % 60).padStart(2, '0')}:${String(sec % 60).padStart(2, '0')}`;
+    $('#clockT').textContent = tt;
+    STEP_MIN.forEach((t, i) => { if (t != null && t * ratio <= m) nowI = i; });
+    const nb = $('#prepList .row.next');
+    if (nb) {
+      const ni = +nb.dataset.i, s = DATA.PREP[ni];
+      nextTxt = `${s.a ? s.a + ' ' : ''}${fmtT(s.x, state.scale)}`;
+      if (STEP_MIN[ni] != null) behind = Math.floor(m - STEP_MIN[ni] * ratio);
+    }
+    const end = hm(new Date(state.prepStart + timeMin(state.scale) * 60000));
+    $('#clockNote').textContent = (nowI >= 0 ? `Nu: trin ${nowI + 1} (${DATA.PREP[nowI].t}). ` : 'Lige startet. ') + `Færdig ca. kl. ${end}.` +
+      (behind > 3 ? ` Du er ca. ${behind} min bagud, bare fortsæt i rækkefølge.` : '');
+    if (mc) {
+      $('#mcT').textContent = tt;
+      $('#mcNext').textContent = nextTxt ? `Næste: ${nextTxt}` : 'Alt er gjort';
+      $('#mcBehind').textContent = behind > 3 ? `Ca. ${behind} min bagud, bare fortsæt i rækkefølge.` : '';
+      $('#mcBehind').hidden = !(behind > 3);
+      const r = $('#clockCard').getBoundingClientRect();
+      mc.hidden = !(state.tab === 'plan' && (r.bottom < 0 || r.top > innerHeight));
+    }
   } else {
     $('#clockT').textContent = '';
-    $('#clockNote').textContent = 'Uret viser hvilket trin du burde være ved.';
+    $('#clockNote').textContent = 'Uret viser, hvor langt du burde være nået.';
+    if (mc) mc.hidden = true;
   }
   $$('#prepList .row').forEach((r, i) => r.classList.toggle('now', i === nowI));
+}
+function startClock() {
+  state.prepStart = Date.now();
+  const k = $('#kitBox'); if (k) k.open = false;
+  save(); clockLoop(); tickClock();
 }
 let clockTimer = null;
 function clockLoop() {
   clearInterval(clockTimer);
-  if (state.prepStart != null) clockTimer = setInterval(() => { if (!document.hidden && state.tab === 'plan') tickClock(); }, 1000);
+  if (state.prepStart != null) clockTimer = setInterval(() => { if (!document.hidden) tickClock(); }, 1000);
 }
 
 /* ---------- Eat sheet */
@@ -1043,13 +1136,13 @@ function openEat(id, st) {
   const r = R[id];
   if (!r) return;
   const d = $('#sheet');
-  const chip = { fridge: '<span class="chip fridge">Køl</span>', freezer: '<span class="chip frozen">Fryser</span>', thawed: '<span class="chip thawed">Optøet, i køl</span>' }[st] || '';
+  const chip = CHIP[st] || '';
   $('#sheetBody').innerHTML = `
-    <div class="sheet-head"><div><div class="kicker">Sådan spiser du den</div><h2 class="display" id="sheetTitle">${esc(r.name)}</h2>
+    <div class="sheet-head"><div><div class="kicker">Sådan varmer du den</div><h2 class="display" id="sheetTitle">${esc(r.name)}</h2>
       <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px">${styleChip(r.style)}${chip}</div></div>
       <button class="close" type="button" data-close aria-label="Luk">${ICON.x}</button></div>
-    ${st === 'freezer' ? `<div class="reminder">${ICON.bell}<span>Stadig frossen? Læg den i køleskabet aftenen før.</span></div>` : ''}
-    ${eatOf(id) ? `<div class="fact reheat"><strong>Varm den sådan</strong>${esc(eatOf(id))}</div>` : ''}
+    ${{ freezer: 'Den er i fryseren. Læg den i køleskabet aftenen før, du skal spise den.', tonight: 'Flyt den fra fryseren til køleskabet i aften.', later: 'Den laves på prepdagen søndag.' }[st] ? `<div class="reminder">${ICON.bell}<span>${{ freezer: 'Den er i fryseren. Læg den i køleskabet aftenen før, du skal spise den.', tonight: 'Flyt den fra fryseren til køleskabet i aften.', later: 'Den laves på prepdagen søndag.' }[st]}</span></div>` : ''}
+    ${eatOf(id) ? `<div class="fact reheat"><strong>Opvarmning</strong>${esc(eatOf(id))}</div>` : ''}
     ${r.reheat && !String(r.reheat).includes(eatOf(id)) ? `<div class="fact"><strong>Godt at vide</strong>${esc(r.reheat)}</div>` : ''}
     <div class="btnrow"><button class="btn" type="button" data-goto="${esc(id)}">Se hele opskriften</button></div>`;
   if (typeof d.showModal === 'function') { try { d.showModal(); return; } catch (e) {} }
@@ -1230,12 +1323,12 @@ document.addEventListener('click', (e) => {
   if (reset) { resetList(reset.dataset.reset); return; }
   if (t.closest('#toastBtn')) { if (undoFn) undoFn(); undoFn = null; $('#toast').classList.remove('show'); return; }
   if (t.closest('#clockBtn')) {
-    state.prepStart = state.prepStart == null ? Date.now() : null;
-    save(); clockLoop(); tickClock();
+    if (state.prepStart == null) startClock(); else { state.prepStart = null; save(); clockLoop(); tickClock(); }
     return;
   }
+  if (t.closest('#miniClock')) { const n = $('#prepList .row.next') || $('#clockCard'); n.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'center' }); return; }
   const sp = t.closest('[data-start-prep]');
-  if (sp && state.prepStart == null) { state.prepStart = Date.now(); save(); clockLoop(); tickClock(); }
+  if (sp && state.prepStart == null) startClock();
   const tg = t.closest('[data-tab-go]');
   if (tg) { showTab(tg.dataset.tabGo); window.scrollTo(0, 0); return; }
   const eat = t.closest('[data-eat]');
