@@ -129,6 +129,7 @@ export const BASES = [
 export const RECIPES = [
   {
     id: 'burrito',
+    short: 'Burrito bowl',
     name: 'Burrito bowl med kylling',
     style: 'mexican',
     bases: ['A', 'C'],
@@ -157,6 +158,7 @@ export const RECIPES = [
   },
   {
     id: 'quesadilla',
+    short: 'Quesadillas',
     name: 'Ostede quesadillas med oksekød',
     style: 'mexican',
     bases: ['B'],
@@ -183,6 +185,7 @@ export const RECIPES = [
   },
   {
     id: 'tacofries',
+    short: 'Taco fries',
     name: 'Taco loaded fries',
     style: 'mexican',
     bases: ['B', 'E'],
@@ -207,6 +210,7 @@ export const RECIPES = [
   },
   {
     id: 'butter',
+    short: 'Butter chicken',
     name: 'Butter chicken',
     style: 'indian',
     bases: ['A', 'C'],
@@ -230,6 +234,7 @@ export const RECIPES = [
   },
   {
     id: 'korean',
+    short: 'Koreansk kylling',
     name: 'Koreansk sticky chicken',
     style: 'korean',
     bases: ['A', 'C'],
@@ -257,6 +262,7 @@ export const RECIPES = [
   },
   {
     id: 'alforno',
+    short: 'Pasta al forno',
     name: 'Pasta al forno',
     style: 'italian',
     bases: ['B', 'D'],
@@ -276,6 +282,7 @@ export const RECIPES = [
   },
   {
     id: 'garlicpasta',
+    short: 'Hvidløgspasta',
     name: 'Cremet hvidløgspasta med kylling og parmesan',
     style: 'italian',
     bases: ['A', 'D'],
@@ -301,6 +308,7 @@ export const RECIPES = [
   },
   {
     id: 'sweetsour',
+    short: 'Sweet chili-kylling',
     name: 'Sursød sweet chili-kylling',
     style: 'takeaway',
     bases: ['A', 'C'],
@@ -327,6 +335,7 @@ export const RECIPES = [
   },
   {
     id: 'buffalo',
+    short: 'Buffalo fries',
     name: 'Buffalo chicken fries',
     style: 'diner',
     bases: ['A', 'E'],
@@ -354,6 +363,7 @@ export const RECIPES = [
   },
   {
     id: 'cheeseburger',
+    short: 'Cheeseburger fries',
     name: 'Cheeseburger fries',
     style: 'diner',
     bases: ['B', 'E'],
@@ -481,8 +491,8 @@ export const PREP = [
 
 // Shown under the timeline when the slider is at or above min.
 export const SCALE_NOTES = [
-  { min: 1.5, text: 'Hver ekstra ca. 350 g rå kylling er et hold mere i airfryeren, ca. +16 min.' },
-  { min: 2, text: 'Lav 2 omgange kylling: klip og krydr det hele, men kør 6 hold i stedet for 3. Regn med ca. 2 timer.' },
+  { min: 1.5, minutes: 110, text: 'Hver ekstra ca. 350 g rå kylling er et hold mere i airfryeren, ca. +16 min.' },
+  { min: 2, minutes: 120, text: 'Lav 2 omgange kylling: klip og krydr det hele, men kør 6 hold i stedet for 3. Regn med ca. 2 timer.' },
   { min: 2, text: 'Ved x2 er der 800 g oksekød. Brun det i 2 omgange, ellers koger det i stedet for at brune.' },
   { min: 2.5, text: 'Over 4 krus ris eller 4 krus pasta: kog i 2 omgange, eller brug mikroris i pose.' },
   { min: 3, text: 'Ærligt: over x2 er det nemmere at dele det op i 2 prepdage.' },
@@ -535,7 +545,7 @@ export const SHOP = [
       { id: 'ris', n: 'Jasminris', u: 'g', need: 400, size: 1000, label: '1 kg', unit: 'pose', plural: 'poser', price: 15, where: 'Alle' },
       { id: 'penne', n: 'Penne', u: 'g', need: 200, size: 500, label: '500 g', unit: 'pose', plural: 'poser', price: 8, where: 'Alle' },
       { id: 'pastasauce', n: 'Pastasauce, tomat og basilikum', need: 1, size: 1, label: '1 glas, 400 g', unit: 'glas', plural: 'glas', price: 17, where: 'Alle' },
-      { id: 'tikka', n: 'Tikka masala- eller butter chicken-sauce', need: 1, size: 1, label: '1 glas, 350 g', unit: 'glas', plural: 'glas', price: 19, where: 'Rema' },
+      { id: 'tikka', alt: 'Patak\'s i Føtex/Bilka', n: 'Tikka masala- eller butter chicken-sauce', need: 1, size: 1, label: '1 glas, 350 g', unit: 'glas', plural: 'glas', price: 19, where: 'Rema' },
       { id: 'taco', n: 'Tacokrydderi', need: 1.25, size: 1, label: '1 brev', unit: 'brev', plural: 'breve', price: 6, where: 'Alle' },
       { id: 'kidney', n: 'Kidneybønner', need: 1, size: 1, label: '1 dåse', unit: 'dåse', plural: 'dåser', price: 7, where: 'Alle' },
       { id: 'majs', n: 'Majs', need: 0.25, size: 1, label: '1 dåse', unit: 'dåse', plural: 'dåser', price: 8, where: 'Alle' },
@@ -551,7 +561,7 @@ export const SHOP = [
     sec: 'Brød',
     items: [
       { id: 'tortillas', n: 'Tortillas, hvede', u: 'stk', need: 3, size: 8, label: '8 stk (20 cm)', unit: 'pose', plural: 'poser', price: 11, where: 'Rema / Netto' },
-      { id: 'naan', n: 'Naanbrød', need: 0.5, size: 1, label: '1 pakke, 260 g', unit: 'pakke', plural: 'pakker', price: 12, where: 'Rema', opt: true },
+      { id: 'naan', alt: 'tortillas fra Lidl/Netto', n: 'Naanbrød', need: 0.5, size: 1, label: '1 pakke, 260 g', unit: 'pakke', plural: 'pakker', price: 12, where: 'Rema', opt: true },
     ],
   },
 ];
@@ -573,7 +583,7 @@ export const PANTRY = [
   { id: 'eddike', n: 'Eddike (lagereddike)', label: '1 flaske', unit: 'flaske', plural: 'flasker', price: 8 },
   { id: 'smoer', n: 'Smør', label: '200 g', unit: 'pakke', plural: 'pakker', price: 10 },
   { id: 'chilisauce', n: 'Sriracha / stærk chilisauce', label: '1 flaske', unit: 'flaske', plural: 'flasker', price: 10 },
-  { id: 'gochujang', n: 'Gochujang', label: '1 bøtte', unit: 'bøtte', plural: 'bøtter', price: 35, where: 'Asian Market', opt: true },
+  { id: 'gochujang', alt: 'chilisauce + lidt honning', n: 'Gochujang', label: '1 bøtte', unit: 'bøtte', plural: 'bøtter', price: 35, where: 'Asian Market', opt: true },
   { id: 'sesam', n: 'Sesamfrø', label: '1 pose', unit: 'pose', plural: 'poser', price: 12, opt: true },
 ];
 
@@ -631,7 +641,7 @@ export const STARTER = [
       { id: 'kidney', n: 'Kidneybønner', need: 1, size: 1, label: '1 dåse', unit: 'dåse', plural: 'dåser', price: 7, where: 'Alle', life: '2-3 år', open: '3 dage i køl, i en boks', use: ['quesadilla', 'tacofries'] },
       { id: 'majs', n: 'Majs', need: 0.25, size: 1, label: '1 dåse', unit: 'dåse', plural: 'dåser', price: 8, where: 'Alle', life: '2-3 år', open: '3 dage i køl, eller frys resten', use: ['burrito'] },
       { id: 'ananas', n: 'Ananas i stykker', need: 0.5, size: 1, label: '1 lille dåse', unit: 'dåse', plural: 'dåser', price: 8, where: 'Alle', life: '2 år', open: '3 dage i køl, i en boks', use: ['sweetsour'], opt: true },
-      { id: 'naan', n: 'Naanbrød', need: 0.5, size: 1, label: '1 pakke, 260 g', unit: 'pakke', plural: 'pakker', price: 12, where: 'Rema', life: '1-2 uger', open: 'Frys dem, 3 mdr.', use: ['butter'], opt: true },
+      { id: 'naan', alt: 'tortillas fra Lidl/Netto', n: 'Naanbrød', need: 0.5, size: 1, label: '1 pakke, 260 g', unit: 'pakke', plural: 'pakker', price: 12, where: 'Rema', life: '1-2 uger', open: 'Frys dem, 3 mdr.', use: ['butter'], opt: true },
       { id: 'tortillachips', n: 'Tortillachips', need: 0.1, size: 1, label: '1 pose', unit: 'pose', plural: 'poser', price: 12, where: 'Alle', life: '3-6 mdr.', open: '1-2 uger med en klips', use: ['burrito'], opt: true },
       { id: 'ristedeloeg', n: 'Ristede løg', need: 0.1, size: 1, label: '1 bæger', unit: 'bæger', plural: 'bægre', price: 10, where: 'Alle', life: '6-12 mdr.', open: '1-2 mdr., låg på', use: ['burrito', 'tacofries', 'buffalo', 'cheeseburger'], opt: true },
     ],
@@ -641,11 +651,11 @@ export const STARTER = [
     note: 'Uåbnet holder de i månedsvis. Efter åbning skal de i køleskabet.',
     items: [
       { id: 'pastasauce', n: 'Pastasauce, tomat og basilikum', need: 0.5, size: 1, label: '1 glas, 400 g', unit: 'glas', plural: 'glas', price: 17, where: 'Alle', life: '1-2 år', open: '5 dage i køl', use: ['alforno'] },
-      { id: 'tikka', n: 'Tikka masala- eller butter chicken-sauce', need: 0.5, size: 1, label: '1 glas, 350 g', unit: 'glas', plural: 'glas', price: 19, where: 'Rema', life: '1 år', open: '3-4 dage i køl', use: ['butter'], tip: 'Kun Rema er tjekket. Glasset holder et år, så køb et par stykker, når du er forbi. Ægte Patak\'s butter chicken koster ca. 40 kr i Føtex/Bilka.' },
+      { id: 'tikka', alt: 'Patak\'s i Føtex/Bilka', n: 'Tikka masala- eller butter chicken-sauce', need: 0.5, size: 1, label: '1 glas, 350 g', unit: 'glas', plural: 'glas', price: 19, where: 'Rema', life: '1 år', open: '3-4 dage i køl', use: ['butter'], tip: 'Kun Rema er tjekket. Glasset holder et år, så køb et par stykker, når du er forbi. Ægte Patak\'s butter chicken koster ca. 40 kr i Føtex/Bilka.' },
       { id: 'soedchili', n: 'Sød chilisauce', need: 45, size: 500, u: 'ml', label: '500 ml', unit: 'flaske', plural: 'flasker', price: 17, where: 'Rema', life: '1-2 år', open: '1-2 mdr. i køl', use: ['sweetsour'] },
       { id: 'salsa', n: 'Salsa / tacosauce', need: 90, size: 230, u: 'g', label: '1 glas', unit: 'glas', plural: 'glas', price: 11, where: 'Alle', life: '1 år', open: 'Se etiketten, typisk 1-2 uger', use: ['burrito', 'quesadilla', 'tacofries'] },
       { id: 'chilisauce', n: 'Sriracha / stærk chilisauce', need: 0.12, size: 1, label: '1 flaske', unit: 'flaske', plural: 'flasker', price: 10, where: 'Rema (Lidl på tilbud)', life: '1-2 år', open: '6+ mdr., helst i køl', use: ['korean', 'buffalo'], tip: 'Dækker både buffalo og den koreanske sauce. Køb den, hvis du kun vil have én chilisauce.' },
-      { id: 'gochujang', n: 'Gochujang', need: 0.06, size: 1, label: '1 bøtte', unit: 'bøtte', plural: 'bøtter', price: 35, where: 'Asian Market', life: '1-2 år', open: '1 år i køl', use: ['korean'], opt: true, tip: 'Findes ikke i Netto, Rema eller Lidl. Spring den over og brug chilisauce + lidt ekstra honning.' },
+      { id: 'gochujang', alt: 'chilisauce + lidt honning', n: 'Gochujang', need: 0.06, size: 1, label: '1 bøtte', unit: 'bøtte', plural: 'bøtter', price: 35, where: 'Asian Market', life: '1-2 år', open: '1 år i køl', use: ['korean'], opt: true, tip: 'Findes ikke i Netto, Rema eller Lidl. Spring den over og brug chilisauce + lidt ekstra honning.' },
       { id: 'soja', n: 'Sojasauce', need: 0.05, size: 1, label: '1 flaske', unit: 'flaske', plural: 'flasker', price: 11, where: 'Alle / Asian Market', life: '2-3 år', open: '1 år', use: ['korean', 'sweetsour'] },
       { id: 'honning', n: 'Honning', need: 0.03, size: 1, label: '1 glas', unit: 'glas', plural: 'glas', price: 19, where: 'Alle', life: 'Årevis', open: 'Årevis, ikke i køl', use: ['korean'] },
       { id: 'ketchup', n: 'Ketchup', need: 0.1, size: 1, label: '1 flaske', unit: 'flaske', plural: 'flasker', price: 9, where: 'Alle', life: '1 år', open: '1-2 mdr. i køl', use: ['quesadilla', 'tacofries', 'sweetsour', 'cheeseburger'] },
