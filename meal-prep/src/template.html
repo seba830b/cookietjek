@@ -102,7 +102,7 @@ nav.tabs button { display: flex; flex-direction: column; align-items: center; ju
 nav.tabs button[aria-selected="true"] { background: var(--accent); color: var(--accent-ink); }
 nav.tabs button:not([aria-selected="true"]):hover { background: var(--surface-2); color: var(--text); }
 
-main { padding: 16px 0 calc(var(--navh) + 40px); }
+main.wrap { padding-top: 16px; padding-bottom: calc(var(--navh) + 24px); }
 section[hidden] { display: none !important; }
 h2 { font-size: 1.25rem; margin: 30px 0 10px; letter-spacing: -.01em; font-weight: 800; line-height: 1.2; }
 h2:first-child { margin-top: 4px; }
@@ -370,6 +370,7 @@ footer { color: var(--muted); font-size: .78rem; text-align: center; padding: 0 
   .top { padding-top: 14px; }
   .today { padding: 20px 22px; }
   .rbody { padding: 0 20px 20px 62px; }
+  .strip { flex-wrap: wrap; overflow: visible; margin: 0 0 10px; padding: 2px 0 4px; }
 }
 </style>
 </head>
@@ -444,6 +445,8 @@ const PREP_MIN = (() => {
   return ts.length ? Math.round(Math.max(...ts) / 5) * 5 : 75;
 })();
 const FIRST_MIN = Number.isFinite(PT.foersteGang) ? PT.foersteGang : null;
+const BOX_KIT = DATA.KIT.find((k) => /boks/i.test(k.n || '') && Number.isFinite(k.count));
+const BOXES = BOX_KIT ? BOX_KIT.count : MEALS;
 const STEP_MIN = DATA.PREP.map((s) => tmin(s.t));
 
 /* ---------- State: load and validate */
@@ -643,7 +646,7 @@ function renderPlan() {
         <button class="btn ghost" type="button" data-tab-go="shop">Indkøbsliste</button></div>
     </div>`;
   }
-  const kit = DATA.KIT.length ? `<div class="card kit"><h3>Det skal du bruge</h3><ul>${DATA.KIT.map((k) => `<li><span>${esc(k.n)}${k.note ? ` <small>${esc(k.note)}</small>` : ''}</span></li>`).join('')}</ul></div>` : '';
+  const kit = DATA.KIT.length ? `<div class="card kit"><h3>Det skal du bruge</h3><ul>${DATA.KIT.map((k) => `<li><span>${Number.isFinite(k.count) ? (/boks|pose/i.test(k.n || '') ? `<b class="tnum" data-kc="${k.count}"></b> ` : `<b class="tnum">${k.count}</b> `) : ''}${esc(k.n)}${k.note ? ` <small>${esc(k.note)}</small>` : ''}</span></li>`).join('')}</ul></div>` : '';
   $('#plan').innerHTML = `
     ${hero}
     <div class="reminder" id="halfNote" hidden>${ICON.scale}<span>½ uge: alle mængder er halveret, så du får ca. <span data-meals></span> bokse i stedet for ${MEALS}. Ugeplanen viser en hel uge, så stop når boksene er tomme.</span></div>
@@ -885,7 +888,8 @@ function update() {
   setText($('#tagline'), `${comma(MEALS * f)} måltider · ${timeTxt(f)} · ingen ovn`);
   $$('[data-raw]').forEach((el) => { if (!el.closest('[data-card]')) setText(el, fmtT(el.dataset.raw, f)); });
   $$('[data-meals]').forEach((el) => setText(el, comma(MEALS * f)));
-  $$('[data-boxes]').forEach((el) => setText(el, Math.ceil(MEALS * f)));
+  $$('[data-boxes]').forEach((el) => setText(el, Math.ceil(BOXES * f)));
+  $$('[data-kc]').forEach((el) => setText(el, Math.ceil(parseFloat(el.dataset.kc) * f)));
   $$('[data-card]').forEach(updateCard);
   setText($('#statMeals'), comma(MEALS * f));
   setText($('#statTime'), timeTxt(f));
@@ -1046,7 +1050,7 @@ function openEat(id, st) {
       <button class="close" type="button" data-close aria-label="Luk">${ICON.x}</button></div>
     ${st === 'freezer' ? `<div class="reminder">${ICON.bell}<span>Stadig frossen? Læg den i køleskabet aftenen før.</span></div>` : ''}
     ${eatOf(id) ? `<div class="fact reheat"><strong>Varm den sådan</strong>${esc(eatOf(id))}</div>` : ''}
-    ${r.reheat && r.reheat !== eatOf(id) ? `<div class="fact"><strong>Godt at vide</strong>${esc(r.reheat)}</div>` : ''}
+    ${r.reheat && !String(r.reheat).includes(eatOf(id)) ? `<div class="fact"><strong>Godt at vide</strong>${esc(r.reheat)}</div>` : ''}
     <div class="btnrow"><button class="btn" type="button" data-goto="${esc(id)}">Se hele opskriften</button></div>`;
   if (typeof d.showModal === 'function') { try { d.showModal(); return; } catch (e) {} }
   gotoRecipe(id);
