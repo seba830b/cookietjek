@@ -3,9 +3,9 @@
 Doven comfort food med meal prep. Kombi-mikro med airfry, 1 pande, 1 gryde, ingen ovn. Handl lørdag, prep søndag, spis hele ugen.
 
 - `index.html`: åbn den på mobilen. Ugens plan, opskrifter og indkøbslister på én side. Der kommer en ny, varieret uge hver uge. Slå hvert måltid til og fra (fx når du spiser i skolen), byt retter, og indkøbsliste, prepplan og pris regnes ud igen. Afkrydsninger gemmes på telefonen, og der er en portions-slider.
-- `weekly-plan.md`: uge 42, 7 måltider i 4 stilarter og prepdagen trin for trin, ca. 70 min (90 min første gang).
+- `weekly-plan.md`: uge 42, 10 måltider i 5 stilarter og prepdagen trin for trin, ca. 75 min (100 min første gang).
 - `recipes.md`: 5 baser + 30 retter med fotos.
-- `shopping-list.md`: ugens indkøbsliste med priser fra Netto, Rema 1000 og Lidl, ca. 328 kr.
+- `shopping-list.md`: ugens indkøbsliste med priser fra Netto, Rema 1000 og Lidl, ca. 395 kr.
 - `starter-list.md`: alt til alle 30 opskrifter, holdbarhed og hvor du finder det i Svendborg.
 - `ROUTINE.md`: hver fredag morgen tilføjer en planlagt Claude-session 2-3 nye retter, så puljen vokser.
 

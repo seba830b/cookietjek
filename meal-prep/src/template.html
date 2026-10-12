@@ -525,7 +525,7 @@ const state = {
   meals: {},
   weeks: {},
 };
-const WDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+const WDAYS = typeof DAYS !== 'undefined' ? DAYS : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
 WDAYS.forEach((d) => {
   const def = (DATA.DEFAULT_MEALS && DATA.DEFAULT_MEALS[d]) || { lunch: true, dinner: true };
   const sv = isObj(saved.meals) && isObj(saved.meals[d]) ? saved.meals[d] : {};
@@ -687,20 +687,20 @@ function boxState(m) {
 }
 const CHIP = { fridge: '<span class="chip fridge">Køl</span>', freezer: '<span class="chip frozen">Fryser</span>', tonight: '<span class="chip frozen">Fryser, flyt i aften</span>',
   thawed: '<span class="chip thawed">Optøet, i køl</span>', later: '<span class="chip">Laves søndag</span>' };
-const stateChip = (m) => CHIP[boxState(m)];
+const stateChip = (m) => (m && m.fresh && TODAY !== 'Sat' ? '<span class="chip fridge">Frisk fra prep</span>' : CHIP[boxState(m)]);
 const eatOf = (id) => DATA.EAT[id] || (R[id] && R[id].reheat) || '';
 
 /* ---------- Plan */
 function renderPlan() {
   const styles = new Set(DATA.WEEK.flatMap((d) => [d.lunch, d.dinner].filter((m) => m && R[m.r]).map((m) => R[m.r].style)));
-  const today = DATA.WEEK.find((d) => d.day === TODAY);
+  const today = TODAY === 'Sat' || TODAY === 'Sun' ? null : DATA.WEEK.find((d) => d.day === TODAY);
   const tile = (label, m) => m.skip ? `
     <div class="mtile off"><span class="when">${label}</span><span class="name muted">${esc(m.r)}</span></div>` : `
     <div class="mtile">
       ${pic(R[m.r], 'tpic')}
       <span class="when">${label} ${stateChip(m)}</span>
       <button class="link name" type="button" data-eat="${esc(m.r)}" data-st="${boxState(m)}">${esc(R[m.r] ? R[m.r].name : m.r)}</button>
-      <span class="how">${esc(eatOf(m.r))}</span>
+      <span class="how">${esc(m.fresh ? 'Frisk fra prepdagen: tag en portion fra, før resten kommer i bokse.' : eatOf(m.r))}</span>
     </div>`;
   const meal = (label, m, key) => `
     <div class="meal${m.skip ? ' off' : ''}">
@@ -748,18 +748,19 @@ function renderPlan() {
       <div class="kicker">I dag, lørdag</div>
       <h2 class="display">Handledag</h2>
       <p class="muted" style="margin:-4px 0 0">Køb ind i dag, prep i morgen. ${esc(stores)} på Mølmarksvej dækker næsten det hele.</p>
+      ${state.meals.Sat && (state.meals.Sat.lunch || state.meals.Sat.dinner) ? `<div class="reminder">${ICON.bell}<span>Mad i dag: lørdagens boks${state.meals.Sat.lunch && state.meals.Sat.dinner ? 'e' : ''} fra sidste uges prep. Den er tøet op i køleskabet siden i går aftes.</span></div>` : ''}
       <div class="reminder">${ICON.bell}<span>Har du frossen kylling? Læg den i køleskabet nu, så er den optøet i morgen. Og tjek, at du har <span data-boxes></span> rene bokse.</span></div>
       <div class="btnrow"><button class="btn" type="button" data-tab-go="shop">${ICON.bag}Handl ind</button>
         <a class="btn ghost" href="#prepH">Se prep-planen</a></div>
     </div>`;
   } else {
-    const first = DATA.WEEK[0];
+    const sun = DATA.WEEK.find((d) => d.day === 'Sun'), mon = DATA.WEEK.find((d) => d.day === 'Mon');
     hero = `<div class="card today">
       ${flow}
       <div class="kicker">I dag, ${DA_DAY[TODAY]}</div>
       <h2 class="display">Prepdag</h2>
       <p class="muted" style="margin:-4px 0 12px" id="weekendLine"></p>
-      ${first ? `<div class="meals2">${tile(dayName(first) + ' frokost', first.lunch)}${tile(dayName(first) + ' aften', first.dinner)}</div>` : ''}
+      ${sun && mon ? `<div class="meals2">${tile('I aften', sun.dinner)}${tile('Mandag frokost', mon.lunch)}</div>` : ''}
       <div class="btnrow"><a class="btn" href="#clockCard" data-start-prep>${ICON.play}Start prep</a>
         <button class="btn ghost" type="button" data-tab-go="shop">Indkøbsliste</button></div>
     </div>`;

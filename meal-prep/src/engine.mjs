@@ -2,15 +2,19 @@
 // All quantities in returned text are {q|unit} markers with ABSOLUTE amounts for the f passed in:
 // render them with fmtText(x, 1). Counts (kit, shop need) are absolute for f too.
 
-export const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+// Sun = prep day (eaten fresh), Mon-Tue from the fridge, Wed-Sat from the freezer.
+export const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const _HOME = { Sun: 1, Sat: 1 };
 export const DAY_DA = { Sun: 'Søndag', Mon: 'Mandag', Tue: 'Tirsdag', Wed: 'Onsdag', Thu: 'Torsdag', Fri: 'Fredag', Sat: 'Lørdag' };
-const _DAY_GEN = { Mon: 'mandagens', Tue: 'tirsdagens', Wed: 'onsdagens', Thu: 'torsdagens', Fri: 'fredagens' };
+const _DAY_GEN = { Sun: 'søndagens', Sat: 'lørdagens', Mon: 'mandagens', Tue: 'tirsdagens', Wed: 'onsdagens', Thu: 'torsdagens', Fri: 'fredagens' };
 export const DEFAULT_MEALS = {
+  Sun: { lunch: false, dinner: true },
   Mon: { lunch: true, dinner: false },
   Tue: { lunch: true, dinner: false },
   Wed: { lunch: true, dinner: true },
   Thu: { lunch: true, dinner: false },
   Fri: { lunch: true, dinner: true },
+  Sat: { lunch: true, dinner: true },
 };
 
 // Built-in mince variants (Base B). Products are per 100 g RAW mince. x = pan step body (the engine adds the lead-in).
@@ -187,8 +191,8 @@ function _slotsOf(meals) {
 function _hardOk(assigned, s, r, n, level) {
   if (!r) return false;
   const rs = r.slot || 'lunch';
-  if (s.slot === 'lunch' && rs !== 'lunch' && rs !== 'both') return false;
-  if (r.freezeOk === false && s.di > 1) return false;
+  if (s.slot === 'lunch' && !_HOME[s.day] && rs !== 'lunch' && rs !== 'both') return false;
+  if (r.freezeOk === false && s.di > 2) return false;
   let same = 0;
   for (const k in assigned) {
     if (k === s.key) continue;
@@ -196,25 +200,26 @@ function _hardOk(assigned, s, r, n, level) {
     if (a.r.id === r.id) { same++; if (a.s.day === s.day) return false; }
   }
   if (same >= 2) return false;
-  if (level >= 1) return true;
   const list = [r];
   for (const k in assigned) if (k !== s.key) list.push(assigned[k].r);
+  // One pan: never more than 2 mince variants, even when the rules are relaxed.
   const vars = new Set(list.map(_minceOf).filter(Boolean));
   if (vars.size > 2) return false;
+  if (level >= 1) return true;
   if (level === 0) {
     if (list.filter(_isTaco).length > 3) return false;
     const sauces = new Set(list.filter((x) => _chickenOf(x) > 0).map((x) => x.id));
     if (sauces.size > 3) return false;
   }
   if (list.reduce((a, x) => a + _chickenOf(x), 0) > _chickenLimit(n) + 1e-6) return false;
-  if (_estPrep(list) > 90) return false;
+  if (_estPrep(list) > (n > 10 ? 120 : 90)) return false;
   return true;
 }
 
 function _weightOf(assigned, s, r, fresh) {
   const rs = r.slot || 'lunch';
   let w = 1;
-  if (s.slot === 'dinner') w *= rs === 'dinner' ? 3 : rs === 'both' ? 2.5 : 0.25;
+  if (s.slot === 'dinner' || _HOME[s.day]) w *= rs === 'dinner' ? 3 : rs === 'both' ? 2.5 : 0.25;
   let same = 0, sameStyle = 0;
   for (const k in assigned) { const a = assigned[k].r; if (a.id === r.id) same++; if (a.style === r.style) sameStyle++; }
   if (same) w *= 0.45;
@@ -237,8 +242,9 @@ function _makePlan(slots, assigned, byId, seedStr, wk, fresh) {
       const a = assigned[`${day}:${slot}`];
       if (!a) return;
       const r = a.r;
-      const fridge = di <= 1 || r.freezeOk === false;
+      const fridge = di <= 2 || r.freezeOk === false;
       d[slot] = { r: r.id, s: fridge ? 'fridge' : 'freezer', thaw: fridge ? null : DAYS[di - 1], box: _CONTAINER_BOX[r.container] || 'boks', slot };
+      if (day === 'Sun') d[slot].fresh = true;
     });
     return d;
   });

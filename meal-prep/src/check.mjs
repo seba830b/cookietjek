@@ -115,7 +115,7 @@ const mealsFrom = (fn) => Object.fromEntries(E.DAYS.map((d, di) => [d, { lunch: 
 const cfgRng = E.rng('check-configs');
 const CONFIGS = [
   ['default', E.DEFAULT_MEALS],
-  ['alle 10', mealsFrom(() => true)],
+  ['alle 14', mealsFrom(() => true)],
   ['kun frokost', mealsFrom((d, s) => s === 'lunch')],
   ['kun aften', mealsFrom((d, s) => s === 'dinner')],
 ];
@@ -158,7 +158,7 @@ for (let week = 1; week <= 52; week++) {
         if (m) {
           const r = D.RECIPES.find((x) => x.id === m.r);
           if (!r) err(`${at}: unknown recipe ${m.r}`);
-          else if (s === 'lunch' && r.slot === 'dinner') err(`${at}: dinner-only ${r.id} at lunch`);
+          else if (s === 'lunch' && r.slot === 'dinner' && d.day !== 'Sat' && d.day !== 'Sun') err(`${at}: dinner-only ${r.id} at lunch`);
           if (!['fridge', 'freezer'].includes(m.s)) err(`${at}: bad storage ${m.s}`);
           if (m.s === 'freezer' && !m.thaw) err(`${at}: freezer meal without thaw day`);
         }
